@@ -1,0 +1,69 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Jan",
+      "secondName": "Kowalski",
+      "password": "haslo123",
+      "email": "jan.kowalski@example.com",
+      "dateOfBirth": "1990-01-15",
+      "age": 34,
+      "descriptionShort": "Młody inżynier z pasją do technologii i nowoczesnych rozwiązań. Lubi spędzać czas na świeżym powietrzu i podróżować.",
+      "imageURI": "https://example.com/images/jan_kowalski.jpg"
+    },
+    {
+      "id": 2,
+      "firstName": "Anna",
+      "secondName": "Nowak",
+      "password": "haslo456",
+      "email": "anna.nowak@example.com",
+      "dateOfBirth": "1985-06-30",
+      "age": 38,
+      "descriptionShort": "Doświadczona nauczycielka z zamiłowaniem do literatury. W wolnym czasie uwielbia gotować i eksperymentować w kuchni.",
+      "imageURI": "https://example.com/images/anna_nowak.jpg"
+    },
+    {
+      "id": 3,
+      "firstName": "Piotr",
+      "secondName": "Wiśniewski",
+      "password": "haslo789",
+      "email": "piotr.wisniewski@example.com",
+      "dateOfBirth": "1992-11-25",
+      "age": 31,
+      "descriptionShort": "Młody programista, który pasjonuje się grami komputerowymi i projektowaniem stron internetowych. Lubi aktywne spędzanie czasu.",
+      "imageURI": "https://example.com/images/piotr_wisniewski.jpg"
+    }
+  ],
+  "friends": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "friend_id": 2
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "friend_id": 3
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "friend_id": 1
+    },
+    {
+      "id": 4,
+      "user_id": 2,
+      "friend_id": 3
+    },
+    {
+      "id": 5,
+      "user_id": 3,
+      "friend_id": 1
+    },
+    {
+      "id": 6,
+      "user_id": 3,
+      "friend_id": 2
+    }
+  ]
+}
