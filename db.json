@@ -65,5 +65,9 @@
       "user_id": 3,
       "friend_id": 2
     }
-  ]
+  ],
+  "posts": [],
+  "posts_likes": [],
+  "posts_comments": [],
+  "groups": []
 }
