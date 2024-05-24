@@ -1,16 +1,18 @@
 import { FC } from "react";
+import Link from "next/link";
+import RingIcon from "@public/icons/ring.svg";
 
 const HeaderMobileMenu: FC = () => {
   return (
     <div className="md:hidden" id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <a
-          href="#"
+        <Link
+          href="/home"
           className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue block rounded-md px-3 py-2 text-base font-medium"
           aria-current="page"
         >
           Homepage
-        </a>
+        </Link>
       </div>
       <div className="border-t border-primary-rose dark:border-dark-primary-light-blue pb-3 pt-4">
         <div className="flex items-center px-5">
@@ -35,20 +37,7 @@ const HeaderMobileMenu: FC = () => {
           >
             <span className="absolute -inset-1.5"></span>
             <span className="sr-only">View notifications</span>
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-              />
-            </svg>
+            <RingIcon className="h-6 w-6"/>
           </button>
         </div>
         <div className="mt-3 space-y-1 px-2">

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 
 const Login: FC = () => {
   return (
@@ -28,8 +29,7 @@ const Login: FC = () => {
                 type="email"
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -76,12 +76,12 @@ const Login: FC = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
-          <a
-            href="#"
+          <Link
+            href="/register"
             className="font-semibold ml-2 leading-6 text-primary-rose dark:text-dark-primary-light-blue"
           >
             Register now!
-          </a>
+          </Link>
         </p>
       </div>
     </div>
