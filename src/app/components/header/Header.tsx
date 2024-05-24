@@ -9,7 +9,7 @@ const Header: FC = () => {
 
   return (
     <header>
-      <nav className="bg-primary dark:bg-dark-secondary">
+      <nav className="bg-primary dark:bg-dark-primary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
