@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 
 const Register: FC = () => {
   return (
@@ -130,12 +131,12 @@ const Register: FC = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Do you have an account?
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="font-semibold ml-2 leading-6 text-primary-rose dark:text-dark-primary-light-blue"
           >
             Log In
-          </a>
+          </Link>
         </p>
       </div>
     </div>
