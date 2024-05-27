@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 
 const HeaderProfilePopup: FC = () => {
   return (
@@ -9,24 +10,24 @@ const HeaderProfilePopup: FC = () => {
       aria-labelledby="user-menu-button"
       tabIndex="-1"
     >
-      <a
-        href="@/components/organisms/HeaderProfilePopup#"
+      <Link
+        href="/profile/information"
         className="block px-4 py-2 text-sm text-primary-rose dark:text-dark-primary-light-blue"
         role="menuitem"
         tabIndex="-1"
         id="user-menu-item-0"
       >
         Your Profile
-      </a>
-      <a
-        href="@/components/organisms/HeaderProfilePopup#"
+      </Link>
+      <Link
+        href="/profile/settings"
         className="block px-4 py-2 text-sm text-primary-rose dark:text-dark-primary-light-blue"
         role="menuitem"
         tabIndex="-1"
         id="user-menu-item-1"
       >
         Settings
-      </a>
+      </Link>
       <a
         href="@/components/organisms/HeaderProfilePopup#"
         className="block px-4 py-2 text-sm text-primary-rose dark:text-dark-primary-light-blue"

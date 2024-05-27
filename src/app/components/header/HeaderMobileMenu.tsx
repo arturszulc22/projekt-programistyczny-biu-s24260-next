@@ -37,22 +37,22 @@ const HeaderMobileMenu: FC = () => {
           >
             <span className="absolute -inset-1.5"></span>
             <span className="sr-only">View notifications</span>
-            <RingIcon className="h-6 w-6"/>
+            <RingIcon className="h-6 w-6" />
           </button>
         </div>
         <div className="mt-3 space-y-1 px-2">
-          <a
-            href="#"
+          <Link
+            href="/profile/information"
             className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
           >
             Your Profile
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/profile/settings"
             className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
           >
             Settings
-          </a>
+          </Link>
           <a
             href="#"
             className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
