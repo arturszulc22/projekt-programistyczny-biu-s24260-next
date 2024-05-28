@@ -46,31 +46,24 @@ const UserSettings: FC = () => {
               >
                 Post's Column Layout
               </FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="column-layout"
-                defaultValue="one"
-                name="column-layout"
-              >
-                <FormControlLabel
-                  value="1"
-                  control={<Radio defaultChecked />}
-                  label="1"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
-                />
-                <FormControlLabel
-                  value="2"
-                  control={<Radio />}
-                  label="2"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
-                />
-                <FormControlLabel
-                  value="3"
-                  control={<Radio />}
-                  label="3"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
-                />
-              </RadioGroup>
+              <div className="grid grid-cols sm:grid-cols-3 gap-3 my-5">
+                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
+                  <div className="bg-secondary dark:bg-dark-primary-blue col-start-2"></div>
+                </div>
+                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
+                  <div className="col-start-2 grid grid-cols-2 gap-2">
+                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
+                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
+                  <div className="col-start-2 grid grid-cols-3 gap-2">
+                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
+                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
+                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
+                  </div>
+                </div>
+              </div>
               <p className="text-primary-rose dark:text-gray-400 text-sm">
                 Adjust the column layout to organize your content in one, two,
                 or three columns for optimal viewing.
@@ -106,7 +99,7 @@ const UserSettings: FC = () => {
             <FormGroup>
               <FormControl className="mt-5 border border-b-1 border-dark-primary-light-blue">
                 <FormControlLabel
-                  control={<Checkbox checked />}
+                  control={<Checkbox defaultChecked />}
                   label="Comments"
                   className="text-primary-rose dark:text-dark-primary-light-blue self-start ml-0"
                 />
