@@ -16,7 +16,7 @@ interface RootLayoutProps {
 const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}>
         {children}
       </body>
     </html>
