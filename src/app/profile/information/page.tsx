@@ -1,6 +1,7 @@
 import { FC } from "react";
 import UserCircleIcon from "@public/icons/user-circle-icon.svg";
 import { Container } from "@mui/material";
+import Link from "next/link";
 
 const UserProfile: FC = () => {
   return (
@@ -11,10 +12,13 @@ const UserProfile: FC = () => {
             <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
               Profile
             </h2>
-            <p className="mt-1 text-sm leading-6 text-primary-rose dark:text-gray-400">
+            <p className="mt-1 text-sm leading-6 text-primary-rose dark:text-gray-400 mb-2">
               This information will be displayed publicly so be careful what you
               share.
             </p>
+            <Link href="/profile/12" className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium">
+              Profile page
+            </Link>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
