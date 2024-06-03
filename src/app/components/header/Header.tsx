@@ -31,6 +31,13 @@ const Header: FC = () => {
                   >
                     Homepage
                   </Link>
+                  <Link
+                      href="/groups"
+                      className="text-primary-rose dark:text-dark-primary-blue rounded-md px-3 py-2 text-sm font-medium"
+                      aria-current="page"
+                  >
+                    Groups
+                  </Link>
                 </div>
               </div>
             </div>
