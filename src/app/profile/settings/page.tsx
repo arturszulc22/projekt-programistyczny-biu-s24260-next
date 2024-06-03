@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Switch,
 } from "@mui/material";
+import ProfilePostLayoutInputContainer from "@/app/components/profile/ProfilePostLayoutInputContainer";
 
 const UserSettings: FC = () => {
   return (
@@ -42,28 +43,13 @@ const UserSettings: FC = () => {
             <FormControl>
               <FormLabel
                 id="column-layout"
-                className="text-primary-rose dark:text-dark-primary-light-blue self-start ml-0"
+                className="text-primary-rose dark:text-dark-primary-light-blue self-start mt-3 lg:mt-0 ml-0"
               >
                 Post's Column Layout
               </FormLabel>
-              <div className="grid grid-cols sm:grid-cols-3 gap-3 my-5">
-                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
-                  <div className="bg-secondary dark:bg-dark-primary-blue col-start-2"></div>
-                </div>
-                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
-                  <div className="col-start-2 grid grid-cols-2 gap-2">
-                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
-                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 bg-primary dark:bg-dark-primary-light-blue h-32 p-3 cursor-pointer">
-                  <div className="col-start-2 grid grid-cols-3 gap-2">
-                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
-                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
-                    <div className="bg-secondary dark:bg-dark-primary-blue"></div>
-                  </div>
-                </div>
-              </div>
+
+              <ProfilePostLayoutInputContainer />
+
               <p className="text-primary-rose dark:text-gray-400 text-sm">
                 Adjust the column layout to organize your content in one, two,
                 or three columns for optimal viewing.
@@ -95,7 +81,9 @@ const UserSettings: FC = () => {
         </p>
         <Grid container>
           <Grid item className="pt-10" md={6}>
-            <h3 className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">By email</h3>
+            <h3 className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">
+              By email
+            </h3>
             <FormGroup>
               <FormControl className="mt-5 border border-b-1 border-dark-primary-light-blue">
                 <FormControlLabel
@@ -120,28 +108,30 @@ const UserSettings: FC = () => {
             </FormGroup>
           </Grid>
           <Grid item className="pt-10" md={6}>
-            <h3 className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">Push Notifications</h3>
+            <h3 className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">
+              Push Notifications
+            </h3>
             <p className="text-primary-rose dark:text-gray-400 text-sm mb-5">
               These are delivered via SMS to your mobile phone.
             </p>
             <RadioGroup>
               <FormControlLabel
-                  value="1"
-                  control={<Radio defaultChecked />}
-                  label="Everything"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
+                value="1"
+                control={<Radio />}
+                label="Everything"
+                className="text-primary-rose dark:text-dark-primary-light-blue"
               />
               <FormControlLabel
-                  value="email-notification"
-                  control={<Radio />}
-                  label="Same as email"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
+                value="email-notification"
+                control={<Radio />}
+                label="Same as email"
+                className="text-primary-rose dark:text-dark-primary-light-blue"
               />
               <FormControlLabel
-                  value="no-notification"
-                  control={<Radio />}
-                  label="No push notifications"
-                  className="text-primary-rose dark:text-dark-primary-light-blue"
+                value="no-notification"
+                control={<Radio />}
+                label="No push notifications"
+                className="text-primary-rose dark:text-dark-primary-light-blue"
               />
             </RadioGroup>
           </Grid>

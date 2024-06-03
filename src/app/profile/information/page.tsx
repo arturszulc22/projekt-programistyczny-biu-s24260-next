@@ -1,12 +1,26 @@
+"use client";
+
 import { FC } from "react";
 import UserCircleIcon from "@public/icons/user-circle-icon.svg";
 import { Container } from "@mui/material";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+  userName: string;
+  description: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
 
 const UserProfile: FC = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
     <Container className="my-10">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 dark:border-dark-primary-light-blue pb-12 ">
             <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
@@ -16,7 +30,10 @@ const UserProfile: FC = () => {
               This information will be displayed publicly so be careful what you
               share.
             </p>
-            <Link href="/profile/12" className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium">
+            <Link
+              href="/profile/12"
+              className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
+            >
               Profile page
             </Link>
 
@@ -32,7 +49,7 @@ const UserProfile: FC = () => {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
                       type="text"
-                      name="username"
+                      {...register("userName")}
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
@@ -52,7 +69,7 @@ const UserProfile: FC = () => {
                 <div className="mt-2">
                   <textarea
                     id="about"
-                    name="about"
+                    {...register("description")}
                     rows={3}
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:text-dark-primary dark:bg-dark-primary-light-blue shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     defaultValue={""}
@@ -105,7 +122,7 @@ const UserProfile: FC = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="first-name"
+                    {...register("firstName")}
                     id="first-name"
                     autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -123,7 +140,7 @@ const UserProfile: FC = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="last-name"
+                    {...register("lastName")}
                     id="last-name"
                     autoComplete="family-name"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -141,102 +158,9 @@ const UserProfile: FC = () => {
                 <div className="mt-2">
                   <input
                     id="email"
-                    name="email"
+                    {...register("email")}
                     type="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  Country
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  >
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="street-address"
-                  className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  Street address
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="street-address"
-                    id="street-address"
-                    autoComplete="street-address"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  City
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    autoComplete="address-level2"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="region"
-                  className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  State / Province
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="region"
-                    id="region"
-                    autoComplete="address-level1"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="postal-code"
-                  className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  ZIP / Postal code
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="postal-code"
-                    id="postal-code"
-                    autoComplete="postal-code"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
