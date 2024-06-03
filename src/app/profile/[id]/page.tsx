@@ -26,7 +26,8 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
             className="w-full"
             statistics={[
               { name: "posts", value: 12 },
-              { name: "friends", value: 123 },
+              { name: "following", value: '1k' },
+              { name: "followers", value: '12k' },
             ]}
           />
         </div>

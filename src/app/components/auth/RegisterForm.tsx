@@ -1,12 +1,24 @@
 import { FC } from "react";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
 
 const RegisterForm: FC = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
-    <form className="space-y-6" action="#" method="POST">
+    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label
-          htmlFor="firstName"
+          htmlFor="first-name"
           className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
         >
           First name
@@ -14,8 +26,7 @@ const RegisterForm: FC = () => {
         <div className="mt-2">
           <input
             id="first-name"
-            name="firstName"
-            type="text"
+            {...register("firstName")}
             autoComplete="username"
             required
             className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
@@ -26,7 +37,7 @@ const RegisterForm: FC = () => {
 
       <div>
         <label
-          htmlFor="lastName"
+          htmlFor="last-name"
           className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
         >
           Last Name
@@ -34,8 +45,7 @@ const RegisterForm: FC = () => {
         <div className="mt-2">
           <input
             id="last-name"
-            name="lastName"
-            type="text"
+            {...register("lastName")}
             autoComplete="username"
             required
             className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
@@ -54,7 +64,7 @@ const RegisterForm: FC = () => {
         <div className="mt-2">
           <input
             id="email"
-            name="email"
+            {...register("email")}
             type="email"
             autoComplete="email"
             required
@@ -76,7 +86,7 @@ const RegisterForm: FC = () => {
         <div className="mt-2">
           <input
             id="password"
-            name="password"
+            {...register("password")}
             type="password"
             autoComplete="current-password"
             required
@@ -89,7 +99,7 @@ const RegisterForm: FC = () => {
       <div>
         <div className="flex items-center justify-between">
           <label
-            htmlFor="repeatPassword"
+            htmlFor="repeat-password"
             className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
           >
             Repeat Password
@@ -119,6 +129,5 @@ const RegisterForm: FC = () => {
     </form>
   );
 };
-
 
 export default RegisterForm;

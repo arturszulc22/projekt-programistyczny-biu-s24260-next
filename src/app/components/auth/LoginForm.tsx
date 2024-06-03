@@ -1,8 +1,19 @@
+"use client";
+
 import { FC } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 const LoginForm: FC = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
-    <form className="space-y-6" action="#" method="POST">
+    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label
           htmlFor="email"
@@ -17,6 +28,7 @@ const LoginForm: FC = () => {
             type="email"
             autoComplete="email"
             required
+            {...register("email")}
             className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
           />
         </div>
@@ -42,10 +54,10 @@ const LoginForm: FC = () => {
         <div className="mt-2">
           <input
             id="password"
-            name="password"
             type="password"
             autoComplete="current-password"
             required
+            {...register("password")}
             className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
           />
