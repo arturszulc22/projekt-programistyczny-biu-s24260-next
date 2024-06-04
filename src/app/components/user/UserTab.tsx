@@ -1,25 +1,22 @@
-import { FC } from "react";
-import GroupCard from "@/app/components/groups/GroupCard";
 import { Grid } from "@mui/material";
+import UserCard from "@/app/components/user/UserCard";
 
-const GroupsTab: FC = ({ groups }: object[]) => {
+const UserTab = ({ users }) => {
   return (
     <Grid container spacing={4} className="mt-5">
-      {groups.map((group, index) => (
+      {users.map((user, index) => (
         <Grid
           key={index}
           item
           xs={12}
           sm={6}
-          md={4}
-          lg={3}
           className="flex justify-center"
         >
-          <GroupCard group={group} />
+          <UserCard user={user} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default GroupsTab;
+export default UserTab;

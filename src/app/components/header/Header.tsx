@@ -33,10 +33,17 @@ const Header: FC = () => {
                   </Link>
                   <Link
                       href="/groups"
-                      className="text-primary-rose dark:text-dark-primary-blue rounded-md px-3 py-2 text-sm font-medium"
+                      className="text-primary-rose dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
                       aria-current="page"
                   >
                     Groups
+                  </Link>
+                  <Link
+                      href="/following"
+                      className="text-primary-rose dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
+                      aria-current="page"
+                  >
+                    Community
                   </Link>
                 </div>
               </div>

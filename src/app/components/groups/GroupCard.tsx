@@ -1,10 +1,6 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { FC } from "react";
 import Link from "next/link";
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 const GroupCard: FC = ({ group }) => {
   return (
