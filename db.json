@@ -8,7 +8,7 @@
       "email": "jan.kowalski@example.com",
       "dateOfBirth": "1990-01-15",
       "age": 34,
-      "descriptionShort": "Młody inżynier z pasją do technologii i nowoczesnych rozwiązań. Lubi spędzać czas na świeżym powietrzu i podróżować.",
+      "shortDescription": "Młody inżynier z pasją do technologii i nowoczesnych rozwiązań. Lubi spędzać czas na świeżym powietrzu i podróżować.",
       "imageURI": "https://example.com/images/jan_kowalski.jpg"
     },
     {
@@ -19,7 +19,7 @@
       "email": "anna.nowak@example.com",
       "dateOfBirth": "1985-06-30",
       "age": 38,
-      "descriptionShort": "Doświadczona nauczycielka z zamiłowaniem do literatury. W wolnym czasie uwielbia gotować i eksperymentować w kuchni.",
+      "shortDescription": "Doświadczona nauczycielka z zamiłowaniem do literatury. W wolnym czasie uwielbia gotować i eksperymentować w kuchni.",
       "imageURI": "https://example.com/images/anna_nowak.jpg"
     },
     {
@@ -30,7 +30,7 @@
       "email": "piotr.wisniewski@example.com",
       "dateOfBirth": "1992-11-25",
       "age": 31,
-      "descriptionShort": "Młody programista, który pasjonuje się grami komputerowymi i projektowaniem stron internetowych. Lubi aktywne spędzanie czasu.",
+      "shortDescription": "Młody programista, który pasjonuje się grami komputerowymi i projektowaniem stron internetowych. Lubi aktywne spędzanie czasu.",
       "imageURI": "https://example.com/images/piotr_wisniewski.jpg"
     }
   ],
