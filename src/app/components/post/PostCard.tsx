@@ -1,7 +1,8 @@
 import {
   AspectRatio,
   Avatar,
-  Box, Button,
+  Box,
+  Button,
   Card,
   CardContent,
   CardOverflow,
@@ -43,13 +44,14 @@ export const PostCard = ({ post }) => {
             },
           }}
         >
-          <Avatar
-            size="lg"
-            src={post.author.imageURI}
-          />
+          <Avatar size="lg" src={post.author.imageURI} />
         </Box>
-        <Typography fontWeight="lg" className="text-primary-rose dark:text-dark-primary-light-blue">
-          {post.author.firstName} {post.author.secondName}
+        <Typography
+          fontWeight="lg"
+        >
+          <Link className="text-primary-rose dark:text-dark-primary-light-blue" href={"/profile/" + post.author.id}>
+            {post.author.firstName} {post.author.secondName}
+          </Link>
         </Typography>
         <IconButton
           className="text-primary-rose dark:text-dark-primary-light-blue"
@@ -73,22 +75,43 @@ export const PostCard = ({ post }) => {
         sx={{ alignItems: "center", mx: -1 }}
       >
         <Box sx={{ width: 0, display: "flex", gap: 0.5 }}>
-          <IconButton variant="plain" className="text-primary-rose dark:text-dark-primary-light-blue" size="sm">
+          <IconButton
+            variant="plain"
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            size="sm"
+          >
             <FavoriteBorder />
           </IconButton>
-          <IconButton variant="plain" className="text-primary-rose dark:text-dark-primary-light-blue" size="sm">
+          <IconButton
+            variant="plain"
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            size="sm"
+          >
             <ModeCommentOutlined />
           </IconButton>
-          <IconButton variant="plain" className="text-primary-rose dark:text-dark-primary-light-blue" size="sm">
+          <IconButton
+            variant="plain"
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            size="sm"
+          >
             <SendOutlined />
           </IconButton>
         </Box>
       </CardContent>
       <CardContent>
-        <Link className="text-primary-rose dark:text-dark-primary-light-blue" component="button" underline="none" fontSize="sm" fontWeight="lg">
-          {'81K'} Likes
+        <Link
+          className="text-primary-rose dark:text-dark-primary-light-blue"
+          component="button"
+          underline="none"
+          fontSize="sm"
+          fontWeight="lg"
+        >
+          {"81K"} Likes
         </Link>
-        <Typography fontSize="sm" className="text-primary-rose dark:text-dark-primary-light-blue">
+        <Typography
+          fontSize="sm"
+          className="text-primary-rose dark:text-dark-primary-light-blue"
+        >
           <Link
             component="button"
             color="neutral"
@@ -110,7 +133,12 @@ export const PostCard = ({ post }) => {
         </Link>
       </CardContent>
       <CardContent orientation="horizontal" sx={{ gap: 1 }}>
-        <IconButton size="sm" variant="plain" className="text-primary-rose dark:text-dark-primary-light-blue" sx={{ ml: -1 }}>
+        <IconButton
+          size="sm"
+          variant="plain"
+          className="text-primary-rose dark:text-dark-primary-light-blue"
+          sx={{ ml: -1 }}
+        >
           <Face />
         </IconButton>
         <Input
@@ -120,7 +148,11 @@ export const PostCard = ({ post }) => {
           className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
           sx={{ flex: 1, px: 0, "--Input-focusedThickness": "0px" }}
         />
-        <Button underline="none" role="button" className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
+        <Button
+          underline="none"
+          role="button"
+          className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
+        >
           Post
         </Button>
       </CardContent>

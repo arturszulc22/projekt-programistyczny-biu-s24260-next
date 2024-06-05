@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  Link,
   Sheet,
   Typography,
 } from "@mui/joy";
@@ -22,14 +23,6 @@ const UserCard: FC = ({ user }) => {
       sx={{
         width: "100%",
         flexWrap: "wrap",
-        [`& > *`]: {
-          "--stack-point": "500px",
-          minWidth:
-            "clamp(0px, (calc(var(--stack-point) - 2 * var(--Card-padding) - 2 * var(--variant-borderWidth, 0px)) + 1px - 100%) * 999, 100%)",
-        },
-        // make the card resizable for demo
-        overflow: "auto",
-        resize: "horizontal",
       }}
       className="bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
     >
@@ -42,10 +35,23 @@ const UserCard: FC = ({ user }) => {
         />
       </AspectRatio>
       <CardContent>
-        <Typography fontSize="xl" fontWeight="lg" className="text-primary-rose dark:text-dark-primary-light-blue">
-          {user.firstName} {user.secondName}
+        <Typography
+          fontSize="xl"
+          fontWeight="lg"
+        >
+          <Link
+              overlay
+              href={"/profile/" + user.id}
+              className="text-primary-rose dark:text-dark-primary-light-blue"
+          >
+            {user.firstName} {user.secondName}
+          </Link>
         </Typography>
-        <Typography level="body-sm" fontWeight="lg" className="text-secondary dark:text-dark-primary-light-blue">
+        <Typography
+          level="body-sm"
+          fontWeight="lg"
+          className="text-secondary dark:text-dark-primary-light-blue"
+        >
           {user.shortDescription}
         </Typography>
         <Sheet
@@ -61,29 +67,63 @@ const UserCard: FC = ({ user }) => {
           className="bg-primary-rose dark:bg-dark-primary-blue"
         >
           <div>
-            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+            <Typography
+              level="body-xs"
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
               Posts
             </Typography>
-            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">34</Typography>
+            <Typography
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
+              34
+            </Typography>
           </div>
           <div>
-            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+            <Typography
+              level="body-xs"
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
               Followers
             </Typography>
-            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">980</Typography>
+            <Typography
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
+              980
+            </Typography>
           </div>
           <div>
-            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+            <Typography
+              level="body-xs"
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
               Following
             </Typography>
-            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">12k</Typography>
+            <Typography
+              fontWeight="lg"
+              className="text-primary dark:text-dark-primary-light-blue"
+            >
+              12k
+            </Typography>
           </div>
         </Sheet>
         <Box sx={{ display: "flex", gap: 1.5, "& > button": { flex: 1 } }}>
-          <Button variant="outlined" color="neutral" className="border-primary-rose dark:border-dark-primary-blue text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md">
+          <Button
+            variant="outlined"
+            color="neutral"
+            className="border-primary-rose dark:border-dark-primary-blue text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md"
+          >
             Chat
           </Button>
-          <Button variant="solid" className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
+          <Button
+            variant="solid"
+            className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
+          >
             Follow
           </Button>
         </Box>
