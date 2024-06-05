@@ -70,14 +70,14 @@ const Event: FC = () => {
           </p>
         </div>
         <div className="text-center w-full">
-          <h1 className="text-3xl text-primary-rose">{event.name}</h1>
-          <p className="text-xl text-secondary">{event.shortDescription}</p>
+          <h1 className="text-3xl text-primary-rose dark:text-dark-primary-light-blue">{event.name}</h1>
+          <p className="text-xl text-secondary dark:text-dark-primary-light-blue">{event.shortDescription}</p>
         </div>
-        <h2 className="flex w-full lg:w-auto items-center justify-start gap-3 text-nowrap text-primary-rose ml-6">
+        <h2 className="flex w-full lg:w-auto items-center justify-start gap-3 text-nowrap text-primary-rose dark:text-dark-primary-light-blue ml-6">
           <PersonRoundedIcon className="w-8 h-8" />
           <Link href={"/profile/" + event.user.id}>{"10k"}</Link>
         </h2>
-        <p className="flex w-full lg:w-auto items-center justify-start gap-3 text-nowrap text-primary-rose ml-6">
+        <p className="flex w-full lg:w-auto items-center justify-start gap-3 text-nowrap text-primary-rose dark:text-dark-primary-light-blue ml-6">
           <AccessTimeRoundedIcon className="w-8 h-8" />
           <span>{formatDate(eventDate)}</span>
         </p>
@@ -102,9 +102,9 @@ const Event: FC = () => {
         </div>
       </div>
       <div className="px-6 mt-6">
-        <p className="text-primary-rose">{event.description}</p>
+        <p className="text-primary-rose dark:text-dark-primary-light-blue">{event.description}</p>
       </div>
-      <div className="px-6 mt-6 text-primary-rose">
+      <div className="px-6 mt-6 text-primary-rose dark:text-dark-primary-light-blue">
         <p className="font-bold">Hosted by:</p>
         <p className="text-lg">
           {event.user.firstName} {event.user.secondName}
