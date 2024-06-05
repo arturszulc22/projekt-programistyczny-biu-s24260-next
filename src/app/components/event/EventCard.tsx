@@ -1,6 +1,5 @@
 "use client";
 import { FC, useState } from "react";
-import Link from "next/link";
 import {
   AspectRatio,
   Card,
@@ -9,9 +8,10 @@ import {
   Divider,
   IconButton,
   Typography,
+  Link,
 } from "@mui/joy";
 import { Favorite } from "@mui/icons-material";
-import {twMerge} from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 const EventCard: FC = ({ event }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -62,20 +62,22 @@ const EventCard: FC = ({ event }) => {
           onClick={() => setIsLiked(!isLiked)}
         >
           <Favorite
-              className={twMerge([
-                isLiked && "fill-bg-red-500 stroke-2 fill-red-500",
-                !isLiked &&
+            className={twMerge([
+              isLiked && "fill-bg-red-500 stroke-2 fill-red-500",
+              !isLiked &&
                 "stroke-primary dark:stroke-dark-primary-light-blue stroke-2 fill-transparent",
-              ])}
+            ])}
           />
         </IconButton>
       </CardOverflow>
       <CardContent>
-        <Typography
-          level="title-md"
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-        >
-          <Link href="#multiple-actions" underline="none">
+        <Typography level="title-md">
+          <Link
+            overlay
+            href={"/event/" + event.id}
+            underline="none"
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+          >
             {event.name}
           </Link>
         </Typography>
@@ -83,7 +85,7 @@ const EventCard: FC = ({ event }) => {
           level="body-sm"
           className="text-primary-rose dark:text-dark-primary-light-blue"
         >
-          <Link href="#multiple-actions">{event.shortDescription}</Link>
+          {event.shortDescription}
         </Typography>
       </CardContent>
       <CardOverflow

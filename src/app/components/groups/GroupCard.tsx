@@ -7,6 +7,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Link,
   Typography,
 } from "@mui/joy";
 
@@ -36,13 +37,26 @@ const GroupCard: FC = ({ group }) => {
         </AvatarGroup>
       </Box>
       <CardContent>
-        <Typography level="title-lg" className="text-primary-rose dark:text-dark-primary-light-blue">{group.name}</Typography>
-        <Typography level="body-sm" className="text-primary-rose dark:text-dark-primary-light-blue">{group.shortDescription}</Typography>
+        <Typography
+          level="title-lg"
+          className="text-primary-rose dark:text-dark-primary-light-blue"
+        >
+          {group.name}
+        </Typography>
+        <Typography
+          level="body-sm"
+          className="text-primary-rose dark:text-dark-primary-light-blue"
+        >
+          {group.shortDescription}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
+        <Link
+          href={"/group/" + group.id}
+          className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
+        >
           Join
-        </Button>
+        </Link>
       </CardActions>
     </Card>
   );
