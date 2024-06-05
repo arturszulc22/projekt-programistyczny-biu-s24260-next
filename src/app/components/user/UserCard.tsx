@@ -1,14 +1,13 @@
 import { FC } from "react";
-import Link from "next/link";
 import {
+  AspectRatio,
+  Box,
   Button,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
-  CardMedia,
+  Sheet,
   Typography,
-} from "@mui/material";
+} from "@mui/joy";
 
 const UserCard: FC = ({ user }) => {
   const truncate = (string, length = 120) => {
@@ -18,33 +17,77 @@ const UserCard: FC = ({ user }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }} className="bg-primary text-primary-rose dark:bg-dark-primary dark:text-dark-primary-light-blue">
-      <Link href={"/profile/" + user.id}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            className="h-64"
-            image={user.imageURI}
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {user.firstName} {user.secondName}
+    <Card
+      orientation="horizontal"
+      sx={{
+        width: "100%",
+        flexWrap: "wrap",
+        [`& > *`]: {
+          "--stack-point": "500px",
+          minWidth:
+            "clamp(0px, (calc(var(--stack-point) - 2 * var(--Card-padding) - 2 * var(--variant-borderWidth, 0px)) + 1px - 100%) * 999, 100%)",
+        },
+        // make the card resizable for demo
+        overflow: "auto",
+        resize: "horizontal",
+      }}
+      className="bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
+    >
+      <AspectRatio flex ratio="1" maxHeight={182} sx={{ minWidth: 182 }}>
+        <img
+          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+          loading="lazy"
+          alt=""
+        />
+      </AspectRatio>
+      <CardContent>
+        <Typography fontSize="xl" fontWeight="lg" className="text-primary-rose dark:text-dark-primary-light-blue">
+          {user.firstName} {user.secondName}
+        </Typography>
+        <Typography level="body-sm" fontWeight="lg" className="text-secondary dark:text-dark-primary-light-blue">
+          {user.shortDescription}
+        </Typography>
+        <Sheet
+          sx={{
+            bgcolor: "background.level1",
+            borderRadius: "sm",
+            p: 1.5,
+            my: 1.5,
+            display: "flex",
+            gap: 2,
+            "& > div": { flex: 1 },
+          }}
+          className="bg-primary-rose dark:bg-dark-primary-blue"
+        >
+          <div>
+            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+              Posts
             </Typography>
-            <Typography variant="body2">
-              {truncate(user.shortDescription)}
+            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">34</Typography>
+          </div>
+          <div>
+            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+              Followers
             </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Link>
-      <CardActions>
-        <Button size="small" className="bg-primary-rose dark:bg-dark-primary-blue hover:bg-primary-rose hover:dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
-          follow
-        </Button>
-        <Button size="small" className="text-primary-rose px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
-          remove
-        </Button>
-      </CardActions>
+            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">980</Typography>
+          </div>
+          <div>
+            <Typography level="body-xs" fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">
+              Following
+            </Typography>
+            <Typography fontWeight="lg" className="text-primary dark:text-dark-primary-light-blue">12k</Typography>
+          </div>
+        </Sheet>
+        <Box sx={{ display: "flex", gap: 1.5, "& > button": { flex: 1 } }}>
+          <Button variant="outlined" color="neutral" className="border-primary-rose dark:border-dark-primary-blue text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md">
+            Chat
+          </Button>
+          <Button variant="solid" className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
+            Follow
+          </Button>
+        </Box>
+      </CardContent>
     </Card>
   );
 };

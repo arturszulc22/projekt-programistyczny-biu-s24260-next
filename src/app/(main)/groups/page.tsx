@@ -19,24 +19,18 @@ const Groups: FC = () => {
       name: "Tech Enthusiasts",
       shortDescription:
         "A group for people who love discussing the latest in technology.",
-      image:
-        "https://images.unsplash.com/photo-1717241365608-5565eef72d89?q=80&w=1941&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: 2,
       name: "Fitness Buffs",
       shortDescription:
         "Join this group to share fitness tips and workout routines.",
-      image:
-        "https://images.unsplash.com/photo-1717241365608-5565eef72d89?q=80&w=1941&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: 3,
       name: "Book Club",
       shortDescription:
         "A community for book lovers to discuss their favorite reads.",
-      image:
-        "https://images.unsplash.com/photo-1717241365608-5565eef72d89?q=80&w=1941&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
 
