@@ -11,12 +11,14 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/material": "^5.15.18",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
     "json-server": "^1.0.0-beta.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.51.5"
+    "react-hook-form": "^7.51.5",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
