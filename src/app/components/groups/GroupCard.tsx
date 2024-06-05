@@ -1,31 +1,49 @@
 import { FC } from "react";
-import Link from "next/link";
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import {
+  Avatar,
+  AvatarGroup,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/joy";
 
 const GroupCard: FC = ({ group }) => {
   return (
     <Card
-      sx={{ maxWidth: 345 }}
-      className="bg-primary dark:bg-dark-primary text-primary-rose dark:text-dark-primary-light-blue"
+      sx={{
+        width: 320,
+        // to make the card resizable
+        overflow: "auto",
+      }}
+      className="bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
     >
-      <Link href={"/groups/" + group.id}>
-        <CardMedia
-          sx={{ height: 140 }}
-          image={group.image}
-          title="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {group.name}
-          </Typography>
-          <Typography
-            variant="body2"
-            className="dark:text-dark-primary-light-blue"
-          >
-            {group.shortDescription}
-          </Typography>
-        </CardContent>
-      </Link>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Avatar src="/static/images/avatar/1.jpg" size="lg" />
+        <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
+          <Avatar src="/static/images/avatar/2.jpg" />
+          <Avatar src="/static/images/avatar/3.jpg" />
+          <Avatar src="/static/images/avatar/4.jpg" />
+          <Avatar>+4K</Avatar>
+        </AvatarGroup>
+      </Box>
+      <CardContent>
+        <Typography level="title-lg" className="text-primary-rose dark:text-dark-primary-light-blue">{group.name}</Typography>
+        <Typography level="body-sm" className="text-primary-rose dark:text-dark-primary-light-blue">{group.shortDescription}</Typography>
+      </CardContent>
+      <CardActions>
+        <Button className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue">
+          Join
+        </Button>
+      </CardActions>
     </Card>
   );
 };
