@@ -16,7 +16,7 @@ import ProfilePostLayoutInputContainer from "@/app/components/profile/ProfilePos
 const UserSettings: FC = () => {
   return (
     <Container className="my-10">
-      <form action="">
+      <form action="@/app/(main)/profile/settings/page">
         <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue mb-6">
           Application Settings
         </h2>

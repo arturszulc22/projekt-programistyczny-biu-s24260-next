@@ -6,10 +6,33 @@ import RingIcon from "@public/icons/ring.svg";
 import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+
+  const pathname = usePathname();
+
+  const links = [
+    {
+      href: "/home",
+      name: "Homepage",
+    },
+    {
+      href: "/groups",
+      name: "Groups",
+    },
+    {
+      href: "/following",
+      name: "Community",
+    },
+    {
+      href: "/events",
+      name: "Events"
+    }
+  ];
 
   return (
     <header>
@@ -24,27 +47,21 @@ const Header: FC = () => {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <Link
-                    href="/home"
-                    className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
-                    aria-current="page"
-                  >
-                    Homepage
-                  </Link>
-                  <Link
-                      href="/groups"
-                      className="text-primary-rose dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
+                  {links.map(({ href, name }, index) => (
+                    <Link
+                      href={href}
+                      key={index}
+                      className={twMerge(
+                        pathname === href
+                          ? "bg-primary-rose dark:bg-dark-primary-blue text-primary"
+                          : "text-primary-rose",
+                        "px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue",
+                      )}
                       aria-current="page"
-                  >
-                    Groups
-                  </Link>
-                  <Link
-                      href="/following"
-                      className="text-primary-rose dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
-                      aria-current="page"
-                  >
-                    Community
-                  </Link>
+                    >
+                      {name}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
