@@ -7,7 +7,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  Link,
   Typography,
 } from "@mui/joy";
 
@@ -51,12 +50,9 @@ const GroupCard: FC = ({ group }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link
-          href={"/group/" + group.id}
-          className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
-        >
+        <Button component="a" href={"/group/" + group.id} variant="solid">
           Join
-        </Link>
+        </Button>
       </CardActions>
     </Card>
   );

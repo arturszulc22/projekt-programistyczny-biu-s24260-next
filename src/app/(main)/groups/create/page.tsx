@@ -1,6 +1,7 @@
 "use client";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Button } from "@mui/joy";
 
 type Inputs = {
   name: string;
@@ -79,12 +80,13 @@ const GroupsCreate: FC = () => {
           </div>
 
           <div>
-            <button
+            <Button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-primary-rose dark:bg-dark-secondary dark:border-2 dark:border-dark-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-primary dark:text-dark-primary-light-blue shadow-sm"
+              variant="solid"
+              className="flex w-full justify-center"
             >
               Create
-            </button>
+            </Button>
           </div>
         </form>
       </div>

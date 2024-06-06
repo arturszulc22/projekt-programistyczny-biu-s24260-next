@@ -1,18 +1,21 @@
 import { FC } from "react";
 import Link from "next/link";
 import RingIcon from "@public/icons/ring.svg";
+import { Button } from "@mui/joy";
 
 const HeaderMobileMenu: FC = () => {
   return (
     <div className="md:hidden" id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <Link
+        <Button
+          component="a"
+          variant="solid"
           href="/home"
-          className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue block rounded-md px-3 py-2 text-base font-medium"
           aria-current="page"
+          className="w-full"
         >
           Homepage
-        </Link>
+        </Button>
       </div>
       <div className="border-t border-primary-rose dark:border-dark-primary-light-blue pb-3 pt-4">
         <div className="flex items-center px-5">
@@ -41,24 +44,33 @@ const HeaderMobileMenu: FC = () => {
           </button>
         </div>
         <div className="mt-3 space-y-1 px-2">
-          <Link
+          <Button
+            component="a"
+            variant="plain"
             href="/profile/information"
-            className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
+            aria-current="page"
+            className="w-full justify-start"
           >
             Your Profile
-          </Link>
-          <Link
+          </Button>
+          <Button
+            component="a"
+            variant="plain"
             href="/profile/settings"
-            className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
+            aria-current="page"
+            className="w-full justify-start"
           >
             Settings
-          </Link>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-primary-rose dark:text-dark-primary-light-blue"
+          </Button>
+          <Button
+            component="a"
+            variant="plain"
+            href="/sign-out"
+            aria-current="page"
+            className="w-full justify-start"
           >
             Sign out
-          </a>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,17 +1,12 @@
 "use client";
 
 import { FC, useState } from "react";
-import {Container, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import GroupsTab from "@/app/components/groups/GroupsTab";
-import Link from "next/link";
 import PlusIcon from "@public/icons/plus.svg";
+import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 
 const Groups: FC = () => {
   const [alignment, setAlignment] = useState("user");
-
-  const handleChange = (event: MouseEvent, newAlignment: string) => {
-    setAlignment(newAlignment != null ? newAlignment : "user");
-  };
 
   const groups = [
     {
@@ -39,33 +34,29 @@ const Groups: FC = () => {
       <div className="flex gap-2">
         <ToggleButtonGroup
           value={alignment}
-          exclusive
-          onChange={handleChange}
-          aria-label="Platform"
+          onChange={(event, newValue) =>
+            newValue !== null && setAlignment(newValue)
+          }
         >
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="user"
-          >
-            Your Groups
-          </ToggleButton>
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="other"
-          >
-            Other Groups
-          </ToggleButton>
+          <Button variant="plain" value="user">
+            Following Events
+          </Button>
+          <Button variant="plain" value="others">
+            Other Events
+          </Button>
         </ToggleButtonGroup>
-        <Link
+        <Button
+          component="a"
+          variant="solid"
           href="groups/create"
-          className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-2 py-1 text-md font-medium flex items-center"
+          className="flex items-center"
         >
-          <PlusIcon className="w-8 h-8"/>
-        </Link>
+          <PlusIcon className="w-8 h-8" />
+        </Button>
       </div>
 
       {alignment === "user" && <GroupsTab groups={groups} />}
-      {alignment === "other" && <GroupsTab groups={groups} />}
+      {alignment === "others" && <GroupsTab groups={groups} />}
     </Container>
   );
 };

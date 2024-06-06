@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import UserCardSecondary from "@/app/components/user/UserCardSecondary";
 
 const SearchModal: FC = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const user = {
     id: 2,

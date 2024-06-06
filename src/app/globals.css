@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Badge */
+.MuiBadge-badge {
+    @apply text-xs bg-primary-rose dark:bg-dark-primary-blue shadow-none;
+}
+
+/* Badge - end */
+
+/* Button */
+.MuiButton-variantPlain.MuiButton-colorPrimary {
+    @apply hover:bg-secondary dark:hover:bg-dark-primary-blue text-primary-rose hover:text-primary rounded-md dark:text-dark-primary-light-blue
+}
+
+.MuiButton-variantSolid.MuiButton-colorPrimary {
+    @apply bg-primary-rose dark:bg-dark-primary-blue hover:bg-secondary dark:hover:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue;
+}
+
+.MuiButton-variantOutlined.MuiButton-colorNeutral {
+    @apply border-primary-rose dark:border-dark-primary-blue hover:bg-primary-rose dark:hover:bg-dark-secondary hover:text-primary text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md;
+}
+/* Button - end */
+
+/* Toggle Button */
+.MuiToggleButtonGroup-colorNeutral > button {
+    @apply bg-primary dark:bg-dark-primary-blue text-primary-rose dark:text-dark-primary-light-blue hover:bg-secondary dark:hover:bg-dark-primary hover:text-primary;
+}
+
+.MuiToggleButtonGroup-colorNeutral > button[aria-pressed="true"] {
+    @apply bg-primary-rose dark:bg-dark-secondary text-primary hover:bg-secondary dark:hover:bg-dark-primary hover:text-primary;
+}
+/* Toggle Button - end */
