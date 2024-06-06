@@ -1,6 +1,7 @@
 "use client";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Button } from "@mui/joy";
 
 type Inputs = {
   name: string;
@@ -96,29 +97,30 @@ const EventCreate: FC = () => {
 
           <div>
             <label
-                htmlFor="image"
-                className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
+              htmlFor="image"
+              className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
             >
               Choose event image
             </label>
             <div className="mt-2">
               <input
-                  id="image"
-                  type="file"
-                  {...register("image")}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
+                id="image"
+                type="file"
+                {...register("image")}
+                className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           <div>
-            <button
+            <Button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-primary-rose dark:bg-dark-secondary dark:border-2 dark:border-dark-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-primary dark:text-dark-primary-light-blue shadow-sm"
+              variant="solid"
+              className="flex w-full justify-center"
             >
               Create
-            </button>
+            </Button>
           </div>
         </form>
       </div>

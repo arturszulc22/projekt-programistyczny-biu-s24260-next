@@ -2,12 +2,12 @@
 import { FC, useState } from "react";
 import HeaderMobileMenu from "@/app/components/header/HeaderMobileMenu";
 import HeaderProfilePopup from "@/app/components/header/HeaderProfilePopup";
-import RingIcon from "@public/icons/ring.svg";
 import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
-import Link from "next/link";
+import SearchIcon from "@mui/icons-material/Search";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { usePathname } from "next/navigation";
-import { twMerge } from "tailwind-merge";
+import { Badge, Button, Typography } from "@mui/joy";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
@@ -30,8 +30,8 @@ const Header: FC = () => {
     },
     {
       href: "/events",
-      name: "Events"
-    }
+      name: "Events",
+    },
   ];
 
   return (
@@ -48,38 +48,33 @@ const Header: FC = () => {
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
                   {links.map(({ href, name }, index) => (
-                    <Link
+                    <Button
+                      component="a"
                       href={href}
                       key={index}
-                      className={twMerge(
-                        pathname === href
-                          ? "bg-primary-rose dark:bg-dark-primary-blue text-primary"
-                          : "text-primary-rose",
-                        "px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue",
-                      )}
+                      variant={pathname === href ? "solid" : "plain"}
                       aria-current="page"
                     >
                       {name}
-                    </Link>
+                    </Button>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto mr-3">
               <Button variant="plain" className="p-1">
                 <SearchIcon className="fill-primary-rose dark:fill-dark-primary-light-blue h-6 w-6" />
               </Button>
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
-                <button
-                  type="button"
-                  className="relative rounded-full text-primary-rose dark:text-dark-primary-light-blue"
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">View notifications</span>
-                  <RingIcon className="h-6 w-6" />
-                </button>
+                <Button variant="plain" className="p-1">
+                  <Badge badgeContent={4} size="sm" className="text-xs">
+                    <Typography>
+                      <NotificationsIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
+                    </Typography>
+                  </Badge>
+                </Button>
 
                 <div className="relative ml-3">
                   <div>

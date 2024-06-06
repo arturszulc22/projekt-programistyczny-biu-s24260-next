@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Link from "next/link";
 import LoginForm from "@/app/components/auth/LoginForm";
+import { Button } from "@mui/joy";
 
 const Login: FC = () => {
   return (
@@ -19,12 +19,9 @@ const Login: FC = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
-          <Link
-            href="/register"
-            className="font-semibold ml-2 leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-          >
+          <Button component="a" href="/register" variant="plain" className="ml-2">
             Register now!
-          </Link>
+          </Button>
         </p>
       </div>
     </div>

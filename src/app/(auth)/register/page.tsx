@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Link from "next/link";
 import RegisterForm from "@/app/components/auth/RegisterForm";
+import { Button } from "@mui/joy";
 
 const Register: FC = () => {
   return (
@@ -19,12 +19,9 @@ const Register: FC = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Do you have an account?
-          <Link
-            href="/login"
-            className="font-semibold ml-2 leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-          >
+          <Button component="a" href="/login" variant="plain" className="ml-2">
             Log In
-          </Link>
+          </Button>
         </p>
       </div>
     </div>

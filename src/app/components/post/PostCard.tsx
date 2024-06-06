@@ -46,10 +46,12 @@ export const PostCard = ({ post }) => {
         >
           <Avatar size="lg" src={post.author.imageURI} />
         </Box>
-        <Typography
-          fontWeight="lg"
-        >
-          <Link className="text-primary-rose dark:text-dark-primary-light-blue" href={"/profile/" + post.author.id}>
+        <Typography fontWeight="lg">
+          <Link
+            className="text-primary-rose dark:text-dark-primary-light-blue no-underline"
+            href={"/profile/" + post.author.id}
+            underline="none"
+          >
             {post.author.firstName} {post.author.secondName}
           </Link>
         </Typography>
@@ -142,19 +144,10 @@ export const PostCard = ({ post }) => {
           <Face />
         </IconButton>
         <Input
-          variant="plain"
-          size="sm"
           placeholder="Add a comment…"
           className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
-          sx={{ flex: 1, px: 0, "--Input-focusedThickness": "0px" }}
         />
-        <Button
-          underline="none"
-          role="button"
-          className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
-        >
-          Post
-        </Button>
+        <Button variant="solid">Post</Button>
       </CardContent>
     </Card>
   );

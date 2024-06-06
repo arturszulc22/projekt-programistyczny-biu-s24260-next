@@ -35,14 +35,11 @@ const UserCard: FC = ({ user }) => {
         />
       </AspectRatio>
       <CardContent>
-        <Typography
-          fontSize="xl"
-          fontWeight="lg"
-        >
+        <Typography fontSize="xl" fontWeight="lg">
           <Link
-              overlay
-              href={"/profile/" + user.id}
-              className="text-primary-rose dark:text-dark-primary-light-blue"
+            overlay
+            href={"/profile/" + user.id}
+            className="text-primary-rose dark:text-dark-primary-light-blue hover:no-underline"
           >
             {user.firstName} {user.secondName}
           </Link>
@@ -113,19 +110,10 @@ const UserCard: FC = ({ user }) => {
           </div>
         </Sheet>
         <Box sx={{ display: "flex", gap: 1.5, "& > button": { flex: 1 } }}>
-          <Button
-            variant="outlined"
-            color="neutral"
-            className="border-primary-rose dark:border-dark-primary-blue text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md"
-          >
+          <Button variant="outlined" color="neutral">
             Chat
           </Button>
-          <Button
-            variant="solid"
-            className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
-          >
-            Follow
-          </Button>
+          <Button variant="solid">Follow</Button>
         </Box>
       </CardContent>
     </Card>

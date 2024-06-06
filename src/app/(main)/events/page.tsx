@@ -2,18 +2,11 @@
 import { FC, useState } from "react";
 import { Container } from "@mui/system";
 import PlusIcon from "@public/icons/plus.svg";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import Link from "next/link";
 import EventsTab from "@/app/components/event/EventsTab";
+import { Button, ToggleButtonGroup } from "@mui/joy";
 
 const Events: FC = () => {
   const [alignment, setAlignment] = useState("following");
-
-  const handleChange = (event: MouseEvent, newAlignment: string) => {
-    if (newAlignment != null) {
-      setAlignment(newAlignment);
-    }
-  };
 
   const events = [
     {
@@ -159,29 +152,26 @@ const Events: FC = () => {
       <div className="flex gap-2">
         <ToggleButtonGroup
           value={alignment}
-          exclusive
-          onChange={handleChange}
-          aria-label="Platform"
+          onChange={(event, newValue) =>
+            newValue !== null && setAlignment(newValue)
+          }
         >
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="following"
-          >
+          <Button variant="plain" value="following">
             Following Events
-          </ToggleButton>
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="others"
-          >
+          </Button>
+          <Button variant="plain" value="others">
             Other Events
-          </ToggleButton>
+          </Button>
         </ToggleButtonGroup>
-        <Link
+
+        <Button
+          component="a"
+          variant="solid"
           href="event/create"
-          className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-2 py-1 text-md font-medium flex items-center"
+          className="flex items-center"
         >
           <PlusIcon className="w-8 h-8" />
-        </Link>
+        </Button>
       </div>
 
       {alignment === "following" && <EventsTab events={events} />}

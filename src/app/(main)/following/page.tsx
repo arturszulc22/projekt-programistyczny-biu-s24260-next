@@ -1,15 +1,11 @@
 "use client";
 
 import { FC, useState } from "react";
-import { Container, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import UserTab from "@/app/components/user/UserTab";
+import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 
 const Following: FC = () => {
   const [alignment, setAlignment] = useState("user");
-
-  const handleChange = (event: MouseEvent, newAlignment: string) => {
-    setAlignment(newAlignment != null ? newAlignment : "user");
-  };
 
   const users = [
     {
@@ -21,7 +17,8 @@ const Following: FC = () => {
       age: 38,
       shortDescription:
         "Doświadczona nauczycielka z zamiłowaniem do literatury. W wolnym czasie uwielbia gotować i eksperymentować w kuchni.",
-      imageURI: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      imageURI:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       id: 3,
@@ -33,7 +30,8 @@ const Following: FC = () => {
       age: 31,
       shortDescription:
         "Młody programista, który pasjonuje się grami komputerowymi i projektowaniem stron internetowych. Lubi aktywne spędzanie czasu.",
-      imageURI: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      imageURI:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
   ];
 
@@ -42,22 +40,17 @@ const Following: FC = () => {
       <div className="flex gap-2">
         <ToggleButtonGroup
           value={alignment}
-          exclusive
-          onChange={handleChange}
-          aria-label="Platform"
+          onChange={(event, newValue) =>
+            newValue !== null && setAlignment(newValue)
+          }
+          className="h-12"
         >
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="user"
-          >
-            Your Following
-          </ToggleButton>
-          <ToggleButton
-            className="border-0 bg-primary dark:bg-dark-primary-blue aria-pressed:bg-secondary aria-pressed:dark:bg-dark-primary text-secondary dark:text-dark-primary-light-blue aria-pressed:text-primary aria-pressed:dark:text-primary-light-blue font-bold"
-            value="other"
-          >
-            Follow
-          </ToggleButton>
+          <Button variant="plain" value="user">
+            Following Events
+          </Button>
+          <Button variant="plain" value="other">
+            Other Events
+          </Button>
         </ToggleButtonGroup>
       </div>
 
