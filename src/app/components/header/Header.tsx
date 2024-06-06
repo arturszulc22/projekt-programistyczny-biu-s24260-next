@@ -65,6 +65,11 @@ const Header: FC = () => {
                 </div>
               </div>
             </div>
+            <div className="ml-auto">
+              <Button variant="plain" className="p-1">
+                <SearchIcon className="fill-primary-rose dark:fill-dark-primary-light-blue h-6 w-6" />
+              </Button>
+            </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
                 <button
