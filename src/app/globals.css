@@ -19,7 +19,7 @@
 }
 
 .MuiButton-variantOutlined.MuiButton-colorNeutral {
-    @apply border-primary-rose dark:border-dark-primary-blue hover:bg-primary-rose dark:hover:bg-dark-secondary hover:text-primary text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md;
+    @apply bg-white border-primary-rose dark:border-dark-primary-blue hover:bg-primary-rose dark:hover:bg-dark-secondary hover:text-primary text-primary-rose dark:text-dark-primary-blue text-sm font-medium rounded-md;
 }
 /* Button - end */
 
@@ -32,3 +32,29 @@
     @apply bg-primary-rose dark:bg-dark-secondary text-primary hover:bg-secondary dark:hover:bg-dark-primary hover:text-primary;
 }
 /* Toggle Button - end */
+
+/* Search Input */
+.MuiAutocomplete-variantOutlined.MuiAutocomplete-colorNeutral {
+    @apply bg-white dark:bg-dark-primary-light-blue border-primary-rose dark:border-0 text-primary-rose dark:text-dark-primary;
+}
+
+.MuiAutocomplete-variantOutlined.MuiAutocomplete-colorNeutral svg[data-testid="ArrowDropDownIcon"] {
+    @apply fill-primary-rose dark:fill-dark-primary;
+}
+
+.MuiChip-colorNeutral.MuiChip-variantSoft {
+    @apply bg-primary-rose dark:bg-dark-secondary text-primary dark:text-dark-primary-light-blue;
+}
+
+.MuiChip-colorNeutral.MuiChip-variantSoft .MuiChipDelete-variantSoft.MuiChipDelete-colorNeutral,
+.MuiChip-colorNeutral.MuiChip-variantSoft svg[data-testid="CancelIcon"] {
+    @apply bg-transparent text-primary dark:text-dark-primary-light-blue;
+}
+/* Search Input - end */
+
+
+/* Input uploads */
+.MuiButton-startDecorator {
+    @apply m-0;
+}
+/* Input uploads - end */

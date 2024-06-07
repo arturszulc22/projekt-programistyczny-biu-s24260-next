@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { PostCard } from "@/app/components/post/PostCard";
 import { Container } from "@mui/joy";
+import CreatePostForm from "@/app/components/post/CreatePostForm";
 
 const Home: FC = () => {
   const posts = [
@@ -99,6 +100,7 @@ const Home: FC = () => {
   return (
     <main>
       <Container className="py-10 max-w-screen-md flex flex-col gap-3">
+        <CreatePostForm />
         {posts.map((post) => (
           <PostCard post={post} />
         ))}
