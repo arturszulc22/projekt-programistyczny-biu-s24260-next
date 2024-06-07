@@ -9,7 +9,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 
-const Event: FC = () => {
+const Event: FC = ({ params }: { params: { id: string } }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const event = {
