@@ -1,38 +1,16 @@
 "use client";
 import { FC, useState } from "react";
-import HeaderMobileMenu from "@/app/components/header/HeaderMobileMenu";
-import HeaderProfilePopup from "@/app/components/header/HeaderProfilePopup";
+import HeaderMobileMenu from "@/app/components/layout/header/HeaderMobileMenu";
+import HeaderProfilePopup from "@/app/components/layout/header/HeaderProfilePopup";
 import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { usePathname } from "next/navigation";
 import { Badge, Button, Typography } from "@mui/joy";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
-
-  const pathname = usePathname();
-
-  const links = [
-    {
-      href: "/home",
-      name: "Homepage",
-    },
-    {
-      href: "/groups",
-      name: "Groups",
-    },
-    {
-      href: "/following",
-      name: "Community",
-    },
-    {
-      href: "/events",
-      name: "Events",
-    },
-  ];
 
   return (
     <header>
@@ -44,21 +22,6 @@ const Header: FC = () => {
                 <h1 className="text-primary-rose dark:text-dark-primary-light-blue font-bold text-2xl cursor-pointer">
                   Instagran
                 </h1>
-              </div>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
-                  {links.map(({ href, name }, index) => (
-                    <Button
-                      component="a"
-                      href={href}
-                      key={index}
-                      variant={pathname === href ? "solid" : "plain"}
-                      aria-current="page"
-                    >
-                      {name}
-                    </Button>
-                  ))}
-                </div>
               </div>
             </div>
             <div className="ml-auto mr-3">

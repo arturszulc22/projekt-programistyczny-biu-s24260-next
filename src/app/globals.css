@@ -58,3 +58,29 @@
     @apply m-0;
 }
 /* Input uploads - end */
+
+/* List item button */
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain {
+    @apply bg-primary dark:bg-dark-primary hover:bg-primary-rose dark:hover:bg-dark-primary-blue text-primary-rose dark:text-dark-primary-light-blue hover:text-primary hover:text-dark-primary-light-blue;
+}
+
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"] {
+    @apply bg-primary-rose text-primary dark:text-dark-primary-light-blue dark:bg-dark-primary-blue;
+}
+
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain svg {
+    @apply fill-primary-rose dark:fill-dark-primary-light-blue;
+}
+
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"] svg {
+    @apply fill-primary dark:fill-dark-primary-light-blue;
+}
+
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain:hover svg {
+    @apply fill-primary dark:fill-dark-primary-light-blue;
+}
+
+.MuiListDivider-horizontal.MuiListDivider-insetStartContent {
+    @apply bg-primary-rose dark:bg-dark-primary-light-blue;
+}
+/* List item button - end */
