@@ -1,5 +1,4 @@
 import { FC } from "react";
-import Link from "next/link";
 import RingIcon from "@public/icons/ring.svg";
 import { Button } from "@mui/joy";
 

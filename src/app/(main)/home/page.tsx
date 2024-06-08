@@ -98,14 +98,12 @@ const Home: FC = () => {
   ];
 
   return (
-    <main>
-      <Container className="py-10 max-w-screen-md flex flex-col gap-3">
-        <CreatePostForm />
-        {posts.map((post) => (
-          <PostCard post={post} />
-        ))}
-      </Container>
-    </main>
+    <Container component="main" className="py-10 max-w-screen-md flex flex-col gap-3">
+      <CreatePostForm />
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </Container>
   );
 };
 export default Home;
