@@ -4,6 +4,7 @@ import Header from "@/app/components/layout/header/Header";
 import Footer from "@/app/components/layout/footer/Footer";
 import SearchModal from "@/app/components/modals/SearchModal";
 import NavigationList from "@/app/components/layout/NavigationList";
+import NotificationList from "@/app/components/layout/NotificationList";
 
 export const metadata: Metadata = {
   title: "Main Page Title",
@@ -21,6 +22,7 @@ const MainLayout: NextPage<MainLayoutProps> = ({ children }) => {
       <div className="flex">
         <NavigationList />
         {children}
+        <NotificationList/>
       </div>
       <SearchModal />
       <Footer />
