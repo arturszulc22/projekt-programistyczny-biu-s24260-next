@@ -92,3 +92,14 @@
     @apply bg-primary-rose dark:bg-dark-primary-light-blue;
 }
 /* List item button - end */
+
+/* Drawer */
+.MuiDrawer-content {
+    @apply w-screen bg-white dark:bg-dark-primary text-primary-rose md:w-3/4 lg:w-96;
+}
+
+.MuiDrawer-content .MuiSvgIcon-root {
+    @apply fill-primary-rose dark:fill-dark-primary-light-blue;
+}
+
+/* Drawer - end */
