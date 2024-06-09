@@ -9,6 +9,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/joy";
+import Link from "next/link";
 
 const GroupCard: FC = ({ group }) => {
   return (
@@ -50,7 +51,7 @@ const GroupCard: FC = ({ group }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button component="a" href={"/group/" + group.id} variant="solid">
+        <Button component={Link} href={"/group/" + group.id} variant="solid">
           Join
         </Button>
       </CardActions>

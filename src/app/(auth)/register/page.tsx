@@ -1,6 +1,7 @@
 import { FC } from "react";
 import RegisterForm from "@/app/components/auth/RegisterForm";
 import { Button } from "@mui/joy";
+import Link from "next/link";
 
 const Register: FC = () => {
   return (
@@ -19,7 +20,12 @@ const Register: FC = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Do you have an account?
-          <Button component="a" href="/login" variant="plain" className="ml-2">
+          <Button
+            component={Link}
+            href="/login"
+            variant="plain"
+            className="ml-2"
+          >
             Log In
           </Button>
         </p>

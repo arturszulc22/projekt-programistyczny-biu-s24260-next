@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import GroupsTab from "@/app/components/groups/GroupsTab";
 import PlusIcon from "@public/icons/plus.svg";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
+import Link from "next/link";
 
 const Groups: FC = () => {
   const [alignment, setAlignment] = useState("user");
@@ -46,7 +47,7 @@ const Groups: FC = () => {
           </Button>
         </ToggleButtonGroup>
         <Button
-          component="a"
+          component={Link}
           variant="solid"
           href="groups/create"
           className="flex items-center"
