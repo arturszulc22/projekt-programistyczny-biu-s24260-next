@@ -24,7 +24,7 @@ const FriendsList: FC = () => {
       >
           <Link href="/profile/1">
               <ListItem className="text-primary-rose dark:text-dark-primary-light-blue">
-                  <ListItemDecorator className="mr-6">
+                  <ListItemDecorator>
                       <Avatar size="sm" src="https://images.unsplash.com/photo-1717780084943-305381b5f8f0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
                   </ListItemDecorator>
                   Mabel Boyle

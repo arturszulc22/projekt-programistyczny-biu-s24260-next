@@ -2,6 +2,7 @@ import { FC } from "react";
 import RingIcon from "@public/icons/ring.svg";
 import { Button } from "@mui/joy";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const HeaderMobileMenu: FC = () => {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ const HeaderMobileMenu: FC = () => {
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
         {links.map(({ name, href }) => (
           <Button
-            component="a"
+            component={Link}
             variant={href === pathname ? "solid" : "plain"}
             href={href}
             aria-current="page"
@@ -56,7 +57,7 @@ const HeaderMobileMenu: FC = () => {
         </div>
         <div className="mt-3 space-y-1 px-2">
           <Button
-            component="a"
+            component={Link}
             variant="plain"
             href="/profile/information"
             aria-current="page"
@@ -65,7 +66,7 @@ const HeaderMobileMenu: FC = () => {
             Your Profile
           </Button>
           <Button
-            component="a"
+            component={Link}
             variant="plain"
             href="/profile/settings"
             aria-current="page"
@@ -74,7 +75,7 @@ const HeaderMobileMenu: FC = () => {
             Settings
           </Button>
           <Button
-            component="a"
+            component={Link}
             variant="plain"
             href="/sign-out"
             aria-current="page"

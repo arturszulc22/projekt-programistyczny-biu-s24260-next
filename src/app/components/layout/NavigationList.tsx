@@ -16,6 +16,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { usePathname } from "next/navigation";
 
 import FriendsList from "@/app/components/layout/FriendsList";
+import Link from "next/link";
 
 const NavigationList: FC = () => {
   const pathname = usePathname();
@@ -50,7 +51,7 @@ const NavigationList: FC = () => {
           return (
             <ListItem>
               <ListItemButton
-                component="a"
+                component={Link}
                 href={item.href}
                 className="px-5 py-2"
                 aria-active={pathname === item.href}
