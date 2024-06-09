@@ -39,10 +39,10 @@ const Groups: FC = () => {
           }
         >
           <Button variant="plain" value="user">
-            Following Events
+            Following Group
           </Button>
           <Button variant="plain" value="others">
-            Other Events
+            Other Groups
           </Button>
         </ToggleButtonGroup>
         <Button
