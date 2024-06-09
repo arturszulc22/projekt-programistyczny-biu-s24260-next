@@ -58,6 +58,7 @@ const Home: FC = () => {
       content:
         "JavaScript closures are a fundamental concept that every JavaScript developer should understand. They allow functions to have access to variables from an enclosing scope or environment, even after the outer function has finished executing. This feature can be used to create private variables, among other things...",
       author: {
+        id: "test",
         firstName: "Jane",
         secondName: "Doe",
         profileUrl: "https://example.com/profiles/jane_doe",
@@ -83,6 +84,7 @@ const Home: FC = () => {
         {
           id: 102,
           author: {
+            id: 2,
             firstName: "Alice",
             secondName: "Johnson",
             profileUrl: "profile/2",
@@ -101,7 +103,7 @@ const Home: FC = () => {
     <Container component="main" className="py-10 max-w-screen-md flex flex-col gap-3">
       <CreatePostForm />
       {posts.map((post) => (
-        <PostCard post={post} />
+        <PostCard key={post.id} post={post} />
       ))}
     </Container>
   );

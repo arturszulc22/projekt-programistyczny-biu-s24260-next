@@ -64,11 +64,11 @@
     @apply bg-primary dark:bg-dark-primary hover:bg-secondary dark:hover:bg-dark-primary-blue text-primary-rose dark:text-dark-primary-light-blue hover:text-primary hover:text-dark-primary-light-blue;
 }
 
-.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"] {
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-current="true"] {
     @apply bg-primary-rose text-primary dark:text-dark-primary-light-blue dark:bg-dark-primary-blue hover:bg-secondary dark:hover:bg-dark-primary-light-blue;
 }
 
-.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"]:hover {
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-current="true"]:hover {
     @apply dark:text-dark-primary;
 }
 
@@ -76,11 +76,11 @@
     @apply fill-primary-rose dark:fill-dark-primary-light-blue;
 }
 
-.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"] svg {
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-current="true"] svg {
     @apply fill-primary dark:fill-dark-primary-light-blue;
 }
 
-.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-active="true"]:hover svg {
+.MuiListItemButton-colorNeutral.MuiListItemButton-variantPlain[aria-current="true"]:hover svg {
     @apply dark:fill-dark-primary;
 }
 

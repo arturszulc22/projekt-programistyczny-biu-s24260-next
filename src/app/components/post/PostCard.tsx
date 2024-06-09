@@ -9,6 +9,7 @@ import {
   IconButton,
   Input,
   Link,
+  List,
   Typography,
 } from "@mui/joy";
 import {
@@ -18,6 +19,7 @@ import {
   MoreHoriz,
   SendOutlined,
 } from "@mui/icons-material";
+import CommentItem from "@/app/components/comment/CommentItem";
 
 export const PostCard = ({ post }) => {
   return (
@@ -148,6 +150,13 @@ export const PostCard = ({ post }) => {
           className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
         />
         <Button variant="solid">Post</Button>
+      </CardContent>
+      <CardContent>
+        <List>
+          {post.comments.map((comment) => {
+            return <CommentItem key={comment.id} comment={comment} />;
+          })}
+        </List>
       </CardContent>
     </Card>
   );

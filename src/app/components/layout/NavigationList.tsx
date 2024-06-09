@@ -47,16 +47,16 @@ const NavigationList: FC = () => {
   return (
     <div className="flex flex-col hidden md:block bg-primary dark:bg-dark-primary border-t border-primary-rose dark:border-dark-primary-light-blue">
       <List>
-        {listItems.map((item) => {
+        {listItems.map((item, index) => {
           return (
-            <ListItem>
+            <ListItem key={index}>
               <ListItemButton
                 component={Link}
                 href={item.href}
                 className="px-5 py-2"
-                aria-active={pathname === item.href}
+                aria-current={pathname === item.href}
               >
-                <ListItemDecorator>{[item.decorator]}</ListItemDecorator>
+                <ListItemDecorator key={index}>{item.decorator}</ListItemDecorator>
                 <ListItemContent className="font-bold text-md pl-5 pr-10">
                   {item.text}
                 </ListItemContent>
