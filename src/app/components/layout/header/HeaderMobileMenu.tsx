@@ -1,20 +1,32 @@
 import { FC } from "react";
 import RingIcon from "@public/icons/ring.svg";
 import { Button } from "@mui/joy";
+import { usePathname } from "next/navigation";
 
 const HeaderMobileMenu: FC = () => {
+  const pathname = usePathname();
+
+  const links = [
+    { name: "Home", href: "/home" },
+    { name: "Groups", href: "/groups" },
+    { name: "Events", href: "/events" },
+    { name: "People", href: "/following" },
+  ];
+
   return (
     <div className="md:hidden" id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <Button
-          component="a"
-          variant="solid"
-          href="/home"
-          aria-current="page"
-          className="w-full"
-        >
-          Homepage
-        </Button>
+        {links.map(({ name, href }) => (
+          <Button
+            component="a"
+            variant={href === pathname ? "solid" : "plain"}
+            href={href}
+            aria-current="page"
+            className="w-full"
+          >
+            {name}
+          </Button>
+        ))}
       </div>
       <div className="border-t border-primary-rose dark:border-dark-primary-light-blue pb-3 pt-4">
         <div className="flex items-center px-5">

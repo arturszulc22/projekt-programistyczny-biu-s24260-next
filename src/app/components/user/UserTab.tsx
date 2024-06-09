@@ -10,7 +10,7 @@ const UserTab = ({ users }) => {
           item
           xs={12}
           sm={6}
-          md={4}
+          lg={4}
           className="flex justify-center"
         >
           <UserCard user={user} />

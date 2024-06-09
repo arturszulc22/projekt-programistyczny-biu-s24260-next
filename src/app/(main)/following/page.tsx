@@ -5,7 +5,7 @@ import UserTab from "@/app/components/user/UserTab";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 
 const Following: FC = () => {
-  const [alignment, setAlignment] = useState("user");
+  const [alignment, setAlignment] = useState("other");
 
   const users = [
     {
@@ -46,10 +46,10 @@ const Following: FC = () => {
           className="h-12"
         >
           <Button variant="plain" value="user">
-            Following Events
+            Friends
           </Button>
           <Button variant="plain" value="other">
-            Other Events
+            Community
           </Button>
         </ToggleButtonGroup>
       </div>
