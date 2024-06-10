@@ -45,7 +45,7 @@ const NavigationList: FC = () => {
   ];
 
   return (
-    <div className="min-h-content flex flex-col hidden md:block bg-primary dark:bg-dark-primary border-t border-primary-rose dark:border-dark-primary-light-blue">
+    <div className="h-content sticky top-16 flex flex-col hidden md:block bg-primary dark:bg-dark-primary border-t border-primary-rose dark:border-dark-primary-light-blue">
       <List>
         {listItems.map((item, index) => {
           return (
