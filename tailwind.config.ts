@@ -21,8 +21,8 @@ const config: Config = {
         "primary-green": "#D8E2DC",
         "primary-gray": "#FEFBFB",
       },
-      minHeight: {
-        'content': 'calc(100vh - 64px - 104px)',
+      height: {
+        'content': 'calc(100vh - 64px)',
       }
     },
   },

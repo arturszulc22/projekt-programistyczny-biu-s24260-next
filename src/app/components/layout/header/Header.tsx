@@ -13,7 +13,7 @@ const Header: FC = () => {
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
 
   return (
-    <header>
+    <header className="sticky top-0 w-screen z-10 shadow-sm">
       <nav className="bg-primary dark:bg-dark-primary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
