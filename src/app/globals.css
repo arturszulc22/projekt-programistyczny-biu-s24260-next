@@ -7,6 +7,14 @@
     @apply text-xs bg-primary-rose dark:bg-dark-primary-blue shadow-none;
 }
 
+.MuiBadge-colorSuccess {
+    @apply bg-green-400;
+}
+
+.MuiBadge-colorError {
+    @apply bg-red-400;
+}
+
 /* Badge - end */
 
 /* Button */

@@ -13,6 +13,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import ChatIcon from "@mui/icons-material/Chat";
 import { usePathname } from "next/navigation";
 
 import FriendsList from "@/app/components/layout/FriendsList";
@@ -42,6 +43,11 @@ const NavigationList: FC = () => {
       text: "People",
       href: "/following",
     },
+    {
+      decorator: <ChatIcon />,
+      text: "Messages",
+      href: "/messages",
+    },
   ];
 
   return (
@@ -56,7 +62,9 @@ const NavigationList: FC = () => {
                 className="px-5 py-2"
                 aria-current={pathname === item.href}
               >
-                <ListItemDecorator key={index}>{item.decorator}</ListItemDecorator>
+                <ListItemDecorator key={index}>
+                  {item.decorator}
+                </ListItemDecorator>
                 <ListItemContent className="font-bold text-md pl-5 pr-10">
                   {item.text}
                 </ListItemContent>
