@@ -1,12 +1,14 @@
 "use client";
 import { FC, useState } from "react";
+import { Badge, Button, Typography } from "@mui/joy";
+
 import HeaderMobileMenu from "@/app/components/layout/header/HeaderMobileMenu";
 import HeaderProfilePopup from "@/app/components/layout/header/HeaderProfilePopup";
+
 import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Badge, Button, Typography } from "@mui/joy";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
