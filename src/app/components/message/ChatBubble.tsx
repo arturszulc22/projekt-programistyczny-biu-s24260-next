@@ -7,7 +7,7 @@ const ChatBubble: FC = (props) => {
   const isSent = variant === "sent";
 
   return (
-    <Box classWidth="max-w-1/2 min-w-auto">
+    <Box className="max-w-1/2 min-w-auto">
       <Stack
         direction="row"
         justifyContent="space-between"

@@ -34,7 +34,6 @@ const FriendsList: FC = () => {
             Mabel Boyle
           </ListItem>
         </Link>
-        <ListDivider inset="startContent" />
       </List>
     </div>
   );

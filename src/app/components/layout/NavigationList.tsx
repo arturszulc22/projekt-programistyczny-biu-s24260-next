@@ -6,7 +6,6 @@ import {
   ListItem,
   ListItemButton,
   ListItemContent,
-  ListItemDecorator,
 } from "@mui/joy";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -52,22 +51,26 @@ const NavigationList: FC = () => {
 
   return (
     <div className="h-content sticky top-16 flex flex-col hidden md:block bg-primary dark:bg-dark-primary border-t border-primary-rose dark:border-dark-primary-light-blue">
-      <List>
+      <List
+        size="sm"
+        sx={{
+          gap: 1,
+          "--List-nestedInsetStart": "30px",
+        }}
+        className="p-4"
+      >
         {listItems.map((item, index) => {
           return (
-            <ListItem key={index}>
+            <ListItem className="rounded">
               <ListItemButton
+                role="menuitem"
+                className="rounded"
                 component={Link}
                 href={item.href}
-                className="px-5 py-2"
                 aria-current={pathname === item.href}
               >
-                <ListItemDecorator key={index}>
-                  {item.decorator}
-                </ListItemDecorator>
-                <ListItemContent className="font-bold text-md pl-5 pr-10">
-                  {item.text}
-                </ListItemContent>
+                {item.decorator}
+                <ListItemContent>{item.text}</ListItemContent>
               </ListItemButton>
             </ListItem>
           );
