@@ -9,6 +9,7 @@ import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Link from "next/link";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
@@ -21,9 +22,9 @@ const Header: FC = () => {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-primary-rose dark:text-dark-primary-light-blue font-bold text-2xl cursor-pointer">
+                <Typography component={Link} href="/home" className="text-primary-rose dark:text-dark-primary-light-blue font-bold text-2xl cursor-pointer">
                   Instagran
-                </h1>
+                </Typography>
               </div>
             </div>
             <div className="ml-auto mr-2">

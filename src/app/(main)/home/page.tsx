@@ -100,11 +100,17 @@ const Home: FC = () => {
   ];
 
   return (
-    <Container component="main" className="py-10 max-w-screen-md flex flex-col gap-3">
+    <Container
+      component="main"
+      maxWidth="md"
+      className="py-10 flex flex-col gap-3"
+    >
       <CreatePostForm />
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+      <div className="grid grid-cols-1 gap-3">
+        {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+        ))}
+      </div>
     </Container>
   );
 };

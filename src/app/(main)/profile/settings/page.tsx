@@ -1,17 +1,17 @@
 "use client";
 
 import { FC, useState } from "react";
-import { Button, Container, IconButton, ToggleButtonGroup } from "@mui/joy";
+import { twMerge } from "tailwind-merge";
+import { Container, IconButton, ToggleButtonGroup } from "@mui/joy";
 
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ViewColumnIcon from "@mui/icons-material/ViewColumn";
-import GridViewIcon from "@mui/icons-material/GridView";
+import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
 
 const UserSettings: FC = () => {
-  const [value, setValue] = useState<null | string>("column");
+  const [value, setValue] = useState<null | string>("left");
+  const [mode, setMode] = useState("light");
 
   return (
     <Container className="my-10">
@@ -28,12 +28,28 @@ const UserSettings: FC = () => {
               </h2>
               <div>
                 <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
-                  <div className="border-primary-rose border-2 p-1">
+                  <div
+                    className={twMerge([
+                      "border-2 p-1",
+                      mode === "light"
+                        ? "border-primary-rose"
+                        : "border-transparent",
+                    ])}
+                    onClick={() => setMode("light")}
+                  >
                     <div className="w-full bg-primary flex rounded">
                       <LightModeIcon className="w-10 h-10 mx-auto fill-primary-rose my-20" />
                     </div>
                   </div>
-                  <div className="border-dark-primary dark:border-dark-primary-light-blue border-2 p-1">
+                  <div
+                    className={twMerge([
+                      "border-2 p-1",
+                      mode === "dark"
+                        ? "border-dark-primary dark:border-dark-primary-light-blue"
+                        : "border-transparent",
+                    ])}
+                    onClick={() => setMode("dark")}
+                  >
                     <div className="w-full bg-dark-primary dark:bg-dark-primary-light-blue flex rounded">
                       <DarkModeIcon className="w-10 h-10 mx-auto fill-dark-primary-light-blue dark:fill-dark-primary my-20" />
                     </div>
@@ -53,14 +69,17 @@ const UserSettings: FC = () => {
                   }}
                   className="mt-10 grid grid-cols-1 sm:grid-cols-3"
                 >
-                  <IconButton value="dashboard" className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary">
-                    <DashboardIcon className="fill-primary-rose dark:fill-dark-primary-light-blue"/>
+                  <IconButton
+                    value="left"
+                    className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary"
+                  >
+                    <VerticalSplitIcon className="rotate-180 fill-primary-rose dark:fill-dark-primary-light-blue" />
                   </IconButton>
-                  <IconButton value="column" className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary">
-                    <ViewColumnIcon className="fill-primary-rose dark:fill-dark-primary-light-blue"/>
-                  </IconButton>
-                  <IconButton value="grid" className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary">
-                    <GridViewIcon className="fill-primary-rose dark:fill-dark-primary-light-blue"/>
+                  <IconButton
+                    value="right"
+                    className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary"
+                  >
+                    <VerticalSplitIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
                   </IconButton>
                 </ToggleButtonGroup>
               </div>

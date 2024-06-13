@@ -4,6 +4,7 @@ import Header from "@/app/components/layout/header/Header";
 import SearchModal from "@/app/components/modals/SearchModal";
 import NavigationList from "@/app/components/layout/NavigationList";
 import NotificationList from "@/app/components/layout/NotificationList";
+import { twMerge } from "tailwind-merge";
 
 export const metadata: Metadata = {
   title: "Main Page Title",
@@ -15,13 +16,15 @@ interface MainLayoutProps {
 }
 
 const MainLayout: NextPage<MainLayoutProps> = ({ children }) => {
+  const isLeft = true;
+
   return (
     <>
       <Header />
-      <div className="flex">
+      <div className={twMerge(["flex", !isLeft && "flex-row-reverse"])}>
         <NavigationList />
         {children}
-        <NotificationList/>
+        <NotificationList />
       </div>
       <SearchModal />
     </>

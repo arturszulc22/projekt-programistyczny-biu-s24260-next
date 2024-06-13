@@ -39,6 +39,9 @@
 .MuiToggleButtonGroup-colorNeutral > button[aria-pressed="true"] {
     @apply bg-primary-rose dark:bg-dark-secondary text-primary hover:bg-secondary dark:hover:bg-dark-primary hover:text-primary;
 }
+.MuiToggleButtonGroup-colorNeutral > button[aria-pressed="true"] svg {
+    @apply fill-primary dark:fill-dark-primary-light-blue;
+}
 /* Toggle Button - end */
 
 /* Search Input */
