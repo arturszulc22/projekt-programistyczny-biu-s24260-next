@@ -2,7 +2,7 @@
 import { FC, useState } from "react";
 import { Container } from "@mui/system";
 import PlusIcon from "@public/icons/plus.svg";
-import EventsTab from "@/app/components/event/EventsTab";
+import EventsTab from "@/components/event/EventsTab";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 import Link from "next/link";
 

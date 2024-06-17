@@ -1,4 +1,4 @@
-import Header from "@/app/components/layout/header/Header";
+import Header from "@/components/layout/header/Header";
 import { Metadata, NextPage } from "next";
 import { Box, Button, Container, Typography } from "@mui/joy";
 import Link from "next/link";

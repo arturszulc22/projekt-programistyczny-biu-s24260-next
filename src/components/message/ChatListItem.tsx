@@ -8,8 +8,8 @@ import {
   Box,
 } from "@mui/joy";
 import CircleIcon from "@mui/icons-material/Circle";
-import AvatarWithStatus from "@/app/components/message/AvatarWithStatus";
-import { toggleMessagesPane } from "@/app/utils/switchMessagesPane";
+import AvatarWithStatus from "@/components/message/AvatarWithStatus";
+import { toggleMessagesPane } from "@/utils/switchMessagesPane";
 
 const ChatListItem: FC = (props) => {
   const { id, sender, messages, selectedChatId, setSelectedChat } = props;

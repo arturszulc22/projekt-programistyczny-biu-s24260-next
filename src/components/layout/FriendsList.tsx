@@ -9,7 +9,7 @@ import {
 } from "@mui/joy";
 import CircleIcon from "@mui/icons-material/Circle";
 import Link from "next/link";
-import AvatarWithStatus from "@/app/components/message/AvatarWithStatus";
+import AvatarWithStatus from "@/components/message/AvatarWithStatus";
 
 const FriendsList: FC = () => {
   return (

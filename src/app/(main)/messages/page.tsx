@@ -1,8 +1,8 @@
 "use client";
 import { FC, useState } from "react";
 import { Sheet } from "@mui/joy";
-import ChatsPane from "@/app/components/message/ChatsPane";
-import MessagesPane from "@/app/components/message/MessagesPane";
+import ChatsPane from "@/components/message/ChatsPane";
+import MessagesPane from "@/components/message/MessagesPane";
 
 const Messages: FC = () => {
   const chats = [

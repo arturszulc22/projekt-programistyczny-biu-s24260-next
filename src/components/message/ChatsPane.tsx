@@ -13,7 +13,7 @@ import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import ChatListItem from "./ChatListItem";
-import { toggleMessagesPane } from "@/app/utils/switchMessagesPane";
+import { toggleMessagesPane } from "@/utils/switchMessagesPane";
 
 const ChatsPane: FC = (props) => {
   const { chats, setSelectedChat, selectedChatId } = props;

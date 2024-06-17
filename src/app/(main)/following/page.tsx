@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
-import UserTab from "@/app/components/user/UserTab";
+import UserTab from "@/components/user/UserTab";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 
 const Following: FC = () => {

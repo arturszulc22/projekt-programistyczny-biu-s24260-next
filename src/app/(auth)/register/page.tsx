@@ -1,5 +1,5 @@
 import { FC } from "react";
-import RegisterForm from "@/app/components/auth/RegisterForm";
+import RegisterForm from "@/components/auth/RegisterForm";
 import { Button } from "@mui/joy";
 import Link from "next/link";
 

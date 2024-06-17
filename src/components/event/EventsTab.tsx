@@ -1,23 +1,25 @@
+import { FC } from "react";
 import { Grid } from "@mui/material";
-import UserCard from "@/app/components/user/UserCard";
+import EventCard from "@/components/event/EventCard";
 
-const UserTab = ({ users }) => {
+const EventsTab: FC = ({ events }: object[]) => {
   return (
     <Grid container spacing={4} className="mt-5">
-      {users.map((user, index) => (
+      {events.map((event, index) => (
         <Grid
           key={index}
           item
           xs={12}
           sm={6}
-          lg={4}
+          md={4}
+          lg={3}
           className="flex justify-center"
         >
-          <UserCard user={user} />
+          <EventCard event={event} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default UserTab;
+export default EventsTab;

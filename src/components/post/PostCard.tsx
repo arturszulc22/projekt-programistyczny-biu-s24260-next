@@ -19,7 +19,7 @@ import {
   MoreHoriz,
   SendOutlined,
 } from "@mui/icons-material";
-import CommentItem from "@/app/components/comment/CommentItem";
+import CommentItem from "@/components/comment/CommentItem";
 import {twMerge} from "tailwind-merge";
 
 export const PostCard = ({ post }) => {

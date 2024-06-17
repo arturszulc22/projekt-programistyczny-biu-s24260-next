@@ -1,6 +1,6 @@
 import { FC } from "react";
-import PostListFilters from "@/app/components/admin/PostListFilters";
-import PostList from "@/app/components/admin/PostList";
+import PostListFilters from "@/components/admin/PostListFilters";
+import PostList from "@/components/admin/PostList";
 import { Typography } from "@mui/joy";
 
 const AdminDashboardPosts: FC = () => {

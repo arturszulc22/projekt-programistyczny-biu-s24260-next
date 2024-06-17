@@ -45,7 +45,7 @@ const LoginForm: FC = () => {
           </label>
           <div className="text-sm">
             <a
-              href="#"
+              href="@/components/auth/LoginForm#"
               className="font-semibold text-primary-rose dark:text-dark-primary-light-blue"
             >
               Forgot password?

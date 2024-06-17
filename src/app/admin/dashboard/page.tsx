@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/joy";
 
-import ReportList from "@/app/components/admin/ReportList";
+import ReportList from "@/components/admin/ReportList";
 
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";

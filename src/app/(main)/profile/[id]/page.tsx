@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Container } from "@mui/material";
-import ProfileActions from "@/app/components/profile/ProfileActions";
-import ProfileStatistics from "@/app/components/profile/ProfileStatistics";
+import ProfileActions from "@/components/profile/ProfileActions";
+import ProfileStatistics from "@/components/profile/ProfileStatistics";
 
 const Profile: FC = ({ params }: { params: { id: string } }) => {
   return (
