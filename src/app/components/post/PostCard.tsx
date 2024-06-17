@@ -14,12 +14,13 @@ import {
 } from "@mui/joy";
 import {
   Face,
-  FavoriteBorder,
+  Favorite,
   ModeCommentOutlined,
   MoreHoriz,
   SendOutlined,
 } from "@mui/icons-material";
 import CommentItem from "@/app/components/comment/CommentItem";
+import {twMerge} from "tailwind-merge";
 
 export const PostCard = ({ post }) => {
   return (
@@ -84,7 +85,13 @@ export const PostCard = ({ post }) => {
             className="text-primary-rose dark:text-dark-primary-light-blue"
             size="sm"
           >
-            <FavoriteBorder />
+            <Favorite className={
+              twMerge(
+                  "stroke-2",
+                  true && "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
+                  false && "stroke-red-500 fill-red-500"
+              )
+            }/>
           </IconButton>
           <IconButton
             variant="plain"
