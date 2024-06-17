@@ -2,7 +2,7 @@
 import { FC, useState } from "react";
 import { Modal, ModalDialog, Typography } from "@mui/joy";
 import CloseIcon from "@mui/icons-material/Close";
-import UserCardSecondary from "@/app/components/user/UserCardSecondary";
+import UserCardSecondary from "@/components/user/UserCardSecondary";
 
 const SearchModal: FC = () => {
   const [isOpen, setIsOpen] = useState(false);

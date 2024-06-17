@@ -3,7 +3,7 @@ import { Typography, Stack, IconButton, Chip, Button, Avatar } from "@mui/joy";
 import CircleIcon from "@mui/icons-material/Circle";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
-import { toggleMessagesPane } from "@/app/utils/switchMessagesPane";
+import { toggleMessagesPane } from "@/utils/switchMessagesPane";
 import Link from "next/link";
 
 const MessagesPaneHeader: FC = (props) => {

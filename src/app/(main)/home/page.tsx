@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { PostCard } from "@/app/components/post/PostCard";
+import { PostCard } from "@/components/post/PostCard";
 import { Container } from "@mui/joy";
-import CreatePostForm from "@/app/components/post/CreatePostForm";
+import CreatePostForm from "@/components/post/CreatePostForm";
 
 const Home: FC = () => {
   const posts = [

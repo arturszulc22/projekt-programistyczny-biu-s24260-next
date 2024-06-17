@@ -1,5 +1,5 @@
 import { FC } from "react";
-import GroupCard from "@/app/components/groups/GroupCard";
+import GroupCard from "@/components/groups/GroupCard";
 import { Grid } from "@mui/material";
 
 const GroupsTab: FC = ({ groups }: object[]) => {

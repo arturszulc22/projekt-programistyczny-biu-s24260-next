@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Typography } from "@mui/joy";
-import UserListFilters from "@/app/components/admin/UsersListaFilters";
-import UserList from "@/app/components/admin/UsersList";
+import UserListFilters from "@/components/admin/UsersListaFilters";
+import UserList from "@/components/admin/UsersList";
 
 const AdminDashboardUsers: FC = () => {
   const users = [

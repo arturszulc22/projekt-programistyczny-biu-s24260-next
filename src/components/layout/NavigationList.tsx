@@ -15,7 +15,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ChatIcon from "@mui/icons-material/Chat";
 import { usePathname } from "next/navigation";
 
-import FriendsList from "@/app/components/layout/FriendsList";
+import FriendsList from "@/components/layout/FriendsList";
 import Link from "next/link";
 
 const NavigationList: FC = () => {

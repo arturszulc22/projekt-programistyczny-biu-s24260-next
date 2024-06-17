@@ -14,7 +14,7 @@ import {
 } from "@mui/joy";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const NotificationList: FC = () => {
+const NotificationModal: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const notifications = [
@@ -86,4 +86,4 @@ const NotificationList: FC = () => {
   );
 };
 
-export default NotificationList;
+export default NotificationModal;

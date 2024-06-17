@@ -3,7 +3,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import AddIcon from "@mui/icons-material/Add";
 import ShareIcon from "@mui/icons-material/Share";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { PostCard } from "@/app/components/post/PostCard";
+import { PostCard } from "@/components/post/PostCard";
 
 const Group = ({ params }: { params: { id: string } }) => {
   const group = {

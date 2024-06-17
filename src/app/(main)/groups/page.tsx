@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
-import GroupsTab from "@/app/components/groups/GroupsTab";
+import GroupsTab from "@/components/groups/GroupsTab";
 import PlusIcon from "@public/icons/plus.svg";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 import Link from "next/link";

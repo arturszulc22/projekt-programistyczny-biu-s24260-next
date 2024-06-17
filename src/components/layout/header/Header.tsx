@@ -2,8 +2,8 @@
 import { FC, useState } from "react";
 import { Badge, Button, Typography } from "@mui/joy";
 
-import HeaderMobileMenu from "@/app/components/layout/header/HeaderMobileMenu";
-import HeaderProfilePopup from "@/app/components/layout/header/HeaderProfilePopup";
+import HeaderMobileMenu from "@/components/layout/header/HeaderMobileMenu";
+import HeaderProfilePopup from "@/components/layout/header/HeaderProfilePopup";
 
 import XIcon from "@public/icons/x.svg";
 import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";

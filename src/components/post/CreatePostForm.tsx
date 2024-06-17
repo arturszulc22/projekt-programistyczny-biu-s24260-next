@@ -52,7 +52,7 @@ const CreatePostForm: FC = () => {
   return (
     <div>
       <form
-        action=""
+        action="@/components/post/CreatePostForm"
         className="border border-primary-rose rounded p-4 bg-primary dark:bg-dark-primary dark:border-0"
       >
         <div className="flex flex-col md:flex-row gap-2">

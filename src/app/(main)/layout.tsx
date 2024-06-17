@@ -1,9 +1,9 @@
 import type { Metadata, NextPage } from "next";
 import "@/app/globals.css";
-import Header from "@/app/components/layout/header/Header";
-import SearchModal from "@/app/components/modals/SearchModal";
-import NavigationList from "@/app/components/layout/NavigationList";
-import NotificationList from "@/app/components/layout/NotificationList";
+import Header from "@/components/layout/header/Header";
+import SearchModal from "@/components/modals/SearchModal";
+import NavigationList from "@/components/layout/NavigationList";
+import NotificationModal from "@/components/modals/NotificationModal";
 import { twMerge } from "tailwind-merge";
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ const MainLayout: NextPage<MainLayoutProps> = ({ children }) => {
       <div className={twMerge(["flex", !isLeft && "flex-row-reverse"])}>
         <NavigationList />
         {children}
-        <NotificationList />
+        <NotificationModal />
       </div>
       <SearchModal />
     </>

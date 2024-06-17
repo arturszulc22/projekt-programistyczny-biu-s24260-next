@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Typography } from "@mui/joy";
-import ReportListFilters from "@/app/components/admin/ReportListFilters";
-import ReportList from "@/app/components/admin/ReportList";
+import ReportListFilters from "@/components/admin/ReportListFilters";
+import ReportList from "@/components/admin/ReportList";
 
 const AdminDashboardReports: FC = () => {
   const reports = [
