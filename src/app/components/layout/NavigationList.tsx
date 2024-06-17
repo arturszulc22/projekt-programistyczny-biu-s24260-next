@@ -61,7 +61,7 @@ const NavigationList: FC = () => {
       >
         {listItems.map((item, index) => {
           return (
-            <ListItem className="rounded">
+            <ListItem className="rounded" key={index}>
               <ListItemButton
                 role="menuitem"
                 className="rounded"
