@@ -1,6 +1,7 @@
 import type { Metadata, NextPage } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
+import { SWRProvider } from "@/providers/SWRProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
       <body
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
-        {children}
+        <SWRProvider>{children}</SWRProvider>
       </body>
     </html>
   );
