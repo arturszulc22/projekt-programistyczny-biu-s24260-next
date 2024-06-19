@@ -19,7 +19,7 @@
           "layout": "left",
           "isNotificationEnabled": true
         },
-        "is_admin": "1"
+        "isAdmin": true
       }
     },
     {
@@ -41,7 +41,7 @@
           "layout": "left",
           "isNotificationEnabled": true
         },
-        "is_admin": "0"
+        "isAdmin": false
       }
     }
   ],

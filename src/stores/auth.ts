@@ -57,7 +57,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
               layout: "left",
               isNotificationEnabled: true,
             },
-            is_admin: "0",
+            isAdmin: false,
           },
         };
         delete requestData.repeatPassword;
