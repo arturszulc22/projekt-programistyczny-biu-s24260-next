@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { NextPage } from "next";
 import LoginForm from "@/components/auth/LoginForm";
 import { Button } from "@mui/joy";
 import Link from "next/link";
 
-const Login: FC = () => {
+const Login: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

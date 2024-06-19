@@ -1,19 +1,34 @@
 "use client";
+
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "@mui/joy";
-
-type Inputs = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-};
+import { Button, Typography } from "@mui/joy";
+import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
+import { twMerge } from "tailwind-merge";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useRouter } from "next/navigation";
+import { RegisterFormData } from "@/interfaces/auth";
+import { registerFormValidationSchema } from "@/validations/auth-form-validation-schema";
 
 const RegisterForm: FC = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const { push } = useRouter();
+  const { register: registerUser } = useAuthStore((state) => state);
+
+  const resolver = useYupValidationResolver(registerFormValidationSchema);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterFormData>({ resolver });
+
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+    try {
+      await registerUser(data);
+      reset();
+      push("/home");
+    } catch (e: Error) {}
+  };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -30,10 +45,17 @@ const RegisterForm: FC = () => {
             {...register("firstName")}
             autoComplete="username"
             required
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+              errors.firstName && "ring-red-600 focus-visible:outline-red-600",
+            )}
           />
         </div>
+        {errors.firstName && (
+          <Typography color="danger" fontSize="sm">
+            {errors.firstName.message}
+          </Typography>
+        )}
       </div>
 
       <div>
@@ -49,10 +71,17 @@ const RegisterForm: FC = () => {
             {...register("lastName")}
             autoComplete="username"
             required
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+              errors.lastName && "ring-red-600 focus-visible:outline-red-600",
+            )}
           />
         </div>
+        {errors.lastName && (
+          <Typography color="danger" fontSize="sm">
+            {errors.lastName.message}
+          </Typography>
+        )}
       </div>
 
       <div>
@@ -69,10 +98,17 @@ const RegisterForm: FC = () => {
             type="email"
             autoComplete="email"
             required
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+              errors.email && "ring-red-600 focus-visible:outline-red-600",
+            )}
           />
         </div>
+        {errors.email && (
+          <Typography color="danger" fontSize="sm">
+            {errors.email.message}
+          </Typography>
+        )}
       </div>
 
       <div>
@@ -91,10 +127,17 @@ const RegisterForm: FC = () => {
             type="password"
             autoComplete="current-password"
             required
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+              errors.password && "ring-red-600 focus-visible:outline-red-600",
+            )}
           />
         </div>
+        {errors.password && (
+          <Typography color="danger" fontSize="sm">
+            {errors.password.message}
+          </Typography>
+        )}
       </div>
 
       <div>
@@ -113,10 +156,19 @@ const RegisterForm: FC = () => {
             type="password"
             autoComplete="current-password"
             required
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
-                ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
+            {...register("repeatPassword")}
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+              errors.repeatPassword &&
+                "ring-red-600 focus-visible:outline-red-600",
+            )}
           />
         </div>
+        {errors.repeatPassword && (
+          <Typography color="danger" fontSize="sm">
+            {errors.repeatPassword.message}
+          </Typography>
+        )}
       </div>
 
       <div>
