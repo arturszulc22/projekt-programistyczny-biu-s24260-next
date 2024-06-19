@@ -1,13 +1,13 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button, Typography } from "@mui/joy";
+import { Button, Snackbar, Typography } from "@mui/joy";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
 import { object, string } from "yup";
 import { twMerge } from "tailwind-merge";
-import { login } from "@/api/auth";
-import { setUserId } from "@/actions/cookies";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   email: string;
@@ -20,8 +20,13 @@ const validationSchema = object({
 });
 
 const LoginForm: FC = () => {
-  const resolver = useYupValidationResolver(validationSchema);
+  const { push } = useRouter();
+  const { login } = useAuthStore((state) => state);
 
+  const [state, setState] = useState({ open: false, message: "" });
+  const { open, message } = state;
+
+  const resolver = useYupValidationResolver(validationSchema);
   const {
     register,
     handleSubmit,
@@ -30,10 +35,13 @@ const LoginForm: FC = () => {
   } = useForm<Inputs>({ resolver });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const user = await login(data);
-    await setUserId(user.id);
-
-    reset();
+    try {
+      await login(data);
+      reset();
+      push("/home");
+    } catch (e: Error) {
+      setState({ open: true, message: e.message });
+    }
   };
 
   return (
@@ -112,6 +120,18 @@ const LoginForm: FC = () => {
           Sign in
         </Button>
       </div>
+
+      {open && (
+        <Snackbar
+          open={open}
+          variant="plain"
+          color="danger"
+          className="bg-red-300"
+          onClick={() => setState({ ...state, open: false })}
+        >
+          {message}
+        </Snackbar>
+      )}
     </form>
   );
 };
