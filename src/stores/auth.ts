@@ -1,5 +1,5 @@
 import { createStore } from "zustand/vanilla";
-import { setUserId } from "@/actions/cookies";
+import { setUser } from "@/actions/cookies";
 import { User } from "@/interfaces/user";
 import { LoginFormData, RegisterFormData } from "@/interfaces/auth";
 import { createUser, getUser } from "@/api/user";
@@ -33,7 +33,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
         // json-server doesn't support and operation
         if (user.password !== password) throw new Error();
 
-        await setUserId(user.id);
+        await setUser(user);
 
         set({ user });
       } catch (e: Error) {
@@ -57,12 +57,13 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
               layout: "left",
               isNotificationEnabled: true,
             },
+            is_admin: "0",
           },
         };
         delete requestData.repeatPassword;
 
         const user = await createUser(requestData);
-        await setUserId(user.id);
+        await setUser(user);
 
         set({ user });
       } catch (e: Error) {
