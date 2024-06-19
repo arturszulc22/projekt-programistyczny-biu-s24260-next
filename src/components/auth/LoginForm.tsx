@@ -6,6 +6,8 @@ import { Button, Typography } from "@mui/joy";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
 import { object, string } from "yup";
 import { twMerge } from "tailwind-merge";
+import { login } from "@/api/auth";
+import { setUserId } from "@/actions/cookies";
 
 type Inputs = {
   email: string;
@@ -27,8 +29,10 @@ const LoginForm: FC = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const user = await login(data);
+    await setUserId(user.id);
+
     reset();
   };
 
