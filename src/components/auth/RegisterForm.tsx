@@ -1,45 +1,28 @@
 "use client";
+
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Typography } from "@mui/joy";
-import { object, ref, string } from "yup";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
 import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useRouter } from "next/navigation";
-
-type Inputs = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-};
-
-const validationSchema = object({
-  firstName: string().min(4).required(),
-  lastName: string().min(4).required(),
-  email: string().email().required(),
-  password: string().min(8),
-  repeatPassword: string()
-    .required()
-    .oneOf([ref("password"), null], "Passwords must match"),
-});
+import { RegisterFormData } from "@/interfaces/auth";
+import { registerFormValidationSchema } from "@/validations/auth-form-validation-schema";
 
 const RegisterForm: FC = () => {
   const { push } = useRouter();
   const { register: registerUser } = useAuthStore((state) => state);
 
-  const resolver = useYupValidationResolver(validationSchema);
-
+  const resolver = useYupValidationResolver(registerFormValidationSchema);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({ resolver });
+  } = useForm<RegisterFormData>({ resolver });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
       await registerUser(data);
       reset();

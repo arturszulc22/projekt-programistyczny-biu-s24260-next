@@ -4,20 +4,11 @@ import { FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, Snackbar, Typography } from "@mui/joy";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
-import { object, string } from "yup";
 import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useRouter } from "next/navigation";
-
-type Inputs = {
-  email: string;
-  password: string;
-};
-
-const validationSchema = object({
-  email: string().email(),
-  password: string().min(8).required(),
-});
+import { LoginFormData } from "@/interfaces/auth";
+import { loginFormValidationSchema } from "@/validations/auth-form-validation-schema";
 
 const LoginForm: FC = () => {
   const { push } = useRouter();
@@ -26,15 +17,15 @@ const LoginForm: FC = () => {
   const [state, setState] = useState({ open: false, message: "" });
   const { open, message } = state;
 
-  const resolver = useYupValidationResolver(validationSchema);
+  const resolver = useYupValidationResolver(loginFormValidationSchema);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({ resolver });
+  } = useForm<LoginFormData>({ resolver });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       await login(data);
       reset();
