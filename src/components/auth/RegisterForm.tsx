@@ -5,6 +5,8 @@ import { Button, Typography } from "@mui/joy";
 import { object, ref, string } from "yup";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
 import { twMerge } from "tailwind-merge";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   firstName: string;
@@ -25,6 +27,9 @@ const validationSchema = object({
 });
 
 const RegisterForm: FC = () => {
+  const { push } = useRouter();
+  const { register: registerUser } = useAuthStore((state) => state);
+
   const resolver = useYupValidationResolver(validationSchema);
 
   const {
@@ -34,9 +39,12 @@ const RegisterForm: FC = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await registerUser(data);
+      reset();
+      push("/home");
+    } catch (e: Error) {}
   };
 
   return (

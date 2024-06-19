@@ -1,11 +1,8 @@
 import { createStore } from "zustand/vanilla";
 import { setUserId } from "@/actions/cookies";
 import { User } from "@/interfaces/user";
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+import { LoginFormData, RegisterFormData } from "@/interfaces/auth";
+import { createUser, getUser } from "@/api/user";
 
 export type AuthState = {
   user: User | null;
@@ -13,6 +10,7 @@ export type AuthState = {
 
 export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
+  register: ({ email, password }: LoginFormData) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -30,17 +28,40 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
     ...initState,
     login: async ({ email, password }: LoginFormData) => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users?email=${email}&password=${password}`,
-        );
-
-        const data = await response.json();
-        const user = data[0];
+        const user = await getUser({ email, password });
 
         // json-server doesn't support and operation
-        if (user.password !== password)
-          throw new Error("User password not valid!");
+        if (user.password !== password) throw new Error();
 
+        await setUserId(user.id);
+
+        set({ user });
+      } catch (e: Error) {
+        throw new Error("User not found!");
+      }
+    },
+    register: async (data: RegisterFormData) => {
+      try {
+        const requestData = {
+          ...data,
+          dateOfBirth: null,
+          age: null,
+          shortDescription: null,
+          imageUrl: null,
+          settings: {
+            profile: {
+              isPrivate: false,
+            },
+            app: {
+              isDarkMode: false,
+              layout: "left",
+              isNotificationEnabled: true,
+            },
+          },
+        };
+        delete requestData.repeatPassword;
+
+        const user = await createUser(requestData);
         await setUserId(user.id);
 
         set({ user });
