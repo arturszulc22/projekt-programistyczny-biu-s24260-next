@@ -7,6 +7,6 @@ export const setUser = async (user: User) => {
   cookies().set("user", JSON.stringify(user));
 };
 
-export const getUser = () => {
-  return JSON.parse(cookies().get("user")?.value);
+export const getUser = async () => {
+  return JSON.parse(cookies().get("user")?.value || null);
 };

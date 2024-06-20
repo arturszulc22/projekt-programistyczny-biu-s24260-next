@@ -16,13 +16,14 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
+const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
+  const user = await getUser();
   return (
     <html lang="en">
       <body
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
-        <AuthStoreProvider user={getUser()}>
+        <AuthStoreProvider user={user}>
           <ThemeProvider attribute="class">{children}</ThemeProvider>
         </AuthStoreProvider>
       </body>
