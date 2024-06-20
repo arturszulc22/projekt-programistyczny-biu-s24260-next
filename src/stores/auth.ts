@@ -10,7 +10,7 @@ export type AuthState = {
 
 export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
-  register: ({ email, password }: LoginFormData) => void;
+  register: (data: RegisterFormData) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;

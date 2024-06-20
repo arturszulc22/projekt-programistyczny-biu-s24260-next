@@ -9,6 +9,7 @@ export const loginFormValidationSchema = object({
 export const registerFormValidationSchema = object({
   firstName: string().min(3).required(),
   lastName: string().min(3).required(),
+  userName: string().min(3).required(),
   email: string().email().required(),
   password: string().min(8),
   repeatPassword: string()
