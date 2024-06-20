@@ -11,3 +11,12 @@ export interface RegisterFormData {
     password: string;
     repeatPassword: string;
 }
+
+export interface UpdateUserInformationData {
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    shortDescription: string;
+    imageURI: FileList | string
+}

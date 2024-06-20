@@ -17,6 +17,18 @@ export const createUser = async (userData: object) => {
     body: JSON.stringify(userData),
   });
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 };
+
+
+export const updateUser = async (userData: object) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userData.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  return await response.json();
+}

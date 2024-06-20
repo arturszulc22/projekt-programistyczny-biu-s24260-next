@@ -8,7 +8,7 @@ export interface User {
   dateOfBirth?: string;
   age?: number;
   shortDescription?: string;
-  imageUrl?: string;
+  imageURI?: string;
   settings: UserSettings;
 }
 

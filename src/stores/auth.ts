@@ -1,8 +1,8 @@
 import { createStore } from "zustand/vanilla";
 import { setUser } from "@/actions/cookies";
 import { User } from "@/interfaces/user";
-import { LoginFormData, RegisterFormData } from "@/interfaces/auth";
-import { createUser, getUser } from "@/api/user";
+import {LoginFormData, RegisterFormData, UpdateUserInformationData} from "@/interfaces/auth";
+import { createUser, getUser, updateUser } from "@/api/user";
 
 export type AuthState = {
   user: User | null;
@@ -11,6 +11,7 @@ export type AuthState = {
 export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
   register: (data: RegisterFormData) => void;
+  update: (user, data: UpdateUserInformationData) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -47,7 +48,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
           dateOfBirth: null,
           age: null,
           shortDescription: null,
-          imageUrl: null,
+          imageURI: null,
           settings: {
             profile: {
               isPrivate: false,
@@ -70,5 +71,20 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
         throw new Error("User not found!");
       }
     },
+    update: async (user, data: UpdateUserInformationData) => {
+      try {
+        const requestData = {
+          ...user,
+          ...data,
+          imageURI: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        }
+        const newUser = await updateUser(requestData);
+        await setUser(newUser);
+
+        set({ user });
+      } catch (e: Error) {
+        throw new Error("Cannot save user data!");
+      }
+    }
   }));
 };
