@@ -2,6 +2,7 @@ import type { Metadata, NextPage } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import { AuthStoreProvider } from "@/providers/auth-store-provider";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,11 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
       <body
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
-        <AuthStoreProvider>{children}</AuthStoreProvider>
+        <AuthStoreProvider>
+          <ThemeProvider attribute="class">
+            {children}
+          </ThemeProvider>
+        </AuthStoreProvider>
       </body>
     </html>
   );

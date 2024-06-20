@@ -1,17 +1,13 @@
 "use client";
 
 import { FC, useState } from "react";
-import { twMerge } from "tailwind-merge";
+
 import { Container, IconButton, ToggleButtonGroup } from "@mui/joy";
-
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-
 import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
+import DarkModeToggle from "@/components/layout/DarkModeToggle";
 
 const UserSettings: FC = () => {
   const [value, setValue] = useState<null | string>("left");
-  const [mode, setMode] = useState("light");
 
   return (
     <Container className="my-10">
@@ -27,34 +23,7 @@ const UserSettings: FC = () => {
                 Dark Mode
               </h2>
               <div>
-                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
-                  <div
-                    className={twMerge([
-                      "border-2 p-1",
-                      mode === "light"
-                        ? "border-primary-rose"
-                        : "border-transparent",
-                    ])}
-                    onClick={() => setMode("light")}
-                  >
-                    <div className="w-full bg-primary flex rounded">
-                      <LightModeIcon className="w-10 h-10 mx-auto fill-primary-rose my-20" />
-                    </div>
-                  </div>
-                  <div
-                    className={twMerge([
-                      "border-2 p-1",
-                      mode === "dark"
-                        ? "border-dark-primary dark:border-dark-primary-light-blue"
-                        : "border-transparent",
-                    ])}
-                    onClick={() => setMode("dark")}
-                  >
-                    <div className="w-full bg-dark-primary dark:bg-dark-primary-light-blue flex rounded">
-                      <DarkModeIcon className="w-10 h-10 mx-auto fill-dark-primary-light-blue dark:fill-dark-primary my-20" />
-                    </div>
-                  </div>
-                </div>
+                <DarkModeToggle />
               </div>
             </div>
             <div>
