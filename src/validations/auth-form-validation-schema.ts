@@ -22,13 +22,5 @@ export const userInformationFormValidationSchema = object({
   userName: string().min(3).required(),
   email: string().email().required(),
   shortDescription: string().max(1000),
-  imageURI: mixed()
-    .required()
-    // .test("required", "You need to provide a file", (file) => {
-    //   return file && file.length;
-    // })
-    .test("fileSize", "The file is too large", (value) => {
-      if (!value.length) return true;
-      return value[0].size <= 2000000;
-    }),
+  imageURI: string().required()
 });

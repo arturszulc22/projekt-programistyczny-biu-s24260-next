@@ -18,5 +18,5 @@ export interface UpdateUserInformationData {
     userName: string;
     email: string;
     shortDescription: string;
-    imageURI: FileList | string
+    imageURI: string;
 }

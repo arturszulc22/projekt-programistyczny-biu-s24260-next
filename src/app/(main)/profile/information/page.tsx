@@ -11,24 +11,9 @@ import { UpdateUserInformationData } from "@/interfaces/auth";
 import { twMerge } from "tailwind-merge";
 import {
   Avatar,
-  Button,
-  FormControl,
   Snackbar,
-  styled,
   Typography,
 } from "@mui/joy";
-
-const VisuallyHiddenInput = styled("input")`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`;
 
 const UserProfile: FC = () => {
   const [preview, setPreview] = useState("");
@@ -59,18 +44,6 @@ const UserProfile: FC = () => {
     } catch (e: Error) {
       setState({ open: true, message: "Something went wrong!", isError: true });
     }
-  };
-
-  const handleUploadedFile = (event) => {
-    const file = event.target.files[0];
-
-    if (undefined === file) {
-      setPreview(null);
-      return;
-    }
-
-    const urlImage = URL.createObjectURL(file);
-    setPreview(urlImage);
   };
 
   return (
@@ -156,7 +129,7 @@ const UserProfile: FC = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="image-uri"
                   className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
                 >
                   Photo
@@ -167,23 +140,19 @@ const UserProfile: FC = () => {
                     className="h-12 w-12 text-primary-rose dark:text-dark-primary-light-blue"
                     aria-hidden="true"
                   />
-                  <FormControl>
-                    <Button
-                      component="label"
-                      role={undefined}
-                      tabIndex={-1}
-                      variant="solid"
-                      color={errors.imageURI ? "danger" : "primary"}
-                      className="py-1"
-                    >
-                      upload
-                      <VisuallyHiddenInput
-                        type="file"
-                        {...register("imageURI")}
-                        onChange={handleUploadedFile}
-                      />
-                    </Button>
-                  </FormControl>
+                  <input
+                      type="text"
+                      {...register("imageURI")}
+                      id="image-uri"
+                      className={twMerge(
+                          "block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                          errors.imageURI &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
+                      placeholder="Image URI"
+                      defaultValue={user?.imageURI}
+                      onChange={(e) => setPreview(e.target.value)}
+                  />
                   {errors.imageURI && (
                     <Typography color="danger" fontSize="sm">
                       {errors.imageURI.message}
