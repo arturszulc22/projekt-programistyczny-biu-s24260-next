@@ -260,12 +260,6 @@ const UserProfile: FC = () => {
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="flex justify-center rounded-md bg-primary-rose dark:bg-dark-secondary dark:border-2 dark:border-dark-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-primary dark:text-dark-primary-light-blue shadow-sm"
           >
