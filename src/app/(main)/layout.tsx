@@ -5,6 +5,7 @@ import SearchModal from "@/components/modals/SearchModal";
 import NavigationList from "@/components/layout/NavigationList";
 import NotificationModal from "@/components/modals/NotificationModal";
 import { twMerge } from "tailwind-merge";
+import { getUser } from "@/actions/cookies";
 
 export const metadata: Metadata = {
   title: "Main Page Title",
@@ -15,13 +16,13 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-const MainLayout: NextPage<MainLayoutProps> = ({ children }) => {
-  const isLeft = true;
+const MainLayout: NextPage<MainLayoutProps> = async ({ children }) => {
+  const user = await getUser();
 
   return (
     <>
       <Header />
-      <div className={twMerge(["flex", !isLeft && "flex-row-reverse"])}>
+      <div className={twMerge(["flex", user?.settings?.app?.layout === 'right' && "flex-row-reverse"])}>
         <NavigationList />
         {children}
         <NotificationModal />

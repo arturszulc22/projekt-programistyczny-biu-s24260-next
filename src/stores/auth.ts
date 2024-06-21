@@ -4,7 +4,6 @@ import { User } from "@/interfaces/user";
 import {
   LoginFormData,
   RegisterFormData,
-  UpdateUserInformationData,
 } from "@/interfaces/auth";
 import { createUser, getUser, updateUser } from "@/api/user";
 
@@ -15,7 +14,7 @@ export type AuthState = {
 export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
   register: (data: RegisterFormData) => void;
-  update: (user, data: UpdateUserInformationData) => void;
+  update: (user, data) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -75,7 +74,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
         throw new Error("User not found!");
       }
     },
-    update: async (user, data: UpdateUserInformationData) => {
+    update: async (user, data) => {
       try {
         const requestData = {
           ...user,
