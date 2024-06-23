@@ -6,6 +6,7 @@ import {
   RegisterFormData,
 } from "@/interfaces/auth";
 import { createUser, getUser, updateUser } from "@/api/user";
+import {format} from "date-fns";
 
 export type AuthState = {
   user: User | null;
@@ -76,6 +77,10 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
     },
     update: async (user, data) => {
       try {
+        if (data.dateOfBirth) {
+          data.dateOfBirth = format(data.dateOfBirth, 'yyyy-MM-dd');
+        }
+
         const requestData = {
           ...user,
           ...data,

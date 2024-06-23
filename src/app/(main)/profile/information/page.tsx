@@ -227,7 +227,7 @@ const UserProfile: FC = () => {
                 )}
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
@@ -252,6 +252,33 @@ const UserProfile: FC = () => {
                   <Typography color="danger" fontSize="sm">
                     {errors.email.message}
                   </Typography>
+                )}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                    htmlFor="date-of-birth"
+                    className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
+                >
+                  Date of birth
+                </label>
+                <div className="mt-2">
+                  <input
+                      id="date-of-birth"
+                      {...register("dateOfBirth")}
+                      type="date"
+                      className={twMerge(
+                          "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                          errors.dateOfBirth &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
+                      defaultValue={user?.dateOfBirth}
+                  />
+                </div>
+                {errors.dateOfBirth && (
+                    <Typography color="danger" fontSize="sm">
+                      {errors.dateOfBirth.message}
+                    </Typography>
                 )}
               </div>
             </div>

@@ -19,4 +19,5 @@ export interface UpdateUserInformationData {
     email: string;
     shortDescription: string;
     imageURI: string;
+    dateOfBirth: string;
 }

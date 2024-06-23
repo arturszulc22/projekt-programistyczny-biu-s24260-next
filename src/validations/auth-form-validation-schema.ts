@@ -1,4 +1,4 @@
-import { mixed, object, ref, string } from "yup";
+import { date, object, ref, string } from "yup";
 
 export const loginFormValidationSchema = object({
   email: string().email(),
@@ -22,5 +22,11 @@ export const userInformationFormValidationSchema = object({
   userName: string().min(3).required(),
   email: string().email().required(),
   shortDescription: string().max(1000),
-  imageURI: string().required()
+  imageURI: string().required(),
+  dateOfBirth: date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .nullable()
+    .max(new Date(), "Date of birth cannot be in the future")
+    .min("1969-11-13", "Date is too early")
+    .required("Date of birth is required"),
 });
