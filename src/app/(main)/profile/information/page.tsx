@@ -110,7 +110,7 @@ const UserProfile: FC = () => {
                     {...register("shortDescription")}
                     rows={3}
                     className={twMerge(
-                      "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:text-dark-primary dark:bg-dark-primary-light-blue shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                      "block w-full rounded-md border dark:border-0 border-secondary py-1.5 px-2 text-primary-rose dark:text-dark-primary dark:bg-dark-primary-light-blue placeholder:text-gray-400 sm:text-sm sm:leading-6",
                       errors.shortDescription &&
                         "ring-red-600 focus-visible:outline-red-600",
                     )}
@@ -186,7 +186,7 @@ const UserProfile: FC = () => {
                     id="first-name"
                     autoComplete="given-name"
                     className={twMerge(
-                      "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
                       errors.firstName &&
                         "ring-red-600 focus-visible:outline-red-600",
                     )}
@@ -213,7 +213,7 @@ const UserProfile: FC = () => {
                     {...register("lastName")}
                     id="last-name"
                     className={twMerge(
-                      "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
                       errors.lastName &&
                         "ring-red-600 focus-visible:outline-red-600",
                     )}
@@ -241,7 +241,7 @@ const UserProfile: FC = () => {
                     type="email"
                     autoComplete="email"
                     className={twMerge(
-                      "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
                       errors.email &&
                         "ring-red-600 focus-visible:outline-red-600",
                     )}
@@ -268,7 +268,7 @@ const UserProfile: FC = () => {
                       {...register("dateOfBirth")}
                       type="date"
                       className={twMerge(
-                          "block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                          "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
                           errors.dateOfBirth &&
                           "ring-red-600 focus-visible:outline-red-600",
                       )}
