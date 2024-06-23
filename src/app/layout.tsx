@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import { AuthStoreProvider } from "@/providers/auth-store-provider";
 import { ThemeProvider } from "next-themes";
+import { getUser } from "@/actions/cookies";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +16,15 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
+const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
+  const user = await getUser();
   return (
     <html lang="en">
       <body
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
-        <AuthStoreProvider>
-          <ThemeProvider attribute="class">
-            {children}
-          </ThemeProvider>
+        <AuthStoreProvider user={user}>
+          <ThemeProvider attribute="class">{children}</ThemeProvider>
         </AuthStoreProvider>
       </body>
     </html>

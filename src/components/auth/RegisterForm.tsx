@@ -86,6 +86,33 @@ const RegisterForm: FC = () => {
 
       <div>
         <label
+            htmlFor="user-name"
+            className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
+        >
+          UserName
+        </label>
+        <div className="mt-2">
+          <input
+              id="user-name"
+              {...register("userName")}
+              autoComplete="username"
+              required
+              className={twMerge(
+                  "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6 focus-visible:outline-primary-rose dark:focus-visible:outline-dark-primary-light-blue",
+                  errors.userName && "ring-red-600 focus-visible:outline-red-600",
+              )}
+          />
+        </div>
+        {errors.userName && (
+            <Typography color="danger" fontSize="sm">
+              {errors.userName.message}
+            </Typography>
+        )}
+      </div>
+
+
+      <div>
+        <label
           htmlFor="email"
           className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
         >

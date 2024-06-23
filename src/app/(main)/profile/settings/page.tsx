@@ -1,13 +1,56 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 
-import { Container, IconButton, ToggleButtonGroup } from "@mui/joy";
+import {
+  Container,
+  FormControl,
+  FormLabel,
+  Radio,
+  radioClasses,
+  RadioGroup,
+  Sheet,
+  Switch,
+} from "@mui/joy";
 import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
 import DarkModeToggle from "@/components/layout/DarkModeToggle";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const UserSettings: FC = () => {
-  const [value, setValue] = useState<null | string>("left");
+  const { user, update } = useAuthStore((state) => state);
+
+  const updateUserLayout = (layout) => {
+    const userSettings = {
+      settings: {
+        ...user?.settings,
+      },
+    };
+    userSettings.settings.app.layout = layout;
+
+    update(user, userSettings);
+  };
+
+  const updateUserNotification = (isNotificationEnabled) => {
+    const userSettings = {
+      settings: {
+        ...user?.settings,
+      },
+    };
+    userSettings.settings.app.isNotificationEnabled = isNotificationEnabled;
+
+    update(user, userSettings);
+  };
+
+  const updateUserProfilePrivacy = (isPrivate) => {
+    const userSettings = {
+      settings: {
+        ...user?.settings,
+      },
+    };
+    userSettings.settings.profile.isPrivate = isPrivate;
+
+    update(user, userSettings);
+  };
 
   return (
     <Container className="my-10">
@@ -15,47 +58,105 @@ const UserSettings: FC = () => {
         Application Settings
       </h2>
 
-      <form>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8">
-            <div>
-              <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
-                Dark Mode
-              </h2>
-              <div>
-                <DarkModeToggle />
-              </div>
-            </div>
-            <div>
-              <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
-                Layout
-              </h2>
-              <div>
-                <ToggleButtonGroup
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                  className="mt-10 grid grid-cols-1 sm:grid-cols-3"
-                >
-                  <IconButton
-                    value="left"
-                    className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary"
-                  >
-                    <VerticalSplitIcon className="rotate-180 fill-primary-rose dark:fill-dark-primary-light-blue" />
-                  </IconButton>
-                  <IconButton
-                    value="right"
-                    className="bg-primary dark:bg-dark-primary-blue border-primary-rose dark:border-dark-primary-light-blue aria-pressed:bg-secondary dark:aria-pressed:bg-dark-secondary"
-                  >
-                    <VerticalSplitIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
-                  </IconButton>
-                </ToggleButtonGroup>
-              </div>
-            </div>
+      <div className="border-b border-gray-900/10 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8">
+        <div>
+          <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
+            Dark Mode
+          </h2>
+          <div>
+            <DarkModeToggle />
           </div>
+        </div>
+        <div>
+          <div>
+            <FormControl>
+              <FormLabel className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
+                Layout
+              </FormLabel>
+              <RadioGroup
+                aria-label="platform"
+                value={user?.settings?.app.layout}
+                overlay
+                name="layout"
+                className="mt-10"
+                onChange={(e) => updateUserLayout(e.target.value)}
+                sx={{
+                  flexDirection: "row",
+                  gap: 2,
+                  [`& .${radioClasses.checked}`]: {
+                    [`& .${radioClasses.action}`]: {
+                      inset: -1,
+                      border: "3px solid",
+                      borderColor: "primary.500",
+                    },
+                  },
+                  [`& .${radioClasses.radio}`]: {
+                    display: "contents",
+                    "& > svg": {
+                      zIndex: 2,
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      bgcolor: "background.surface",
+                      borderRadius: "50%",
+                    },
+                  },
+                }}
+              >
+                <Sheet
+                  variant="outlined"
+                  sx={{
+                    borderRadius: "md",
 
-          <div className="border-b border-gray-900/10 pb-12">
+                    boxShadow: "sm",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 1.5,
+                    p: 2,
+                    minWidth: 120,
+                  }}
+                >
+                  <FormLabel htmlFor="left-layout">
+                    <Radio
+                      id="left-layout"
+                      value="left"
+                      disableIcon
+                    />
+                  </FormLabel>
+                  <VerticalSplitIcon className="rotate-180 fill-primary-rose dark:fill-dark-primary" />
+                </Sheet>
+                <Sheet
+                  variant="outlined"
+                  sx={{
+                    borderRadius: "md",
+                    boxShadow: "sm",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 1.5,
+                    p: 2,
+                    minWidth: 120,
+                  }}
+                >
+                  <FormLabel htmlFor="right-layout">
+                    <Radio
+                      id="right-layout"
+                      value="right"
+                      disableIcon
+                    />
+                  </FormLabel>
+                  <VerticalSplitIcon className="fill-primary-rose dark:fill-dark-primary" />
+                </Sheet>
+              </RadioGroup>
+            </FormControl>
+          </div>
+        </div>
+      </div>
+
+      <form className="pt-12">
+        <div className="space-y-12">
+          <div className="pb-12">
             <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
               Notifications
             </h2>
@@ -64,147 +165,36 @@ const UserSettings: FC = () => {
               what else you want to hear about.
             </p>
 
-            <div className="mt-10 space-y-10">
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">
-                  By Email
-                </legend>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="comments"
-                        name="comments"
-                        type="checkbox"
-                        className="h-6 w-6 rounded accent-primary-rose dark:accent-dark-primary"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="comments"
-                        className="font-medium text-primary-rose dark:text-dark-primary-light-blue"
-                      >
-                        Comments
-                      </label>
-                      <p className="text-primary-rose dark:text-dark-primary-light-blue">
-                        Get notified when someones posts a comment on a posting.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="candidates"
-                        name="candidates"
-                        type="checkbox"
-                        className="h-6 w-6 rounded border-gray-300 accent-primary-rose dark:accent-dark-primary"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="candidates"
-                        className="font-medium text-primary-rose dark:text-dark-primary-light-blue"
-                      >
-                        Candidates
-                      </label>
-                      <p className="text-primary-rose dark:text-dark-primary-light-blue">
-                        Get notified when a candidate applies for a job.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="offers"
-                        name="offers"
-                        type="checkbox"
-                        className="h-6 w-6 rounded border-gray-300 accent-primary-rose dark:accent-dark-primary"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="offers"
-                        className="font-medium text-primary-rose dark:text-dark-primary-light-blue"
-                      >
-                        Offers
-                      </label>
-                      <p className="text-primary-rose dark:text-dark-primary-light-blue">
-                        Get notified when a candidate accepts or rejects an
-                        offer.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue">
-                  Push Notifications
-                </legend>
-                <p className="mt-1 text-sm leading-6 text-primary-rose dark:text-dark-primary-light-blue">
-                  These are delivered via SMS to your mobile phone.
-                </p>
-                <div className="mt-6 space-y-6">
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-everything"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-6 w-4 accent-primary-rose dark:accent-dark-primary"
-                    />
-                    <label
-                      htmlFor="push-everything"
-                      className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                    >
-                      Everything
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-email"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-6 w-4 accent-primary-rose dark:accent-dark-primary"
-                    />
-                    <label
-                      htmlFor="push-email"
-                      className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                    >
-                      Same as email
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="push-nothing"
-                      name="push-notifications"
-                      type="radio"
-                      className="h-6 w-4 accent-primary-rose dark:accent-dark-primary"
-                    />
-                    <label
-                      htmlFor="push-nothing"
-                      className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-                    >
-                      No push notifications
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
+            <Switch
+              className="mt-3"
+              checked={user?.settings.app.isNotificationEnabled}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                updateUserNotification(event.target.checked)
+              }
+            />
           </div>
         </div>
+      </form>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
-          >
-            Save
-          </button>
+      <form>
+        <div className="space-y-12">
+          <div className="pb-12">
+            <h2 className="text-base font-semibold leading-7 text-primary-rose dark:text-dark-primary-light-blue">
+              Private profile
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-primary-rose dark:text-dark-primary-light-blue">
+              Set profile to private to hide your post, and set them followers
+              only.
+            </p>
+
+            <Switch
+              className="mt-3"
+              checked={user?.settings.profile.isPrivate}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                updateUserProfilePrivacy(event.target.checked)
+              }
+            />
+          </div>
         </div>
       </form>
     </Container>

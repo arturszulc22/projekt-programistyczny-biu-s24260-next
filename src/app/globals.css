@@ -113,3 +113,32 @@
     @apply fill-primary-rose dark:fill-dark-primary-light-blue;
 }
 /* Drawer - end */
+
+/* Checked Input */
+.css-mrg5eo-JoyRadioGroup-root .Mui-checked .MuiRadio-action {
+    @apply border-primary-rose dark:border-dark-primary
+}
+/* Checked Input - end*/
+
+/* Switch */
+.css-1kynshp-JoySwitch-track.Mui-checked {
+    @apply bg-primary-rose dark:bg-dark-primary;
+}
+
+.css-1kynshp-JoySwitch-track {
+    @apply bg-primary dark:bg-gray-400
+}
+
+.css-d5sxl0-JoySwitch-thumb {
+    @apply shadow-none
+}
+/* Switch - end */
+
+/* Radio */
+@media (hover: hover) {
+    .css-71im7q-JoyRadio-action:hover:hover,
+    .css-18fcfow-JoyRadio-action:hover {
+        @apply bg-transparent
+    }
+}
+/* Radio end */

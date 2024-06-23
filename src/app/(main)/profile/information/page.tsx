@@ -1,22 +1,50 @@
 "use client";
 
-import { FC } from "react";
-import UserCircleIcon from "@public/icons/user-circle-icon.svg";
+import { FC, useState } from "react";
 import { Container } from "@mui/material";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-type Inputs = {
-  userName: string;
-  description: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
+import { userInformationFormValidationSchema } from "@/validations/auth-form-validation-schema";
+import { UpdateUserInformationData } from "@/interfaces/auth";
+import { twMerge } from "tailwind-merge";
+import {
+  Avatar,
+  Snackbar,
+  Typography,
+} from "@mui/joy";
 
 const UserProfile: FC = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const [preview, setPreview] = useState("");
+  const { user, update } = useAuthStore((state) => state);
+  const [state, setState] = useState({
+    open: false,
+    message: "",
+    isError: false,
+  });
+
+  const resolver = useYupValidationResolver(
+    userInformationFormValidationSchema,
+  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateUserInformationData>({ resolver });
+
+  const onSubmit: SubmitHandler<UpdateUserInformationData> = async (data) => {
+    try {
+      await update(user, data);
+      setState({
+        open: true,
+        message: "User has been updated!",
+        isError: false,
+      });
+    } catch (e: Error) {
+      setState({ open: true, message: "Something went wrong!", isError: true });
+    }
+  };
 
   return (
     <Container className="my-10">
@@ -31,7 +59,7 @@ const UserProfile: FC = () => {
               share.
             </p>
             <Link
-              href="/profile/12"
+              href={"/profile/" + user?.id}
               className="bg-primary-rose dark:bg-dark-primary-blue text-primary dark:text-dark-primary-light-blue rounded-md px-3 py-2 text-sm font-medium"
             >
               Profile page
@@ -52,10 +80,20 @@ const UserProfile: FC = () => {
                       {...register("userName")}
                       id="username"
                       autoComplete="username"
-                      className="block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
+                      className={twMerge(
+                        "block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                        errors.userName &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
                       placeholder="john@doe"
+                      defaultValue={user?.userName}
                     />
                   </div>
+                  {errors.userName && (
+                    <Typography color="danger" fontSize="sm">
+                      {errors.userName.message}
+                    </Typography>
+                  )}
                 </div>
               </div>
 
@@ -69,12 +107,21 @@ const UserProfile: FC = () => {
                 <div className="mt-2">
                   <textarea
                     id="about"
-                    {...register("description")}
+                    {...register("shortDescription")}
                     rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:text-dark-primary dark:bg-dark-primary-light-blue shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    defaultValue={""}
+                    className={twMerge(
+                      "block w-full rounded-md border dark:border-0 border-secondary py-1.5 px-2 text-primary-rose dark:text-dark-primary dark:bg-dark-primary-light-blue placeholder:text-gray-400 sm:text-sm sm:leading-6",
+                      errors.shortDescription &&
+                        "ring-red-600 focus-visible:outline-red-600",
+                    )}
+                    defaultValue={user?.shortDescription}
                   />
                 </div>
+                {errors.shortDescription && (
+                  <Typography color="danger" fontSize="sm">
+                    {errors.shortDescription.message}
+                  </Typography>
+                )}
                 <p className="mt-3 text-sm leading-6 text-primary-rose dark:text-dark-primary-light-blue">
                   Write a few sentences about yourself.
                 </p>
@@ -82,22 +129,35 @@ const UserProfile: FC = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="image-uri"
                   className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
                 >
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  <UserCircleIcon
+                  <Avatar
+                    src={preview || user?.imageURI}
                     className="h-12 w-12 text-primary-rose dark:text-dark-primary-light-blue"
                     aria-hidden="true"
                   />
-                  <button
-                    type="button"
-                    className="rounded-md bg-white dark:bg-dark-primary-light-blue dark:border-0 px-2.5 py-1.5 text-sm font-semibold text-primary-rose dark:text-dark-primary shadow-sm hover:bg-gray-50"
-                  >
-                    Change
-                  </button>
+                  <input
+                      type="text"
+                      {...register("imageURI")}
+                      id="image-uri"
+                      className={twMerge(
+                          "block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                          errors.imageURI &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
+                      placeholder="Image URI"
+                      defaultValue={user?.imageURI}
+                      onChange={(e) => setPreview(e.target.value)}
+                  />
+                  {errors.imageURI && (
+                    <Typography color="danger" fontSize="sm">
+                      {errors.imageURI.message}
+                    </Typography>
+                  )}
                 </div>
               </div>
             </div>
@@ -125,9 +185,19 @@ const UserProfile: FC = () => {
                     {...register("firstName")}
                     id="first-name"
                     autoComplete="given-name"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className={twMerge(
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                      errors.firstName &&
+                        "ring-red-600 focus-visible:outline-red-600",
+                    )}
+                    defaultValue={user?.firstName}
                   />
                 </div>
+                {errors.firstName && (
+                  <Typography color="danger" fontSize="sm">
+                    {errors.firstName.message}
+                  </Typography>
+                )}
               </div>
 
               <div className="sm:col-span-3">
@@ -142,13 +212,22 @@ const UserProfile: FC = () => {
                     type="text"
                     {...register("lastName")}
                     id="last-name"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className={twMerge(
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                      errors.lastName &&
+                        "ring-red-600 focus-visible:outline-red-600",
+                    )}
+                    defaultValue={user?.lastName}
                   />
                 </div>
+                {errors.lastName && (
+                  <Typography color="danger" fontSize="sm">
+                    {errors.lastName.message}
+                  </Typography>
+                )}
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
@@ -161,21 +240,52 @@ const UserProfile: FC = () => {
                     {...register("email")}
                     type="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-primary-rose dark:bg-dark-primary-light-blue border-0 dark:text-gray-800 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className={twMerge(
+                      "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                      errors.email &&
+                        "ring-red-600 focus-visible:outline-red-600",
+                    )}
+                    defaultValue={user?.email}
                   />
                 </div>
+                {errors.email && (
+                  <Typography color="danger" fontSize="sm">
+                    {errors.email.message}
+                  </Typography>
+                )}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                    htmlFor="date-of-birth"
+                    className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
+                >
+                  Date of birth
+                </label>
+                <div className="mt-2">
+                  <input
+                      id="date-of-birth"
+                      {...register("dateOfBirth")}
+                      type="date"
+                      className={twMerge(
+                          "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                          errors.dateOfBirth &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
+                      defaultValue={user?.dateOfBirth}
+                  />
+                </div>
+                {errors.dateOfBirth && (
+                    <Typography color="danger" fontSize="sm">
+                      {errors.dateOfBirth.message}
+                    </Typography>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-primary-rose dark:text-dark-primary-light-blue"
-          >
-            Cancel
-          </button>
           <button
             type="submit"
             className="flex justify-center rounded-md bg-primary-rose dark:bg-dark-secondary dark:border-2 dark:border-dark-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-primary dark:text-dark-primary-light-blue shadow-sm"
@@ -184,6 +294,19 @@ const UserProfile: FC = () => {
           </button>
         </div>
       </form>
+      {state.open && (
+        <Snackbar
+          open={state.open}
+          variant="plain"
+          className={twMerge([
+            !state.isError && "bg-green-300 color-green-600",
+            state.isError && "bg-red-300",
+          ])}
+          onClick={() => setState({ ...state, open: false })}
+        >
+          {state.message}
+        </Snackbar>
+      )}
     </Container>
   );
 };

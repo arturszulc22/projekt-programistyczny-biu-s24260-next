@@ -24,25 +24,25 @@ const DarkModeToggle: FC = () => {
     <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
       <div
         className={twMerge([
-          "border-2 p-1",
+          "border-4 rounded",
           isDark === "light" ? "border-primary-rose" : "border-transparent",
         ])}
         onClick={() => handleToggleMode("light")}
       >
-        <div className="w-full bg-primary flex rounded">
+        <div className="w-full h-full bg-primary flex">
           <LightModeIcon className="w-10 h-10 mx-auto fill-primary-rose my-20" />
         </div>
       </div>
       <div
         className={twMerge([
-          "border-2 p-1",
+          "border-4 rounded",
           isDark === "dark"
-            ? "border-dark-primary dark:border-dark-primary-light-blue"
+            ? "border-dark-primary dark:border-dark-primary"
             : "border-transparent",
         ])}
         onClick={() => handleToggleMode("dark")}
       >
-        <div className="w-full bg-dark-primary dark:bg-dark-primary-light-blue flex rounded">
+        <div className="w-full h-full bg-dark-primary dark:bg-dark-primary-blue flex">
           <DarkModeIcon className="w-10 h-10 mx-auto fill-dark-primary-light-blue dark:fill-dark-primary my-20" />
         </div>
       </div>

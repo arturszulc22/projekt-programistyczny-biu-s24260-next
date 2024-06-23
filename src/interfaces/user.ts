@@ -2,12 +2,13 @@ export interface User {
   id: string;
   firstName: string;
   lastName: string;
+  userName: string;
   password: string;
   email: string;
   dateOfBirth?: string;
   age?: number;
   shortDescription?: string;
-  imageUrl?: string;
+  imageURI?: string;
   settings: UserSettings;
 }
 
