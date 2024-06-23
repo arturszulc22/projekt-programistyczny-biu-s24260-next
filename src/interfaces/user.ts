@@ -15,6 +15,7 @@ export interface User {
 export interface UserSettings {
   profile: UserProfileSettings;
   app: UserAppSettings;
+  isAdmin: boolean;
 }
 
 export interface UserProfileSettings {

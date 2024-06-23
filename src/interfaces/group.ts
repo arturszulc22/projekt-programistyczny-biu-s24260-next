@@ -1,8 +1,11 @@
+import { User } from "@/interfaces/user";
+
 export interface Group {
   id: string;
-  userId: string;
+  user: User;
   name: string;
   shortDescription: string;
   imageURI: string;
-  isPublic: boolean;
+  isPrivate: boolean;
+  users: User[];
 }

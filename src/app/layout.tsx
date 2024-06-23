@@ -2,6 +2,7 @@ import type { Metadata, NextPage } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import { AuthStoreProvider } from "@/providers/auth-store-provider";
+import { GroupsStoreProvider } from "@/providers/groups-store-provider";
 import { ThemeProvider } from "next-themes";
 import { getUser } from "@/actions/cookies";
 
@@ -24,7 +25,9 @@ const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
         <AuthStoreProvider user={user}>
-          <ThemeProvider attribute="class">{children}</ThemeProvider>
+          <GroupsStoreProvider>
+            <ThemeProvider attribute="class">{children}</ThemeProvider>
+          </GroupsStoreProvider>
         </AuthStoreProvider>
       </body>
     </html>
