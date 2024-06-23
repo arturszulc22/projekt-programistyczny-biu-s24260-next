@@ -13,12 +13,16 @@ const Groups: FC = () => {
   const { groups } = useGroupsStore((state) => state);
   const [alignment, setAlignment] = useState("user");
 
-  const userGroups = groups.filter((group) =>
-    group.users.some((user) => user.id === auth.id),
+  const userGroups = groups.filter(
+    (group) =>
+      group.user.id === auth?.id ||
+      group.users.some((user) => user.id === auth?.id),
   );
 
-  const otherGroups = groups.filter((group) =>
-      group.users.some((user) => user.id !== auth.id),
+  const otherGroups = groups.filter(
+    (group) =>
+      group.user.id !== auth?.id &&
+      !group.users.some((user) => user.id === auth?.id),
   );
 
   return (

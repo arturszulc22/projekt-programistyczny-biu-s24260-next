@@ -12,10 +12,22 @@ import {
 } from "@mui/joy";
 import Link from "next/link";
 import { useAuthStore } from "@/providers/auth-store-provider";
+import StarIcon from "@mui/icons-material/Star";
+import { useGroupsStore } from "@/providers/groups-store-provider";
+import { useRouter } from "next/navigation";
 
 const GroupCard: FC = ({ group }) => {
+  const { push } = useRouter();
   const { user: auth } = useAuthStore((state) => state);
-  const isUserInGroup = group.users.some((user) => user.id === auth.id);
+  const { addUserToGroup } = useGroupsStore((state) => state);
+  const isUserInGroup =
+    group.user.id === auth?.id ||
+    group.users.some((user) => user.id === auth?.id);
+
+  const handleAddUserToGroup = () => {
+    addUserToGroup(group.id, auth);
+    push("/group/" + group.id);
+  };
 
   return (
     <Card
@@ -24,8 +36,12 @@ const GroupCard: FC = ({ group }) => {
         // to make the card resizable
         overflow: "auto",
       }}
-      className="bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
+      className="relative bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
     >
+      {auth?.id === group.user.id && (
+        <StarIcon className="absolute right-1 top-1 fill-yellow-600" />
+      )}
+
       <Box
         sx={{
           display: "flex",
@@ -68,14 +84,14 @@ const GroupCard: FC = ({ group }) => {
       <CardActions>
         {isUserInGroup && (
           <Button component={Link} href={"/group/" + group.id} variant="solid">
-            Go
+            Open Group
           </Button>
         )}
 
         {!isUserInGroup && (
-            <Button variant="solid">
-              Join
-            </Button>
+          <Button variant="solid" onClick={handleAddUserToGroup}>
+            Join
+          </Button>
         )}
       </CardActions>
     </Card>

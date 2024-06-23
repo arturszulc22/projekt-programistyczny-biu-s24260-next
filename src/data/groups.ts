@@ -33,7 +33,6 @@ export const groups: Group[] = [
       "A group for people who love discussing the latest in technology.",
     imageURI:
       "https://images.unsplash.com/photo-1717241365608-5565eef72d89?q=80&w=1941&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    isPrivate: false,
     users: [
       {
         id: "2",
