@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
   AspectRatio,
   Card,
@@ -8,13 +8,29 @@ import {
   Divider,
   IconButton,
   Typography,
-  Link,
+  Link as JoyLink
 } from "@mui/joy";
+import Link from "next/link";
 import { Favorite } from "@mui/icons-material";
 import { twMerge } from "tailwind-merge";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useRouter } from "next/navigation";
+import { useEventsStore } from "@/providers/events-store-provider";
 
 const EventCard: FC = ({ event }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const { push } = useRouter();
+  const { user: auth } = useAuthStore((state) => state);
+  const { addUserToEvent, removeUserFromEvent } = useEventsStore(
+    (state) => state,
+  );
+  const isUserInEvent =
+    event.user.id === auth?.id ||
+    event.users.some((user) => user.id === auth?.id);
+
+  const handleAddUserToEvent = () => {
+    addUserToEvent(event.id, auth);
+    push("/event/" + event.id);
+  };
 
   const eventDate = new Date(event.dateTime);
 
@@ -40,8 +56,7 @@ const EventCard: FC = ({ event }) => {
       <CardOverflow>
         <AspectRatio ratio="2">
           <img
-            src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318"
-            srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
+            src={event.imageURI}
             loading="lazy"
             alt=""
           />
@@ -59,12 +74,16 @@ const EventCard: FC = ({ event }) => {
             transform: "translateY(50%)",
           }}
           className="bg-secondary dark:bg-dark-primary-blue"
-          onClick={() => setIsLiked(!isLiked)}
+          onClick={() =>
+            isUserInEvent
+              ? removeUserFromEvent(event.id, auth)
+              : handleAddUserToEvent()
+          }
         >
           <Favorite
             className={twMerge([
-              isLiked && "fill-bg-red-500 stroke-2 fill-red-500",
-              !isLiked &&
+              isUserInEvent && "fill-bg-red-500 stroke-2 fill-red-500",
+              !isUserInEvent &&
                 "stroke-primary dark:stroke-dark-primary-light-blue stroke-2 fill-transparent",
             ])}
           />
@@ -72,14 +91,15 @@ const EventCard: FC = ({ event }) => {
       </CardOverflow>
       <CardContent>
         <Typography level="title-md">
-          <Link
+          <JoyLink
             overlay
             href={"/event/" + event.id}
             underline="none"
+            component={Link}
             className="text-primary-rose dark:text-dark-primary-light-blue"
           >
             {event.name}
-          </Link>
+          </JoyLink>
         </Typography>
         <Typography
           level="body-sm"
@@ -98,7 +118,7 @@ const EventCard: FC = ({ event }) => {
             level="body-xs"
             className="text-primary-rose dark:text-dark-primary-light-blue"
           >
-            6.3k views
+            {event.users.length} users
           </Typography>
           <Divider orientation="vertical" />
           <Typography
