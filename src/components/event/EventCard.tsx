@@ -8,7 +8,7 @@ import {
   Divider,
   IconButton,
   Typography,
-  Link as JoyLink
+  Link as JoyLink,
 } from "@mui/joy";
 import Link from "next/link";
 import { Favorite } from "@mui/icons-material";
@@ -23,9 +23,9 @@ const EventCard: FC = ({ event }) => {
   const { addUserToEvent, removeUserFromEvent } = useEventsStore(
     (state) => state,
   );
+  const isUserAuthor = event.user.id === auth?.id;
   const isUserInEvent =
-    event.user.id === auth?.id ||
-    event.users.some((user) => user.id === auth?.id);
+    isUserAuthor || event.users.some((user) => user.id === auth?.id);
 
   const handleAddUserToEvent = () => {
     addUserToEvent(event.id, auth);
@@ -42,9 +42,8 @@ const EventCard: FC = ({ event }) => {
     const day = pad(date.getDate());
     const hours = pad(date.getHours());
     const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
   return (
@@ -55,39 +54,37 @@ const EventCard: FC = ({ event }) => {
     >
       <CardOverflow>
         <AspectRatio ratio="2">
-          <img
-            src={event.imageURI}
-            loading="lazy"
-            alt=""
-          />
+          <img src={event.imageURI} loading="lazy" alt="" />
         </AspectRatio>
-        <IconButton
-          aria-label="Like minimal photography"
-          size="md"
-          variant="solid"
-          sx={{
-            position: "absolute",
-            zIndex: 2,
-            borderRadius: "50%",
-            right: "1rem",
-            bottom: 0,
-            transform: "translateY(50%)",
-          }}
-          className="bg-secondary dark:bg-dark-primary-blue"
-          onClick={() =>
-            isUserInEvent
-              ? removeUserFromEvent(event.id, auth)
-              : handleAddUserToEvent()
-          }
-        >
-          <Favorite
-            className={twMerge([
-              isUserInEvent && "fill-bg-red-500 stroke-2 fill-red-500",
-              !isUserInEvent &&
-                "stroke-primary dark:stroke-dark-primary-light-blue stroke-2 fill-transparent",
-            ])}
-          />
-        </IconButton>
+        {!isUserAuthor && (
+          <IconButton
+            aria-label="Like minimal photography"
+            size="md"
+            variant="solid"
+            sx={{
+              position: "absolute",
+              zIndex: 2,
+              borderRadius: "50%",
+              right: "1rem",
+              bottom: 0,
+              transform: "translateY(50%)",
+            }}
+            className="bg-secondary dark:bg-dark-primary-blue"
+            onClick={() =>
+              isUserInEvent
+                ? removeUserFromEvent(event.id, auth)
+                : handleAddUserToEvent()
+            }
+          >
+            <Favorite
+              className={twMerge([
+                isUserInEvent && "fill-bg-red-500 stroke-2 fill-red-500",
+                !isUserInEvent &&
+                  "stroke-primary dark:stroke-dark-primary-light-blue stroke-2 fill-transparent",
+              ])}
+            />
+          </IconButton>
+        )}
       </CardOverflow>
       <CardContent>
         <Typography level="title-md">

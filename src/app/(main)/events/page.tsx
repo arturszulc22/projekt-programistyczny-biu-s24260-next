@@ -45,7 +45,7 @@ const Events: FC = () => {
         <Button
           component={Link}
           variant="solid"
-          href="event/create"
+          href="events/create"
           className="flex items-center"
         >
           <PlusIcon className="w-8 h-8" />

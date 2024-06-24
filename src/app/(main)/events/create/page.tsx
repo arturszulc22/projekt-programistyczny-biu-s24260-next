@@ -1,19 +1,38 @@
 "use client";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "@mui/joy";
-
-type Inputs = {
-  name: string;
-  description: string;
-  shortDescription: string;
-  image: File;
-  dateTime: string;
-};
+import {Button, Typography} from "@mui/joy";
+import {useAuthStore} from "@/providers/auth-store-provider";
+import {useYupValidationResolver} from "@/resolvers/yupValidationResolver";
+import {createEventValidationSchema} from "@/validations/event-validation-schema";
+import {EventCreate, EventCreateFormData} from "@/interfaces/event";
+import {useRouter} from "next/navigation";
+import {useEventsStore} from "@/providers/events-store-provider";
+import { v4 as uuidv4 } from 'uuid';
 
 const EventCreate: FC = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const { push } = useRouter();
+  const { user } = useAuthStore((state) => state);
+  const { addEvent } = useEventsStore((state) => state);
+
+  const resolver = useYupValidationResolver(createEventValidationSchema);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<EventCreateFormData>({ resolver });
+
+  const onSubmit: SubmitHandler<EventCreate> = (data) => {
+    data.id = uuidv4();
+    data.user = user;
+    data.users = [];
+
+    addEvent(data);
+    reset();
+    push("/events");
+  };
+
 
   return (
     <div className="flex flex-col w-full justify-center px-6 py-12 lg:px-8">
@@ -40,6 +59,11 @@ const EventCreate: FC = () => {
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
+            {errors.name && (
+                <Typography color="danger" fontSize="sm">
+                  {errors.name.message}
+                </Typography>
+            )}
           </div>
 
           <div>
@@ -59,6 +83,11 @@ const EventCreate: FC = () => {
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
+            {errors.dateTime && (
+                <Typography color="danger" fontSize="sm">
+                  {errors.dateTime.message}
+                </Typography>
+            )}
           </div>
 
           <div>
@@ -76,6 +105,11 @@ const EventCreate: FC = () => {
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
+            {errors.shortDescription && (
+                <Typography color="danger" fontSize="sm">
+                  {errors.shortDescription.message}
+                </Typography>
+            )}
           </div>
 
           <div>
@@ -93,6 +127,11 @@ const EventCreate: FC = () => {
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
+            {errors.description && (
+                <Typography color="danger" fontSize="sm">
+                  {errors.description.message}
+                </Typography>
+            )}
           </div>
 
           <div>
@@ -105,12 +144,17 @@ const EventCreate: FC = () => {
             <div className="mt-2">
               <input
                 id="image"
-                type="file"
-                {...register("image")}
+                type="string"
+                {...register("imageURI")}
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue
                 ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
               />
             </div>
+            {errors.imageURI && (
+                <Typography color="danger" fontSize="sm">
+                  {errors.imageURI.message}
+                </Typography>
+            )}
           </div>
 
           <div>

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 import EventCard from "@/components/event/EventCard";
+import {Typography} from "@mui/joy";
 
 const EventsTab: FC = ({ events }: object[]) => {
   return (
@@ -18,6 +19,14 @@ const EventsTab: FC = ({ events }: object[]) => {
           <EventCard event={event} />
         </Grid>
       ))}
+      {events.length <= 0 && (
+          <Typography
+              level="body-sm"
+              className="text-primary-rose dark:text-dark-primary-light-blue ml-8"
+          >
+            No events here!
+          </Typography>
+      )}
     </Grid>
   );
 };
