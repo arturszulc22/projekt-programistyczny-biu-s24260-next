@@ -4,9 +4,7 @@ import { Modal, ModalDialog, Typography } from "@mui/joy";
 import CloseIcon from "@mui/icons-material/Close";
 import UserCardSecondary from "@/components/user/UserCardSecondary";
 
-const SearchModal: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const SearchModal: FC = ({ isOpen, onCloseModal }) => {
   const user = {
     id: 2,
     firstName: "Anna",
@@ -21,11 +19,11 @@ const SearchModal: FC = () => {
   };
 
   return (
-    <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+    <Modal open={isOpen} onClose={onCloseModal}>
       <ModalDialog className="bg-primary dark:bg-dark-primary border-0 w-full h-full md:max-w-3xl md:h-auto">
         <CloseIcon
           className="absolute top-2 right-2 fill-primary-rose dark:fill-dark-primary-light-blue"
-          onClick={() => setIsOpen(false)}
+          onClick={onCloseModal}
         />
         <Typography className="text-primary-rose dark:text-dark-primary-light-blue text-xl mb-3">
           Search profiles
