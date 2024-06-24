@@ -5,30 +5,25 @@ import GroupsTab from "@/components/groups/GroupsTab";
 import PlusIcon from "@public/icons/plus.svg";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
 import Link from "next/link";
+import { useGroupsStore } from "@/providers/groups-store-provider";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const Groups: FC = () => {
+  const { user: auth } = useAuthStore((state) => state);
+  const { groups } = useGroupsStore((state) => state);
   const [alignment, setAlignment] = useState("user");
 
-  const groups = [
-    {
-      id: 1,
-      name: "Tech Enthusiasts",
-      shortDescription:
-        "A group for people who love discussing the latest in technology.",
-    },
-    {
-      id: 2,
-      name: "Fitness Buffs",
-      shortDescription:
-        "Join this group to share fitness tips and workout routines.",
-    },
-    {
-      id: 3,
-      name: "Book Club",
-      shortDescription:
-        "A community for book lovers to discuss their favorite reads.",
-    },
-  ];
+  const userGroups = groups.filter(
+    (group) =>
+      group.user.id === auth?.id ||
+      group.users.some((user) => user.id === auth?.id),
+  );
+
+  const otherGroups = groups.filter(
+    (group) =>
+      group.user.id !== auth?.id &&
+      !group.users.some((user) => user.id === auth?.id),
+  );
 
   return (
     <Container className="py-10">
@@ -56,8 +51,8 @@ const Groups: FC = () => {
         </Button>
       </div>
 
-      {alignment === "user" && <GroupsTab groups={groups} />}
-      {alignment === "others" && <GroupsTab groups={groups} />}
+      {alignment === "user" && <GroupsTab groups={userGroups} />}
+      {alignment === "others" && <GroupsTab groups={otherGroups} />}
     </Container>
   );
 };

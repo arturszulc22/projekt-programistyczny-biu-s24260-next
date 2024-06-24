@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import {
   Avatar,
@@ -10,8 +11,24 @@ import {
   Typography,
 } from "@mui/joy";
 import Link from "next/link";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import StarIcon from "@mui/icons-material/Star";
+import { useGroupsStore } from "@/providers/groups-store-provider";
+import { useRouter } from "next/navigation";
 
 const GroupCard: FC = ({ group }) => {
+  const { push } = useRouter();
+  const { user: auth } = useAuthStore((state) => state);
+  const { addUserToGroup } = useGroupsStore((state) => state);
+  const isUserInGroup =
+    group.user.id === auth?.id ||
+    group.users.some((user) => user.id === auth?.id);
+
+  const handleAddUserToGroup = () => {
+    addUserToGroup(group.id, auth);
+    push("/group/" + group.id);
+  };
+
   return (
     <Card
       sx={{
@@ -19,8 +36,12 @@ const GroupCard: FC = ({ group }) => {
         // to make the card resizable
         overflow: "auto",
       }}
-      className="bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
+      className="relative bg-primary border-primary-rose dark:bg-dark-primary dark:border-dark-primary"
     >
+      {auth?.id === group.user.id && (
+        <StarIcon className="absolute right-1 top-1 fill-yellow-600" />
+      )}
+
       <Box
         sx={{
           display: "flex",
@@ -28,12 +49,22 @@ const GroupCard: FC = ({ group }) => {
           alignItems: "center",
         }}
       >
-        <Avatar src="/static/images/avatar/1.jpg" size="lg" />
+        <Avatar src={group.user.imageURI} size="lg" />
         <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
-          <Avatar src="/static/images/avatar/2.jpg" />
-          <Avatar src="/static/images/avatar/3.jpg" />
-          <Avatar src="/static/images/avatar/4.jpg" />
-          <Avatar>+4K</Avatar>
+          {group.users.length > 3 ? (
+            <>
+              {group.users.slice(0, 3).map((user) => (
+                <Avatar src={user.imageURI} key={user.id} />
+              ))}
+              <Avatar>+{group.users.length - 3}</Avatar>
+            </>
+          ) : (
+            <>
+              {group.users.map((user) => (
+                <Avatar src={user.imageURI} key={user.id} />
+              ))}
+            </>
+          )}
         </AvatarGroup>
       </Box>
       <CardContent>
@@ -51,9 +82,17 @@ const GroupCard: FC = ({ group }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button component={Link} href={"/group/" + group.id} variant="solid">
-          Join
-        </Button>
+        {isUserInGroup && (
+          <Button component={Link} href={"/group/" + group.id} variant="solid">
+            Open Group
+          </Button>
+        )}
+
+        {!isUserInGroup && (
+          <Button variant="solid" onClick={handleAddUserToGroup}>
+            Join
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
