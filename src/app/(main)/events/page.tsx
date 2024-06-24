@@ -15,13 +15,13 @@ const Events: FC = () => {
 
   const userEvents = events.filter(
     (event) =>
-      event.user.id === auth?.id ||
+      event.user?.id === auth?.id ||
       event.users.some((user) => user.id === auth?.id),
   );
 
   const otherGroups = events.filter(
     (event) =>
-      event.user.id !== auth?.id &&
+      event.user?.id !== auth?.id &&
       !event.users.some((user) => user.id === auth?.id),
   );
 
