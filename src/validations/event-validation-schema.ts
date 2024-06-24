@@ -1,6 +1,14 @@
 import { date, object, string } from "yup";
 
-export const createEventValidationSchema = object({
+export interface EventFormDataInterface {
+  name: string;
+  shortDescription: string;
+  description: string;
+  dateTime: string;
+  imageURI: string;
+}
+
+export const eventValidationSchema = object({
   name: string().min(3).required(),
   shortDescription: string().min(3).required(),
   description: string().min(3).required(),

@@ -1,29 +1,32 @@
 "use client";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {Button, Typography} from "@mui/joy";
-import {useAuthStore} from "@/providers/auth-store-provider";
-import {useYupValidationResolver} from "@/resolvers/yupValidationResolver";
-import {createEventValidationSchema} from "@/validations/event-validation-schema";
-import {EventCreate, EventCreateFormData} from "@/interfaces/event";
-import {useRouter} from "next/navigation";
-import {useEventsStore} from "@/providers/events-store-provider";
-import { v4 as uuidv4 } from 'uuid';
+import { Button, Typography } from "@mui/joy";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
+import {
+  EventFormDataInterface,
+  eventValidationSchema,
+} from "@/validations/event-validation-schema";
+import { Event } from "@/interfaces/event";
+import { useRouter } from "next/navigation";
+import { useEventsStore } from "@/providers/events-store-provider";
+import { v4 as uuidv4 } from "uuid";
 
 const EventCreate: FC = () => {
   const { push } = useRouter();
   const { user } = useAuthStore((state) => state);
   const { addEvent } = useEventsStore((state) => state);
 
-  const resolver = useYupValidationResolver(createEventValidationSchema);
+  const resolver = useYupValidationResolver(eventValidationSchema);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<EventCreateFormData>({ resolver });
+  } = useForm<EventFormDataInterface>({ resolver });
 
-  const onSubmit: SubmitHandler<EventCreate> = (data) => {
+  const onSubmit: SubmitHandler<Event> = (data) => {
     data.id = uuidv4();
     data.user = user;
     data.users = [];
@@ -32,7 +35,6 @@ const EventCreate: FC = () => {
     reset();
     push("/events");
   };
-
 
   return (
     <div className="flex flex-col w-full justify-center px-6 py-12 lg:px-8">
@@ -60,9 +62,9 @@ const EventCreate: FC = () => {
               />
             </div>
             {errors.name && (
-                <Typography color="danger" fontSize="sm">
-                  {errors.name.message}
-                </Typography>
+              <Typography color="danger" fontSize="sm">
+                {errors.name.message}
+              </Typography>
             )}
           </div>
 
@@ -84,9 +86,9 @@ const EventCreate: FC = () => {
               />
             </div>
             {errors.dateTime && (
-                <Typography color="danger" fontSize="sm">
-                  {errors.dateTime.message}
-                </Typography>
+              <Typography color="danger" fontSize="sm">
+                {errors.dateTime.message}
+              </Typography>
             )}
           </div>
 
@@ -106,9 +108,9 @@ const EventCreate: FC = () => {
               />
             </div>
             {errors.shortDescription && (
-                <Typography color="danger" fontSize="sm">
-                  {errors.shortDescription.message}
-                </Typography>
+              <Typography color="danger" fontSize="sm">
+                {errors.shortDescription.message}
+              </Typography>
             )}
           </div>
 
@@ -128,9 +130,9 @@ const EventCreate: FC = () => {
               />
             </div>
             {errors.description && (
-                <Typography color="danger" fontSize="sm">
-                  {errors.description.message}
-                </Typography>
+              <Typography color="danger" fontSize="sm">
+                {errors.description.message}
+              </Typography>
             )}
           </div>
 
@@ -151,9 +153,9 @@ const EventCreate: FC = () => {
               />
             </div>
             {errors.imageURI && (
-                <Typography color="danger" fontSize="sm">
-                  {errors.imageURI.message}
-                </Typography>
+              <Typography color="danger" fontSize="sm">
+                {errors.imageURI.message}
+              </Typography>
             )}
           </div>
 
