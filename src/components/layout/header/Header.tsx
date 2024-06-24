@@ -45,7 +45,7 @@ const Header: FC = () => {
                 <SearchIcon className="fill-primary-rose dark:fill-dark-primary-light-blue h-6 w-6" />
               </Button>
             </div>
-            <div className="hidden md:block">
+            <div className="mr-5 md:mr-0">
               <div className="ml-4 flex items-center md:ml-0">
                 <Button
                   variant="plain"
@@ -59,7 +59,7 @@ const Header: FC = () => {
                   </Badge>
                 </Button>
 
-                <div className="relative ml-3">
+                <div className="relative ml-3 hidden md:block">
                   <div>
                     <button
                       type="button"
@@ -105,7 +105,7 @@ const Header: FC = () => {
           </div>
         </div>
 
-        {isHeaderMobileMenuOpen && <HeaderMobileMenu />}
+        {isHeaderMobileMenuOpen && <HeaderMobileMenu setIsNotificationModalOpen={setIsNotificationModalOpen}/>}
 
         {isSearchModalOpen &&
           createPortal(

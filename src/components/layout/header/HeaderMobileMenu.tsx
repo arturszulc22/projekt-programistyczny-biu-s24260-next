@@ -1,10 +1,10 @@
 import { FC } from "react";
-import RingIcon from "@public/icons/ring.svg";
-import { Button } from "@mui/joy";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import {Badge, Button, Typography} from "@mui/joy";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const HeaderMobileMenu: FC = () => {
+const HeaderMobileMenu: FC = ({setIsNotificationModalOpen}) => {
   const pathname = usePathname();
 
   const links = [
@@ -46,14 +46,6 @@ const HeaderMobileMenu: FC = () => {
               tom@example.com
             </div>
           </div>
-          <button
-            type="button"
-            className="relative ml-auto flex-shrink-0 rounded-full bg-primary dark:bg-dark-primary-blue p-1 text-primary-rose dark:text-dark-primary-light-blue"
-          >
-            <span className="absolute -inset-1.5"></span>
-            <span className="sr-only">View notifications</span>
-            <RingIcon className="h-6 w-6" />
-          </button>
         </div>
         <div className="mt-3 space-y-1 px-2">
           <Button
