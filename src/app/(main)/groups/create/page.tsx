@@ -3,28 +3,31 @@ import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Typography } from "@mui/joy";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
-import { createGroupValidationSchema } from "@/validations/group-validation-schema";
-import { GroupCreate, GroupCreateFormData } from "@/interfaces/group";
+import {
+  GroupFormDataInterface,
+  groupValidationSchema,
+} from "@/validations/group-validation-schema";
 import { twMerge } from "tailwind-merge";
 import { useGroupsStore } from "@/providers/groups-store-provider";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useRouter } from "next/navigation";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { Group } from "@/interfaces/group";
 
 const GroupsCreate: FC = () => {
   const { push } = useRouter();
   const { user } = useAuthStore((state) => state);
   const { addGroup } = useGroupsStore((state) => state);
 
-  const resolver = useYupValidationResolver(createGroupValidationSchema);
+  const resolver = useYupValidationResolver(groupValidationSchema);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<GroupCreateFormData>({ resolver });
+  } = useForm<GroupFormDataInterface>({ resolver });
 
-  const onSubmit: SubmitHandler<GroupCreate> = (data) => {
+  const onSubmit: SubmitHandler<Group> = (data) => {
     data.id = uuidv4();
     data.user = user;
     data.users = [];

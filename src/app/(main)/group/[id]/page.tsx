@@ -74,7 +74,7 @@ const Group = ({ params }: { params: { id: string } }) => {
               >
                 <ShareIcon /> Share
               </Button>
-              {group?.user.id !== auth?.id ? (
+              {group?.user?.id !== auth?.id ? (
                 <Button
                   variant="outlined"
                   color="neutral"

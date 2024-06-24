@@ -1,8 +1,12 @@
+import { User } from "@/interfaces/user";
+
 export interface Event {
   id: string;
-  userId: string;
+  user: User | null;
   name: string;
   shortDescription: string;
   description: string;
-  date: string;
+  dateTime: string;
+  imageURI: string;
+  users: User[] | [];
 }

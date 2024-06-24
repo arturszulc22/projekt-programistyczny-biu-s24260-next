@@ -15,13 +15,13 @@ const Groups: FC = () => {
 
   const userGroups = groups.filter(
     (group) =>
-      group.user.id === auth?.id ||
+      group.user?.id === auth?.id ||
       group.users.some((user) => user.id === auth?.id),
   );
 
   const otherGroups = groups.filter(
     (group) =>
-      group.user.id !== auth?.id &&
+      group.user?.id !== auth?.id &&
       !group.users.some((user) => user.id === auth?.id),
   );
 

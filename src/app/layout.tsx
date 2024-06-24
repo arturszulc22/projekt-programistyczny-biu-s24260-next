@@ -5,6 +5,7 @@ import { AuthStoreProvider } from "@/providers/auth-store-provider";
 import { GroupsStoreProvider } from "@/providers/groups-store-provider";
 import { ThemeProvider } from "next-themes";
 import { getUser } from "@/actions/cookies";
+import { EventsStoreProvider } from "@/providers/events-store-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,9 @@ const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
       >
         <AuthStoreProvider user={user}>
           <GroupsStoreProvider>
-            <ThemeProvider attribute="class">{children}</ThemeProvider>
+            <EventsStoreProvider>
+              <ThemeProvider attribute="class">{children}</ThemeProvider>
+            </EventsStoreProvider>
           </GroupsStoreProvider>
         </AuthStoreProvider>
       </body>
