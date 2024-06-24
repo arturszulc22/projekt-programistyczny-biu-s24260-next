@@ -8,7 +8,11 @@ export type GroupsState = {
 };
 
 export type GroupsActions = {
+  getGroupById: (groupId: string) => Group;
   addGroup: (group: GroupCreateFormData) => void;
+  removeGroup: (groupId: string) => Promise<void>;
+  addUserToGroup: (groupId: string, user: User | null) => void;
+  removeUserFromGroup: (groupId: string, user: User | null) => Promise<void>;
 };
 
 export type GroupsStore = GroupsState & GroupsActions;
@@ -26,15 +30,34 @@ export const createGroupsStore = (
 ) => {
   return createStore<GroupsStore>()((set, get) => ({
     ...initState,
+    getGroupById: (groupId) => {
+      return get().groups.filter((group) => group.id === groupId)[0] || null;
+    },
     addGroup: (group: Group) =>
       set((state) => ({ groups: [...state.groups, group] })),
-    addUserToGroup: (groupId: string, user: User) => {
+    removeGroup: async (groupId: string) => {
+      const groups = get().groups.filter((group) => group.id !== groupId);
+      set({ groups });
+    },
+    addUserToGroup: (groupId: string, user: User | null) => {
       const groups = get().groups?.map((group) =>
         group.id === groupId
           ? { ...group, users: [...group.users, user] }
           : group,
       );
-
+      set({ groups });
+    },
+    removeUserFromGroup: async (groupId: string, user: User | null) => {
+      const groups = get().groups?.map((group) =>
+        group.id === groupId
+          ? {
+              ...group,
+              users: [
+                ...group.users?.filter((groupUser) => groupUser !== user),
+              ],
+            }
+          : group,
+      );
       set({ groups });
     },
   }));
