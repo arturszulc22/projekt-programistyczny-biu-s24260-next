@@ -53,6 +53,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
           age: null,
           shortDescription: null,
           imageURI: null,
+          town: null,
           settings: {
             profile: {
               isPrivate: false,

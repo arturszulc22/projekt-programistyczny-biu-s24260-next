@@ -6,8 +6,10 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
-import { userInformationFormValidationSchema } from "@/validations/auth-form-validation-schema";
-import { UpdateUserInformationData } from "@/interfaces/auth";
+import {
+  UserInformationFormData,
+  userInformationFormValidationSchema
+} from "@/validations/auth-form-validation-schema";
 import { twMerge } from "tailwind-merge";
 import {
   Avatar,
@@ -31,9 +33,9 @@ const UserProfile: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateUserInformationData>({ resolver });
+  } = useForm<UserInformationFormData>({ resolver });
 
-  const onSubmit: SubmitHandler<UpdateUserInformationData> = async (data) => {
+  const onSubmit: SubmitHandler<UserInformationFormData> = async (data) => {
     try {
       await update(user, data);
       setState({
@@ -278,6 +280,33 @@ const UserProfile: FC = () => {
                 {errors.dateOfBirth && (
                     <Typography color="danger" fontSize="sm">
                       {errors.dateOfBirth.message}
+                    </Typography>
+                )}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                    htmlFor="town"
+                    className="block text-sm font-medium leading-6 text-primary-rose dark:text-dark-primary-light-blue"
+                >
+                  Date of birth
+                </label>
+                <div className="mt-2">
+                  <input
+                      id="town"
+                      {...register("town")}
+                      type="text"
+                      className={twMerge(
+                          "block w-full flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                          errors.town &&
+                          "ring-red-600 focus-visible:outline-red-600",
+                      )}
+                      defaultValue={user?.town}
+                  />
+                </div>
+                {errors.town && (
+                    <Typography color="danger" fontSize="sm">
+                      {errors.town.message}
                     </Typography>
                 )}
               </div>

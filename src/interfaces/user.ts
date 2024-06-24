@@ -7,6 +7,7 @@ export interface User {
   email: string;
   dateOfBirth?: string;
   age?: number;
+  town?: string;
   shortDescription?: string;
   imageURI?: string;
   settings: UserSettings;
