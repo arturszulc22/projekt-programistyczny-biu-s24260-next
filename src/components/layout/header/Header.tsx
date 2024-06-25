@@ -13,12 +13,21 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import SearchModal from "@/components/modals/SearchModal";
 import NotificationModal from "@/components/modals/NotificationModal";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useRouter } from "next/navigation";
 
 const Header: FC = () => {
+  const { user, logout } = useAuthStore((state) => state);
+  const { push } = useRouter();
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+
+  const logoutUser = async () => {
+    await logout();
+    push("/login");
+  };
 
   return (
     <header className="sticky top-0 z-20 shadow-sm">
@@ -78,7 +87,9 @@ const Header: FC = () => {
                       />
                     </button>
                   </div>
-                  {isProfilePopupOpen && <HeaderProfilePopup />}
+                  {isProfilePopupOpen && (
+                    <HeaderProfilePopup logout={() => logoutUser()} />
+                  )}
                 </div>
               </div>
             </div>
@@ -105,7 +116,9 @@ const Header: FC = () => {
           </div>
         </div>
 
-        {isHeaderMobileMenuOpen && <HeaderMobileMenu setIsNotificationModalOpen={setIsNotificationModalOpen}/>}
+        {isHeaderMobileMenuOpen && (
+          <HeaderMobileMenu user={user} logout={() => logoutUser()} />
+        )}
 
         {isSearchModalOpen &&
           createPortal(

@@ -1,10 +1,9 @@
 import { FC } from "react";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import {Badge, Button, Typography} from "@mui/joy";
+import { Button } from "@mui/joy";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const HeaderMobileMenu: FC = ({setIsNotificationModalOpen}) => {
+const HeaderMobileMenu: FC = ({ user, logout }: { User; (): void }) => {
   const pathname = usePathname();
 
   const links = [
@@ -34,16 +33,16 @@ const HeaderMobileMenu: FC = ({setIsNotificationModalOpen}) => {
           <div className="flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
+              src={user.imageURI}
+              alt={user.firstName + " " + user.lastName}
             />
           </div>
           <div className="ml-3">
             <div className="text-primary-rose dark:text-dark-primary-light-blue font-medium leading-none">
-              Tom Cook
+              {user.firstName + " " + user.lastName}
             </div>
             <div className="text-sm text-primary-rose dark:text-dark-primary-light-blue font-medium leading-none">
-              tom@example.com
+              {user.email}
             </div>
           </div>
         </div>
@@ -69,7 +68,7 @@ const HeaderMobileMenu: FC = ({setIsNotificationModalOpen}) => {
           <Button
             component={Link}
             variant="plain"
-            href="/sign-out"
+            onClick={logout}
             aria-current="page"
             className="w-full justify-start"
           >

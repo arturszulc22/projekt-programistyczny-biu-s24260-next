@@ -1,5 +1,5 @@
 import { createStore } from "zustand/vanilla";
-import { setUser } from "@/actions/cookies";
+import { removeUser, setUser } from "@/actions/cookies";
 import { User } from "@/interfaces/user";
 import { LoginFormData, RegisterFormData } from "@/interfaces/auth";
 import { createUser, getUser, updateUser } from "@/api/user";
@@ -13,6 +13,7 @@ export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
   register: (data: RegisterFormData) => void;
   update: (user, data) => void;
+  logout: () => void;
   isUserFriend: (user: User | null) => boolean;
   addFriendRequest: (user: User) => Promise<void>;
   addFriend: (user: User) => Promise<void>;
@@ -95,6 +96,14 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
         set({ user });
       } catch (e: Error) {
         throw new Error("Cannot save user data!");
+      }
+    },
+    logout: async () => {
+      try {
+        await removeUser();
+        set({ user: null });
+      } catch (e) {
+        throw new Error("Failed to log out. Please try again.");
       }
     },
     isUserFriend: (user) =>
