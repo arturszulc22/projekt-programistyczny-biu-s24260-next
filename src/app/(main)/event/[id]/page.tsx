@@ -13,6 +13,7 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 import { useEventsStore } from "@/providers/events-store-provider";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "@mui/joy";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
 const Event: FC = ({ params }: { params: { id: string } }) => {
   const { push } = useRouter();
@@ -23,7 +24,8 @@ const Event: FC = ({ params }: { params: { id: string } }) => {
   const event = getEventById(params.id);
   if (!event) notFound();
 
-  const posts = [];
+  const { getEventPosts } = usePostsStore((state) => state);
+  const posts = getEventPosts(event);
 
   const isUserAuthor = event?.user?.id === auth?.id;
 

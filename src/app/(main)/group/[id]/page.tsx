@@ -9,6 +9,7 @@ import { PostCard } from "@/components/post/PostCard";
 import { useGroupsStore } from "@/providers/groups-store-provider";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { notFound, useRouter } from "next/navigation";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
 const Group = ({ params }: { params: { id: string } }) => {
   const { push } = useRouter();
@@ -19,7 +20,8 @@ const Group = ({ params }: { params: { id: string } }) => {
   const group = getGroupById(params.id);
   if (!group) notFound();
 
-  const posts = [];
+  const { getGroupPosts } = usePostsStore((state) => state);
+  const posts = getGroupPosts(group);
 
   const isUserInGroup =
     group?.user?.id === auth?.id ||
