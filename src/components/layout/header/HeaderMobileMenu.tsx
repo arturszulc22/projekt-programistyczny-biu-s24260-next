@@ -3,7 +3,7 @@ import { Button } from "@mui/joy";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const HeaderMobileMenu: FC = ({ user, logout }: { User; (): void }) => {
+const HeaderMobileMenu: FC = ({ user, logout }) => {
   const pathname = usePathname();
 
   const links = [
@@ -16,11 +16,12 @@ const HeaderMobileMenu: FC = ({ user, logout }: { User; (): void }) => {
   return (
     <div className="md:hidden" id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        {links.map(({ name, href }) => (
+        {links.map(({ name, href }, index) => (
           <Button
             component={Link}
             variant={href === pathname ? "solid" : "plain"}
             href={href}
+            key={index}
             aria-current="page"
             className="w-full"
           >
@@ -33,16 +34,16 @@ const HeaderMobileMenu: FC = ({ user, logout }: { User; (): void }) => {
           <div className="flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full"
-              src={user.imageURI}
-              alt={user.firstName + " " + user.lastName}
+              src={user?.imageURI}
+              alt={user?.firstName + " " + user?.lastName}
             />
           </div>
           <div className="ml-3">
             <div className="text-primary-rose dark:text-dark-primary-light-blue font-medium leading-none">
-              {user.firstName + " " + user.lastName}
+              {user?.firstName + " " + user?.lastName}
             </div>
             <div className="text-sm text-primary-rose dark:text-dark-primary-light-blue font-medium leading-none">
-              {user.email}
+              {user?.email}
             </div>
           </div>
         </div>
@@ -66,7 +67,6 @@ const HeaderMobileMenu: FC = ({ user, logout }: { User; (): void }) => {
             Settings
           </Button>
           <Button
-            component={Link}
             variant="plain"
             onClick={logout}
             aria-current="page"
