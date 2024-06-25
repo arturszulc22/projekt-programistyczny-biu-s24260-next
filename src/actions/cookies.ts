@@ -10,3 +10,7 @@ export const setUser = async (user: User) => {
 export const getUser = async () => {
   return JSON.parse(cookies().get("user")?.value || null);
 };
+
+export const removeUser = async () => {
+  return cookies().delete("user");
+}
