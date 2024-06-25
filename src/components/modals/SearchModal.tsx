@@ -4,12 +4,14 @@ import { Modal, ModalDialog, Typography } from "@mui/joy";
 import CloseIcon from "@mui/icons-material/Close";
 import UserCardSecondary from "@/components/user/UserCardSecondary";
 import { useUsersStore } from "@/providers/users-store-provider";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const SearchModal: FC = ({ isOpen, onCloseModal }) => {
+  const { user: auth } = useAuthStore((state) => state);
   const { searchResults, searchUsers } = useUsersStore((state) => state);
 
   const handleSearchUsers = (event) => {
-    searchUsers(event.target.value);
+    searchUsers(event.target.value, auth);
   };
 
   return (

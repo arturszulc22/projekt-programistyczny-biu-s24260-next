@@ -8,7 +8,7 @@ export type UsersState = {
 };
 
 export type UsersActions = {
-  searchUsers: (phrase: string) => User[] | [];
+  searchUsers: (phrase: string, user: User) => User[] | [];
   updateUser: (user, data) => void;
   getUserFriends: (user: User) => User[] | [];
   addFriend: (user: User, auth: User | null) => Promise<void>;
@@ -32,15 +32,16 @@ export const defaultInitState: UsersState = {
 export const createUsersStore = (initState: UsersState = defaultInitState) => {
   return createStore<UsersStore>()((set, get) => ({
     ...initState,
-    searchUsers: (phrase) =>
+    searchUsers: (phrase, auth) =>
       set((state) => ({
         searchResults: state.users.filter(
           (user) =>
-            user?.firstName.includes(phrase) ||
-            user?.lastName.includes(phrase) ||
-            user?.town?.includes(phrase) ||
-            (user?.firstName + " " + user?.lastName).includes(phrase) ||
-            user?.age?.toString() === phrase,
+            (user?.firstName.includes(phrase) ||
+              user?.lastName.includes(phrase) ||
+              user?.town?.includes(phrase) ||
+              (user?.firstName + " " + user?.lastName).includes(phrase) ||
+              user?.age?.toString() === phrase) &&
+            user.id !== auth.id,
         ),
       })),
     updateUser: async (user, data) => {
