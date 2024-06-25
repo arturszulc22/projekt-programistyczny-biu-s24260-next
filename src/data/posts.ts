@@ -36,7 +36,7 @@ export const posts = [
       friends: ["d0fa", "2"],
       friendsRequests: [],
     },
-    createdAt: "2024-06-04T10:30:00Z",
+    createdAt: "25.06.2024, 23:47:47",
     attachedUsers: [
       {
         ...users[1],
@@ -50,7 +50,7 @@ export const posts = [
         },
         content:
           "Great article! I finally understand closures after reading this.",
-        createdAt: "2024-06-04T11:00:00Z",
+        createdAt: "25.06.2024, 23:47:47",
         likes: [users[0]],
       },
       {
@@ -60,7 +60,7 @@ export const posts = [
         },
         content:
           "Thanks for the clear explanation. Can you provide more examples?",
-        createdAt: "2024-06-04T12:15:00Z",
+        createdAt: "25.06.2024, 23:47:47",
         likes: [users[0]],
       },
     ],

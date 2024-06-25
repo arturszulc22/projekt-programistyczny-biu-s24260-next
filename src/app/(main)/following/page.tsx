@@ -9,8 +9,8 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 const Following: FC = () => {
   const [alignment, setAlignment] = useState("other");
   const { user: auth } = useAuthStore((state) => state);
-  const { getUserFriends, getOtherPeople, getUserFriendsRequests } = useUsersStore((state) => state);
-
+  const { getUserFriends, getOtherPeople, getUserFriendsRequests } =
+    useUsersStore((state) => state);
 
   return (
     <Container className="py-10">
@@ -36,7 +36,9 @@ const Following: FC = () => {
 
       {alignment === "user" && <UserTab users={getUserFriends(auth)} />}
       {alignment === "other" && <UserTab users={getOtherPeople(auth)} />}
-      {alignment === "requests" && <UserTab users={getUserFriendsRequests(auth)} />}
+      {alignment === "requests" && (
+        <UserTab users={getUserFriendsRequests(auth)} />
+      )}
     </Container>
   );
 };

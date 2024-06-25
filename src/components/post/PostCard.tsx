@@ -1,3 +1,4 @@
+"use client";
 import {
   AspectRatio,
   Avatar,
@@ -15,22 +16,25 @@ import {
 import {
   Face,
   Favorite,
-  ModeCommentOutlined,
+  ModeComment,
   MoreHoriz,
   SendOutlined,
 } from "@mui/icons-material";
 import CommentItem from "@/components/comment/CommentItem";
 import { twMerge } from "tailwind-merge";
+import { useState } from "react";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
 export const PostCard = ({ post }) => {
-  const daysAgo = (createdAt) => {
-    const createdDate = new Date(createdAt);
-    const currentDate = new Date();
+  const { user } = useAuthStore((state) => state);
+  const { isUserLikePost, setUserLike, removeUserLike } =
+    usePostsStore((state) => state);
+  const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
 
-    const timeDifference = currentDate - createdDate;
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    return daysDifference;
-  };
+  const isUserLike = isUserLikePost(post, user);
+  
+  
 
   return (
     <Card
@@ -66,6 +70,24 @@ export const PostCard = ({ post }) => {
           >
             {post.user.firstName} {post.user.lastName}
           </Link>
+          {post.attachedUsers.length > 0 && (
+            <Typography
+              size="sm"
+              className="text-primary-rose dark:text-dark-primary-light-blue ml-2"
+            >
+              <Typography fontWeight="sm">is with: </Typography>
+              {post.attachedUsers.map((user, index) => (
+                <Link
+                  className="text-primary-rose dark:text-dark-primary-light-blue no-underline ml-2"
+                  href={"/profile/" + user.id}
+                  underline="none"
+                  key={index}
+                >
+                  {user.firstName} {user.lastName}
+                </Link>
+              ))}
+            </Typography>
+          )}
         </Typography>
         <IconButton
           className="text-primary-rose dark:text-dark-primary-light-blue"
@@ -93,13 +115,16 @@ export const PostCard = ({ post }) => {
             variant="plain"
             className="text-primary-rose dark:text-dark-primary-light-blue"
             size="sm"
+            onClick={() =>
+              isUserLike ? removeUserLike(post, user) : setUserLike(post, user)
+            }
           >
             <Favorite
               className={twMerge(
                 "stroke-2",
-                true &&
+                !isUserLike &&
                   "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
-                false && "stroke-red-500 fill-red-500",
+                isUserLike && "stroke-red-500 fill-red-500",
               )}
             />
           </IconButton>
@@ -107,8 +132,17 @@ export const PostCard = ({ post }) => {
             variant="plain"
             className="text-primary-rose dark:text-dark-primary-light-blue"
             size="sm"
+            onClick={() => setIsOpenCommentSection(!isOpenCommentSection)}
           >
-            <ModeCommentOutlined />
+            <ModeComment
+              className={twMerge(
+                "stroke-2",
+                isOpenCommentSection &&
+                  "fill-primary-rose dark:fill-dark-primary-light-blue",
+                !isOpenCommentSection &&
+                  "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
+              )}
+            />
           </IconButton>
           <IconButton
             variant="plain"
@@ -161,7 +195,7 @@ export const PostCard = ({ post }) => {
           className="text-primary-rose dark:text-dark-primary-light-blue"
           sx={{ my: 0.5 }}
         >
-          {daysAgo(post.createdAt)} DAYS AGO
+          {post.createdAt}
         </Link>
       </CardContent>
       <CardContent orientation="horizontal" sx={{ gap: 1 }}>
@@ -180,11 +214,14 @@ export const PostCard = ({ post }) => {
         <Button variant="solid">Post</Button>
       </CardContent>
       <CardContent>
-        <List>
-          {post.comments.map((comment) => {
-            return <CommentItem key={comment.id} comment={comment} />;
-          })}
-        </List>
+        {isOpenCommentSection && (
+          <List className="max-h-32 overflow-scroll">
+            {isOpenCommentSection &&
+              post.comments.map((comment) => (
+                <CommentItem key={comment.id} comment={comment} />
+              ))}
+          </List>
+        )}
       </CardContent>
     </Card>
   );
