@@ -52,7 +52,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
     },
     getGroupPosts: (group: Group) => {
       return get()
-        .posts.filter((post) => post.idEventPost === group.id);
+        .posts.filter((post) => post.idGroupPost === group.id);
     },
     getUserPosts: (user: User) => {
       return get()
@@ -61,7 +61,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
     createPost: (data) => {
       const request = {
         ...data,
-        id: uuidv4,
+        id: uuidv4(),
         comments: [],
         likes: [],
         createdAt: new Date().toLocaleString("pl-Pl"),
@@ -91,7 +91,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
     addComment: (post: Post, commentData: Comment) => {
       const comment = {
         ...commentData,
-        id: uuidv4,
+        id: uuidv4(),
         likes: [],
         createdAt: new Date().toLocaleString("pl-Pl"),
       };

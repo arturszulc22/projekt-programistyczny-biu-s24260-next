@@ -12,7 +12,13 @@ import {
 } from "@/validations/post-validation-schema";
 import { usePostsStore } from "@/providers/posts-store-provider";
 
-const CreatePostForm: FC = ({ type = null, typeId = null }) => {
+const CreatePostForm: FC = ({
+  type = null,
+  typeId = null,
+}: {
+  type: string;
+  typeId: string;
+}) => {
   const [selectedFriends, setSelectedFriends] = useState([]);
 
   const { user } = useAuthStore((state) => state);

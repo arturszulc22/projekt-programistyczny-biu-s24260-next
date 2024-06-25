@@ -9,9 +9,9 @@ import {
   CardOverflow,
   IconButton,
   Input,
-  Link,
   List,
   Typography,
+  Link as LinkJoy,
 } from "@mui/joy";
 import {
   Face,
@@ -25,16 +25,16 @@ import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { usePostsStore } from "@/providers/posts-store-provider";
+import Link from "next/link";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuthStore((state) => state);
-  const { isUserLikePost, setUserLike, removeUserLike } =
-    usePostsStore((state) => state);
+  const { isUserLikePost, setUserLike, removeUserLike } = usePostsStore(
+    (state) => state,
+  );
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
 
   const isUserLike = isUserLikePost(post, user);
-  
-  
 
   return (
     <Card
@@ -63,13 +63,14 @@ export const PostCard = ({ post }) => {
           <Avatar size="lg" src={post.user.imageURI} />
         </Box>
         <Typography fontWeight="lg">
-          <Link
+          <LinkJoy
             className="text-primary-rose dark:text-dark-primary-light-blue no-underline"
             href={"/profile/" + post.user.id}
             underline="none"
+            component={Link}
           >
             {post.user.firstName} {post.user.lastName}
-          </Link>
+          </LinkJoy>
           {post.attachedUsers.length > 0 && (
             <Typography
               size="sm"
@@ -77,14 +78,15 @@ export const PostCard = ({ post }) => {
             >
               <Typography fontWeight="sm">is with: </Typography>
               {post.attachedUsers.map((user, index) => (
-                <Link
+                <LinkJoy
                   className="text-primary-rose dark:text-dark-primary-light-blue no-underline ml-2"
                   href={"/profile/" + user.id}
                   underline="none"
                   key={index}
+                  component={Link}
                 >
                   {user.firstName} {user.lastName}
-                </Link>
+                </LinkJoy>
               ))}
             </Typography>
           )}
@@ -155,7 +157,7 @@ export const PostCard = ({ post }) => {
       </CardContent>
       <CardContent>
         <div className="flex gap-3">
-          <Link
+          <Typography
             className="text-primary-rose dark:text-dark-primary-light-blue"
             component="button"
             underline="none"
@@ -163,40 +165,37 @@ export const PostCard = ({ post }) => {
             fontWeight="lg"
           >
             {post.likes.length} Likes
-          </Link>
-          <Link
+          </Typography>
+          <Typography
             className="text-primary-rose dark:text-dark-primary-light-blue"
-            component="button"
             underline="none"
             fontSize="sm"
             fontWeight="lg"
           >
             {post.comments.length} comments
-          </Link>
+          </Typography>
         </div>
         <Typography
           fontSize="sm"
           className="text-primary-rose dark:text-dark-primary-light-blue"
         >
-          <Link
-            component="button"
+          <Typography
             color="neutral"
             fontWeight="lg"
             className="text-primary-rose dark:text-dark-primary-light-blue mr-1"
           >
             {post.user.firstName} {post.user.lastName}
-          </Link>
+          </Typography>
           {post.content}
         </Typography>
-        <Link
-          component="button"
+        <Typography
           underline="none"
           fontSize="10px"
           className="text-primary-rose dark:text-dark-primary-light-blue"
           sx={{ my: 0.5 }}
         >
           {post.createdAt}
-        </Link>
+        </Typography>
       </CardContent>
       <CardContent orientation="horizontal" sx={{ gap: 1 }}>
         <IconButton
