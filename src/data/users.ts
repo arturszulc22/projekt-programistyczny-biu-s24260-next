@@ -10,6 +10,7 @@ export const users: User[] = [
     email: "jan.kowalski@example.com",
     dateOfBirth: "1990-01-15",
     age: 34,
+    town: "Gdańsk",
     shortDescription:
       "Młody inżynier z pasją do technologii i nowoczesnych rozwiązań. Lubi spędzać czas na świeżym powietrzu i podróżować.",
     imageURI:
@@ -25,6 +26,8 @@ export const users: User[] = [
       },
       isAdmin: true,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "0a6b8c1e-aa5e-4746-85b5-1d8f1e00743e",
@@ -35,6 +38,7 @@ export const users: User[] = [
     email: "anna.nowak@example.com",
     dateOfBirth: "1985-07-20",
     age: 39,
+    town: "Gdańsk",
     shortDescription:
       "Pasjonatka podróży, kuchni azjatyckiej i górskich wędrówek. Lubi czytać książki przy kawie.",
     imageURI:
@@ -50,6 +54,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "fd7a5d5d-3e7c-4396-9f2d-2241b9a2b195",
@@ -60,6 +66,7 @@ export const users: User[] = [
     email: "piotr.lis@example.com",
     dateOfBirth: "1989-03-02",
     age: 35,
+    town: "Poznań",
     shortDescription:
       "Entuzjasta sportów ekstremalnych i muzyki elektronicznej. Kocha podróże i fotografię krajobrazową.",
     imageURI:
@@ -75,6 +82,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "c3f9be6b-d24f-4324-ba32-10d14e0169e0",
@@ -85,6 +94,7 @@ export const users: User[] = [
     email: "marta.wojcik@example.com",
     dateOfBirth: "1992-12-10",
     age: 31,
+    town: "Poznań",
     shortDescription:
       "Kreatywna dusza zamiłowana do sztuki i podróży. Uwielbia gotowanie i zbieranie roślin doniczkowych.",
     imageURI:
@@ -100,6 +110,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "ec46d9f1-4e20-4a84-9421-ebc8e8b9e5f5",
@@ -110,6 +122,7 @@ export const users: User[] = [
     email: "adam.kaczmarek@example.com",
     dateOfBirth: "1987-05-25",
     age: 37,
+    town: "Poznań",
     shortDescription:
       "Programista z zamiłowaniem do gier komputerowych i nowych technologii. Pasjonat podróży rowerowych.",
     imageURI:
@@ -125,6 +138,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "e9e508e2-4ee8-4fa3-b6a6-75d70ee992f8",
@@ -135,6 +150,7 @@ export const users: User[] = [
     email: "ewa.zawadzka@example.com",
     dateOfBirth: "1995-08-12",
     age: 28,
+    town: "Gdynia",
     shortDescription:
       "Studentka architektury z zamiłowaniem do podróży po Europie. Miłośniczka kina francuskiego i literatury współczesnej.",
     imageURI:
@@ -150,6 +166,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "d0c82f68-1b20-4e26-ba4a-10fca3d6e5f1",
@@ -160,6 +178,7 @@ export const users: User[] = [
     email: "michal.pawlak@example.com",
     dateOfBirth: "1984-11-03",
     age: 39,
+    town: "Gdynia",
     shortDescription:
       "Dziennikarz z zamiłowaniem do podróży po Azji i kuchni lokalnej. Miłośnik książek kryminalnych i jazzu.",
     imageURI:
@@ -175,6 +194,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "1aa4bc74-ba98-4a5e-a59d-0d1b7bf8e9a2",
@@ -185,6 +206,7 @@ export const users: User[] = [
     email: "karolina.walczak@example.com",
     dateOfBirth: "1991-09-18",
     age: 32,
+    town: "Gdynia",
     shortDescription:
       "Fotograf z zamiłowaniem do podróży po Ameryce Południowej. Lubi gotować i eksperymentować z nowymi technologiami.",
     imageURI:
@@ -200,6 +222,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "b6f34a1c-18b7-4998-ae7d-95e4f986e4e2",
@@ -210,6 +234,7 @@ export const users: User[] = [
     email: "lukasz.krawczyk@example.com",
     dateOfBirth: "1986-06-28",
     age: 38,
+    town: "Gdynia",
     shortDescription:
       "Grafik komputerowy z zamiłowaniem do podróży po Japonii. Miłośnik designu i kina azjatyckiego.",
     imageURI:
@@ -225,6 +250,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "0d5b52f4-d0e4-4314-8474-2a190e0d9ed0",
@@ -235,6 +262,7 @@ export const users: User[] = [
     email: "magdalena.jasinska@example.com",
     dateOfBirth: "1993-04-05",
     age: 31,
+    town: "Gdynia",
     shortDescription:
       "Inżynier budownictwa z zamiłowaniem do podróży po Skandynawii. Pasjonatka nurkowania i podziwiania architektury.",
     imageURI:
@@ -250,6 +278,8 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
   {
     id: "8a80158f-1f4e-41cf-b08c-ecdb4782482b",
@@ -260,6 +290,7 @@ export const users: User[] = [
     email: "marcin.nowicki@example.com",
     dateOfBirth: "1988-12-15",
     age: 35,
+    town: "Gdynia",
     shortDescription:
       "Marketingowiec z zamiłowaniem do podróży po Ameryce Północnej. Miłośnik teatru i eksplorowania nowych miejsc.",
     imageURI:
@@ -275,5 +306,7 @@ export const users: User[] = [
       },
       isAdmin: false,
     },
+    friends: [],
+    friendsRequests: [],
   },
 ];

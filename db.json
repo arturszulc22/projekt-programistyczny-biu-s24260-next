@@ -22,7 +22,9 @@
         },
         "isAdmin": true
       },
-      "userName": "admin22"
+      "userName": "admin22",
+      "friends": ["2", "d0fa"],
+      "friendsRequests": []
     },
     {
       "id": "2",
@@ -45,7 +47,9 @@
           "isNotificationEnabled": true
         },
         "isAdmin": false
-      }
+      },
+      "friends": ["1"],
+      "friendsRequests": []
     },
     {
       "id": "d0fa",
@@ -69,7 +73,167 @@
           "isNotificationEnabled": true
         },
         "isAdmin": false
-      }
+      },
+      "friends": ["1"],
+      "friendsRequests": []
+    },
+    {
+      "id": "8bf50d34-3a9b-4a9d-b9c8-92d0f757e6a1",
+      "firstName": "Jan",
+      "lastName": "Kowalski",
+      "userName": "JackKowalak123",
+      "password": "password",
+      "email": "jan.kowalski@example.com",
+      "dateOfBirth": "1990-01-15",
+      "age": 34,
+      "town": "Gdańsk",
+      "shortDescription": "Młody inżynier z pasją do technologii i nowoczesnych rozwiązań. Lubi spędzać czas na świeżym powietrzu i podróżować.",
+      "imageURI": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": false
+        },
+        "app": {
+          "isDarkMode": false,
+          "layout": "left",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": true
+      },
+      "friends": [],
+      "friendsRequests": [
+        "1"
+      ]
+    },
+    {
+      "id": "0a6b8c1e-aa5e-4746-85b5-1d8f1e00743e",
+      "firstName": "Anna",
+      "lastName": "Nowak",
+      "userName": "AnnaN123",
+      "password": "password",
+      "email": "anna.nowak@example.com",
+      "dateOfBirth": "1985-07-20",
+      "age": 39,
+      "town": "Gdańsk",
+      "shortDescription": "Pasjonatka podróży, kuchni azjatyckiej i górskich wędrówek. Lubi czytać książki przy kawie.",
+      "imageURI": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": false
+        },
+        "app": {
+          "isDarkMode": true,
+          "layout": "right",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": false
+      },
+      "friends": [],
+      "friendsRequests": []
+    },
+    {
+      "id": "fd7a5d5d-3e7c-4396-9f2d-2241b9a2b195",
+      "firstName": "Piotr",
+      "lastName": "Lis",
+      "userName": "PeterLis89",
+      "password": "password",
+      "email": "piotr.lis@example.com",
+      "dateOfBirth": "1989-03-02",
+      "age": 35,
+      "town": "Poznań",
+      "shortDescription": "Entuzjasta sportów ekstremalnych i muzyki elektronicznej. Kocha podróże i fotografię krajobrazową.",
+      "imageURI": "https://images.unsplash.com/photo-1523474253046-28f2e1c0f8d5?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": true
+        },
+        "app": {
+          "isDarkMode": false,
+          "layout": "left",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": false
+      },
+      "friends": [],
+      "friendsRequests": []
+    },
+    {
+      "id": "c3f9be6b-d24f-4324-ba32-10d14e0169e0",
+      "firstName": "Marta",
+      "lastName": "Wójcik",
+      "userName": "MartaWojcik",
+      "password": "password",
+      "email": "marta.wojcik@example.com",
+      "dateOfBirth": "1992-12-10",
+      "age": 31,
+      "town": "Poznań",
+      "shortDescription": "Kreatywna dusza zamiłowana do sztuki i podróży. Uwielbia gotowanie i zbieranie roślin doniczkowych.",
+      "imageURI": "https://images.unsplash.com/photo-1528695522286-511191d6cf81?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": false
+        },
+        "app": {
+          "isDarkMode": true,
+          "layout": "right",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": false
+      },
+      "friends": [],
+      "friendsRequests": []
+    },
+    {
+      "id": "ec46d9f1-4e20-4a84-9421-ebc8e8b9e5f5",
+      "firstName": "Adam",
+      "lastName": "Kaczmarek",
+      "userName": "AdamK",
+      "password": "password",
+      "email": "adam.kaczmarek@example.com",
+      "dateOfBirth": "1987-05-25",
+      "age": 37,
+      "town": "Poznań",
+      "shortDescription": "Programista z zamiłowaniem do gier komputerowych i nowych technologii. Pasjonat podróży rowerowych.",
+      "imageURI": "https://images.unsplash.com/photo-1575025793973-5a3a6c9e3a11?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": false
+        },
+        "app": {
+          "isDarkMode": false,
+          "layout": "left",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": false
+      },
+      "friends": [],
+      "friendsRequests": []
+    },
+    {
+      "id": "e9e508e2-4ee8-4fa3-b6a6-75d70ee992f8",
+      "firstName": "Ewa",
+      "lastName": "Zawadzka",
+      "userName": "EvaZ",
+      "password": "password",
+      "email": "ewa.zawadzka@example.com",
+      "dateOfBirth": "1995-08-12",
+      "age": 28,
+      "town": "Gdynia",
+      "shortDescription": "Studentka architektury z zamiłowaniem do podróży po Europie. Miłośniczka kina francuskiego i literatury współczesnej.",
+      "imageURI": "https://images.unsplash.com/photo-1543336201-4da174b2f3f0?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "settings": {
+        "profile": {
+          "isPrivate": false
+        },
+        "app": {
+          "isDarkMode": true,
+          "layout": "right",
+          "isNotificationEnabled": true
+        },
+        "isAdmin": false
+      },
+      "friends": [],
+      "friendsRequests": []
     }
   ],
   "posts": [

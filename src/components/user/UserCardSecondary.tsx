@@ -8,6 +8,9 @@ import {
   Link,
   Typography,
 } from "@mui/joy";
+import { useUsersStore } from "@/providers/users-store-provider";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { User } from "@/interfaces/user";
 
 const UserCardSecondary: FC = ({ user }) => {
   const truncate = (string, length = 120) => {
@@ -39,7 +42,7 @@ const UserCardSecondary: FC = ({ user }) => {
             href={"/profile/" + user.id}
             className="text-primary-rose dark:text-dark-primary-light-blue hover:no-underline"
           >
-            {user.firstName} {user.secondName}
+            {user.firstName} {user.lastName} ({user.town})
           </Link>
         </Typography>
         <Typography
@@ -47,23 +50,8 @@ const UserCardSecondary: FC = ({ user }) => {
           fontWeight="lg"
           className="text-secondary dark:text-dark-primary-light-blue mb-3"
         >
-          {truncate(user.shortDescription)}
+          {user.shortDescription && truncate(user.shortDescription)}
         </Typography>
-        <Box sx={{ display: "flex", gap: 1.5, "& > button": { flex: 1 } }}>
-          <Button
-            variant="outlined"
-            color="neutral"
-            className="border-primary-rose dark:border-dark-primary-blue text-primary-rose dark:text-dark-primary-blue px-3 py-2 text-sm font-medium rounded-md"
-          >
-            Chat
-          </Button>
-          <Button
-            variant="solid"
-            className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
-          >
-            Follow
-          </Button>
-        </Box>
       </CardContent>
     </Card>
   );

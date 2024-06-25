@@ -1,12 +1,9 @@
 import { createStore } from "zustand/vanilla";
 import { setUser } from "@/actions/cookies";
 import { User } from "@/interfaces/user";
-import {
-  LoginFormData,
-  RegisterFormData,
-} from "@/interfaces/auth";
+import { LoginFormData, RegisterFormData } from "@/interfaces/auth";
 import { createUser, getUser, updateUser } from "@/api/user";
-import {format} from "date-fns";
+import { format } from "date-fns";
 
 export type AuthState = {
   user: User | null;
@@ -16,6 +13,10 @@ export type AuthActions = {
   login: ({ email, password }: LoginFormData) => void;
   register: (data: RegisterFormData) => void;
   update: (user, data) => void;
+  isUserFriend: (user: User) => boolean;
+  addFriendRequest: (user: User) => Promise<void>;
+  addFriend: (user: User) => Promise<void>;
+  removeFriend: (user: User) => Promise<void>;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -29,7 +30,7 @@ export const defaultInitState: AuthState = {
 };
 
 export const createAuthStore = (initState: AuthState = defaultInitState) => {
-  return createStore<AuthStore>()((set) => ({
+  return createStore<AuthStore>()((set, get) => ({
     ...initState,
     login: async ({ email, password }: LoginFormData) => {
       try {
@@ -65,6 +66,8 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
             },
             isAdmin: false,
           },
+          friends: [],
+          friendsRequests: [],
         };
         delete requestData.repeatPassword;
 
@@ -79,7 +82,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
     update: async (user, data) => {
       try {
         if (data.dateOfBirth) {
-          data.dateOfBirth = format(data.dateOfBirth, 'yyyy-MM-dd');
+          data.dateOfBirth = format(data.dateOfBirth, "yyyy-MM-dd");
         }
 
         const requestData = {
@@ -93,6 +96,40 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
       } catch (e: Error) {
         throw new Error("Cannot save user data!");
       }
+    },
+    isUserFriend: (user) =>
+      get().user.friends.some((friend) => friend === user.id),
+    addFriend: async (friend) => {
+      try {
+        const newUser = await updateUser({
+          ...get().user,
+          friends: [...get().user.friends, friend.id],
+          friendsRequests: [
+            ...get().user.friendsRequests.filter((f) => f !== friend.id),
+          ],
+        });
+        await setUser(newUser);
+        set({ user: newUser });
+      } catch (e) {}
+    },
+    removeFriend: async (friend) => {
+      try {
+        const requestData = {
+          ...get().user,
+          friends: [
+            ...get().user.friends.filter((friendId) => friendId !== friend.id),
+          ],
+          friendsRequests: [
+            ...get().user.friendsRequests.filter(
+              (friendId) => friendId !== friend.id,
+            ),
+          ],
+        };
+
+        const newUser = await updateUser(requestData);
+        await setUser(newUser);
+        set({ user: newUser });
+      } catch (e) {}
     },
   }));
 };
