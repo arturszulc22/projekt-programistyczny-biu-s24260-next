@@ -10,10 +10,15 @@ import HamburgerMenuIcon from "@public/icons/hamburger-menu-icon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Link from "next/link";
+import { createPortal } from "react-dom";
+import SearchModal from "@/components/modals/SearchModal";
+import NotificationModal from "@/components/modals/NotificationModal";
 
 const Header: FC = () => {
   const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-20 shadow-sm">
@@ -22,19 +27,31 @@ const Header: FC = () => {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Typography component={Link} href="/home" className="text-primary-rose dark:text-dark-primary-light-blue font-bold text-2xl cursor-pointer">
+                <Typography
+                  component={Link}
+                  href="/home"
+                  className="text-primary-rose dark:text-dark-primary-light-blue font-bold text-2xl cursor-pointer"
+                >
                   Instagran
                 </Typography>
               </div>
             </div>
             <div className="ml-auto mr-2">
-              <Button variant="plain" className="p-1">
+              <Button
+                variant="plain"
+                className="p-1"
+                onClick={() => setIsSearchModalOpen(true)}
+              >
                 <SearchIcon className="fill-primary-rose dark:fill-dark-primary-light-blue h-6 w-6" />
               </Button>
             </div>
-            <div className="hidden md:block">
+            <div className="mr-5 md:mr-0">
               <div className="ml-4 flex items-center md:ml-0">
-                <Button variant="plain" className="p-1">
+                <Button
+                  variant="plain"
+                  className="p-1"
+                  onClick={() => setIsNotificationModalOpen(true)}
+                >
                   <Badge badgeContent={4} size="sm" className="text-xs">
                     <Typography>
                       <NotificationsIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
@@ -42,7 +59,7 @@ const Header: FC = () => {
                   </Badge>
                 </Button>
 
-                <div className="relative ml-3">
+                <div className="relative ml-3 hidden md:block">
                   <div>
                     <button
                       type="button"
@@ -88,7 +105,25 @@ const Header: FC = () => {
           </div>
         </div>
 
-        {isHeaderMobileMenuOpen && <HeaderMobileMenu />}
+        {isHeaderMobileMenuOpen && <HeaderMobileMenu setIsNotificationModalOpen={setIsNotificationModalOpen}/>}
+
+        {isSearchModalOpen &&
+          createPortal(
+            <SearchModal
+              isOpen={isSearchModalOpen}
+              onCloseModal={() => setIsSearchModalOpen(false)}
+            />,
+            document.body,
+          )}
+
+        {isNotificationModalOpen &&
+          createPortal(
+            <NotificationModal
+              isOpen={isNotificationModalOpen}
+              onCloseModal={() => setIsNotificationModalOpen(false)}
+            />,
+            document.body,
+          )}
       </nav>
     </header>
   );

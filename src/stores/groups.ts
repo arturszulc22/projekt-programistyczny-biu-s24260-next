@@ -1,5 +1,5 @@
 import { createStore } from "zustand/vanilla";
-import { Group, GroupCreateFormData } from "@/interfaces/group";
+import { Group } from "@/interfaces/group";
 import { groups } from "@/data/groups";
 import { User } from "@/interfaces/user";
 
@@ -9,7 +9,7 @@ export type GroupsState = {
 
 export type GroupsActions = {
   getGroupById: (groupId: string) => Group;
-  addGroup: (group: GroupCreateFormData) => void;
+  addGroup: (group: Group) => void;
   removeGroup: (groupId: string) => Promise<void>;
   addUserToGroup: (groupId: string, user: User | null) => void;
   removeUserFromGroup: (groupId: string, user: User | null) => Promise<void>;

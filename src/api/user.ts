@@ -22,13 +22,24 @@ export const createUser = async (userData: object) => {
 
 
 export const updateUser = async (userData: object) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userData.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/${userData.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     },
-    body: JSON.stringify(userData),
-  });
+  );
 
   return await response.json();
-}
+};
+
+export const getUsers = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users`,
+  );
+
+  return await response.json();
+};

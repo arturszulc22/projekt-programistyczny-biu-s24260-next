@@ -1,9 +1,7 @@
 import type { Metadata, NextPage } from "next";
 import "@/app/globals.css";
 import Header from "@/components/layout/header/Header";
-import SearchModal from "@/components/modals/SearchModal";
 import NavigationList from "@/components/layout/NavigationList";
-import NotificationModal from "@/components/modals/NotificationModal";
 import { twMerge } from "tailwind-merge";
 import { getUser } from "@/actions/cookies";
 
@@ -25,9 +23,7 @@ const MainLayout: NextPage<MainLayoutProps> = async ({ children }) => {
       <div className={twMerge(["flex", user?.settings?.app?.layout === 'right' && "flex-row-reverse"])}>
         <NavigationList />
         {children}
-        <NotificationModal />
       </div>
-      <SearchModal />
     </>
   );
 };

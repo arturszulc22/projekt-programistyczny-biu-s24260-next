@@ -16,6 +16,17 @@ export const registerFormValidationSchema = object({
     .oneOf([ref("password"), null], "Passwords must match"),
 });
 
+export interface UserInformationFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  shortDescription: string;
+  imageURI: string;
+  dateOfBirth: string;
+  town: string;
+}
+
 export const userInformationFormValidationSchema = object({
   firstName: string().min(3).required(),
   lastName: string().min(3).required(),
@@ -23,6 +34,7 @@ export const userInformationFormValidationSchema = object({
   email: string().email().required(),
   shortDescription: string().max(1000),
   imageURI: string().required(),
+  town: string().min(2).required(),
   dateOfBirth: date()
     .transform((value, originalValue) => (originalValue === "" ? null : value))
     .nullable()

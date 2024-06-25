@@ -14,9 +14,7 @@ import {
 } from "@mui/joy";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const NotificationModal: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const NotificationModal: FC = ({ isOpen, onCloseModal }) => {
   const notifications = [
     {
       id: 1,
@@ -45,8 +43,8 @@ const NotificationModal: FC = () => {
   ];
 
   return (
-    <Drawer open={isOpen} onClose={() => setIsOpen(false)} anchor="right">
-      <ModalClose />
+    <Drawer open={isOpen} onClose={onCloseModal} anchor="right">
+      <ModalClose onClick={onCloseModal} />
       <DialogTitle className="text-primary-rose dark:text-dark-primary-light-blue">
         Inbox
       </DialogTitle>

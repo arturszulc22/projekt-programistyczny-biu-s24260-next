@@ -3,37 +3,14 @@
 import { FC, useState } from "react";
 import UserTab from "@/components/user/UserTab";
 import { Button, Container, ToggleButtonGroup } from "@mui/joy";
+import { useUsersStore } from "@/providers/users-store-provider";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const Following: FC = () => {
   const [alignment, setAlignment] = useState("other");
+  const { user: auth } = useAuthStore((state) => state);
+  const { getUserFriends, getOtherPeople, getUserFriendsRequests } = useUsersStore((state) => state);
 
-  const users = [
-    {
-      id: 2,
-      firstName: "Anna",
-      secondName: "Nowak",
-      email: "anna.nowak@example.com",
-      dateOfBirth: "1985-06-30",
-      age: 38,
-      shortDescription:
-        "Doświadczona nauczycielka z zamiłowaniem do literatury. W wolnym czasie uwielbia gotować i eksperymentować w kuchni.",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    {
-      id: 3,
-      firstName: "Piotr",
-      secondName: "Wiśniewski",
-      password: "haslo789",
-      email: "piotr.wisniewski@example.com",
-      dateOfBirth: "1992-11-25",
-      age: 31,
-      shortDescription:
-        "Młody programista, który pasjonuje się grami komputerowymi i projektowaniem stron internetowych. Lubi aktywne spędzanie czasu.",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  ];
 
   return (
     <Container className="py-10">
@@ -51,11 +28,15 @@ const Following: FC = () => {
           <Button variant="plain" value="other">
             Community
           </Button>
+          <Button variant="plain" value="requests">
+            Requests
+          </Button>
         </ToggleButtonGroup>
       </div>
 
-      {alignment === "user" && <UserTab users={users} />}
-      {alignment === "other" && <UserTab users={users} />}
+      {alignment === "user" && <UserTab users={getUserFriends(auth)} />}
+      {alignment === "other" && <UserTab users={getOtherPeople(auth)} />}
+      {alignment === "requests" && <UserTab users={getUserFriendsRequests(auth)} />}
     </Container>
   );
 };

@@ -6,6 +6,8 @@ import { GroupsStoreProvider } from "@/providers/groups-store-provider";
 import { ThemeProvider } from "next-themes";
 import { getUser } from "@/actions/cookies";
 import { EventsStoreProvider } from "@/providers/events-store-provider";
+import { UsersStoreProvider } from "@/providers/users-store-provider";
+import { getUsers } from "@/api/user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,17 +22,21 @@ interface RootLayoutProps {
 
 const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
   const user = await getUser();
+  const users = await getUsers();
+
   return (
     <html lang="en">
       <body
         className={`min-h-screen relative bg-primary-gray dark:bg-dark-primary-gray ${inter.className}`}
       >
         <AuthStoreProvider user={user}>
-          <GroupsStoreProvider>
-            <EventsStoreProvider>
-              <ThemeProvider attribute="class">{children}</ThemeProvider>
-            </EventsStoreProvider>
-          </GroupsStoreProvider>
+          <UsersStoreProvider users={users}>
+            <GroupsStoreProvider>
+              <EventsStoreProvider>
+                <ThemeProvider attribute="class">{children}</ThemeProvider>
+              </EventsStoreProvider>
+            </GroupsStoreProvider>
+          </UsersStoreProvider>
         </AuthStoreProvider>
       </body>
     </html>
