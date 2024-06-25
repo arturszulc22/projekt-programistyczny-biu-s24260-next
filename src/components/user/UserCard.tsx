@@ -46,7 +46,7 @@ const UserCard: FC = ({
             href={"/profile/" + user.id}
             className="text-primary-rose dark:text-dark-primary-light-blue hover:no-underline"
           >
-            {user.firstName} {user.lastName} {user.id}
+            {user.firstName} {user.lastName}
           </JoyLink>
         </Typography>
         <Typography
