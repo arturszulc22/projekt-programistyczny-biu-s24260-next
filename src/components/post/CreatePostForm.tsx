@@ -1,9 +1,19 @@
 "use client";
 import { FC } from "react";
-import {Autocomplete, Avatar, Button, FormControl, FormLabel, styled} from "@mui/joy";
-import UploadIcon from '@mui/icons-material/Upload';
+import {
+  Autocomplete,
+  Avatar,
+  Button,
+  FormControl,
+  FormLabel,
+  styled,
+} from "@mui/joy";
+import UploadIcon from "@mui/icons-material/Upload";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useUsersStore } from "@/providers/users-store-provider";
+import {twMerge} from "tailwind-merge";
 
-const VisuallyHiddenInput = styled('input')`
+const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -15,39 +25,11 @@ const VisuallyHiddenInput = styled('input')`
   width: 1px;
 `;
 
+const CreatePostForm: FC = ({ type }) => {
+  const { user } = useAuthStore((state) => state);
+  const { getUserFriends } = useUsersStore((state) => state);
 
-const CreatePostForm: FC = () => {
-  const user = {
-    firstName: "Alice",
-    secondName: "Johnson",
-    profileUrl: "profile/2",
-    imageURI:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  };
-
-  const friends = [
-    {
-      firstName: "Alice",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    {
-      firstName: "John",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    {
-      firstName: "Derek",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  ];
+  const friends = getUserFriends(user);
 
   return (
     <div>
@@ -57,8 +39,8 @@ const CreatePostForm: FC = () => {
       >
         <div className="flex flex-col md:flex-row gap-2">
           <Avatar
-            src={user.imageURI}
-            alt={user.firstName + " " + user.secondName}
+            src={user?.imageURI}
+            alt={user?.firstName + " " + user?.lastName}
             className="hidden md:block"
           />
           <div className="w-full flex flex-col gap-2">
@@ -68,33 +50,34 @@ const CreatePostForm: FC = () => {
               placeholder="What do you think?"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose dark:placeholder:text-dark-primary sm:text-sm sm:leading-6"
             />
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col gap-2">
               <FormControl className="w-full">
-                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">@Mentions</FormLabel>
+                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">
+                  @Mentions
+                </FormLabel>
                 <Autocomplete
-                    multiple
-                    id="tags-default"
-                    placeholder="Favorites"
-                    options={friends}
-                    getOptionLabel={(user) =>
-                        user.firstName + " " + user.secondName
-                    }
-                    defaultValue={[]}
+                  multiple
+                  id="tags-default"
+                  placeholder="Favorites"
+                  options={friends}
+                  getOptionLabel={(user) =>
+                    user.firstName + " " + user.lastName
+                  }
+                  defaultValue={[]}
                 />
               </FormControl>
               <FormControl>
-                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">Image</FormLabel>
-                <Button
-                    component="label"
-                    role={undefined}
-                    tabIndex={-1}
-                    variant="outlined"
-                    color="neutral"
-                    className="py-1"
-                    startDecorator={<UploadIcon/>}
-                >
-                  <VisuallyHiddenInput type="file" />
-                </Button>
+                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">
+                  Image URI
+                </FormLabel>
+                <input
+                    type="text"
+                    id="image-uri"
+                    className={twMerge(
+                        "block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                    )}
+                    placeholder="Image URI"
+                />
               </FormControl>
             </div>
           </div>

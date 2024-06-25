@@ -20,9 +20,18 @@ import {
   SendOutlined,
 } from "@mui/icons-material";
 import CommentItem from "@/components/comment/CommentItem";
-import {twMerge} from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 export const PostCard = ({ post }) => {
+  const daysAgo = (createdAt) => {
+    const createdDate = new Date(createdAt);
+    const currentDate = new Date();
+
+    const timeDifference = currentDate - createdDate;
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    return daysDifference;
+  };
+
   return (
     <Card
       sx={{
@@ -47,15 +56,15 @@ export const PostCard = ({ post }) => {
             },
           }}
         >
-          <Avatar size="lg" src={post.author.imageURI} />
+          <Avatar size="lg" src={post.user.imageURI} />
         </Box>
         <Typography fontWeight="lg">
           <Link
             className="text-primary-rose dark:text-dark-primary-light-blue no-underline"
-            href={"/profile/" + post.author.id}
+            href={"/profile/" + post.user.id}
             underline="none"
           >
-            {post.author.firstName} {post.author.secondName}
+            {post.user.firstName} {post.user.lastName}
           </Link>
         </Typography>
         <IconButton
@@ -69,8 +78,8 @@ export const PostCard = ({ post }) => {
       <CardOverflow>
         <AspectRatio>
           <img
-            src="https://images.unsplash.com/photo-1717241365608-5565eef72d89?q=80&w=1941&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
+            src={post.imageURI}
+            alt={post.user.firstName + " " + post.user.lastName}
             loading="lazy"
           />
         </AspectRatio>
@@ -85,13 +94,14 @@ export const PostCard = ({ post }) => {
             className="text-primary-rose dark:text-dark-primary-light-blue"
             size="sm"
           >
-            <Favorite className={
-              twMerge(
-                  "stroke-2",
-                  true && "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
-                  false && "stroke-red-500 fill-red-500"
-              )
-            }/>
+            <Favorite
+              className={twMerge(
+                "stroke-2",
+                true &&
+                  "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
+                false && "stroke-red-500 fill-red-500",
+              )}
+            />
           </IconButton>
           <IconButton
             variant="plain"
@@ -110,15 +120,26 @@ export const PostCard = ({ post }) => {
         </Box>
       </CardContent>
       <CardContent>
-        <Link
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-          component="button"
-          underline="none"
-          fontSize="sm"
-          fontWeight="lg"
-        >
-          {"81K"} Likes
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            component="button"
+            underline="none"
+            fontSize="sm"
+            fontWeight="lg"
+          >
+            {post.likes.length} Likes
+          </Link>
+          <Link
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            component="button"
+            underline="none"
+            fontSize="sm"
+            fontWeight="lg"
+          >
+            {post.comments.length} comments
+          </Link>
+        </div>
         <Typography
           fontSize="sm"
           className="text-primary-rose dark:text-dark-primary-light-blue"
@@ -129,7 +150,7 @@ export const PostCard = ({ post }) => {
             fontWeight="lg"
             className="text-primary-rose dark:text-dark-primary-light-blue mr-1"
           >
-            {post.author.firstName} {post.author.secondName}
+            {post.user.firstName} {post.user.lastName}
           </Link>
           {post.content}
         </Typography>
@@ -140,7 +161,7 @@ export const PostCard = ({ post }) => {
           className="text-primary-rose dark:text-dark-primary-light-blue"
           sx={{ my: 0.5 }}
         >
-          2 DAYS AGO
+          {daysAgo(post.createdAt)} DAYS AGO
         </Link>
       </CardContent>
       <CardContent orientation="horizontal" sx={{ gap: 1 }}>

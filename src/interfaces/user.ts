@@ -11,8 +11,8 @@ export interface User {
   shortDescription?: string;
   imageURI?: string;
   settings: UserSettings;
-  friends: [];
-  friendsRequests: [];
+  friends: string[];
+  friendsRequests: string[];
 }
 
 export interface UserSettings {

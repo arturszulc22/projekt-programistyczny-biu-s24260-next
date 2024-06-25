@@ -23,15 +23,18 @@
         "isAdmin": true
       },
       "userName": "admin22",
-      "friends": ["2", "d0fa"],
+      "friends": [
+        "d0fa",
+        "2"
+      ],
       "friendsRequests": []
     },
     {
       "id": "2",
-      "firstName": "Janek",
-      "lastName": "Kowa",
+      "firstName": "Stefan",
+      "lastName": "Kowalski",
       "password": "password",
-      "email": "user@user.com",
+      "email": "admin@admin2.com",
       "dateOfBirth": "1990-01-15",
       "age": 34,
       "town": "Gdańsk",
@@ -46,9 +49,12 @@
           "layout": "left",
           "isNotificationEnabled": true
         },
-        "isAdmin": false
+        "isAdmin": true
       },
-      "friends": ["1"],
+      "userName": "admin23",
+      "friends": [
+        "1"
+      ],
       "friendsRequests": []
     },
     {
@@ -74,7 +80,9 @@
         },
         "isAdmin": false
       },
-      "friends": ["1"],
+      "friends": [
+        "1"
+      ],
       "friendsRequests": []
     },
     {
@@ -101,9 +109,7 @@
         "isAdmin": true
       },
       "friends": [],
-      "friendsRequests": [
-        "1"
-      ]
+      "friendsRequests": []
     },
     {
       "id": "0a6b8c1e-aa5e-4746-85b5-1d8f1e00743e",
