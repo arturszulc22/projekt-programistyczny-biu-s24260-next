@@ -28,13 +28,7 @@ const UserCardSecondary: FC = ({ user }) => {
       }}
       className="bg-primary border-transparent dark:bg-dark-primary dark:border-dark-primary"
     >
-      <Avatar
-        src={
-          "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-        }
-        alt="test"
-        size="lg"
-      />
+      <Avatar src={user.imageURI} alt="test" size="lg" />
       <CardContent>
         <Typography fontSize="xl" fontWeight="lg">
           <Link

@@ -10,9 +10,9 @@ const ProfileStatistics: FC = ({
   return (
     <div className={`flex gap-3 justify-center items-center ${className}`}>
       {statistics &&
-        statistics.map((statistic) => {
+        statistics.map((statistic, index) => {
           return (
-            <div className="flex gap-1">
+            <div className="flex gap-1" key={index}>
               <p className="text-sm md:text-lg text-primary-rose dark:text-dark-primary-light-blue font-bold">
                 {statistic.value}
               </p>
