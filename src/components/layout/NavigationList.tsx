@@ -1,12 +1,7 @@
 "use client";
 import { FC } from "react";
 
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemContent,
-} from "@mui/joy";
+import { List, ListItem, ListItemButton, ListItemContent } from "@mui/joy";
 
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -17,8 +12,15 @@ import { usePathname } from "next/navigation";
 
 import FriendsList from "@/components/layout/FriendsList";
 import Link from "next/link";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useUsersStore } from "@/providers/users-store-provider";
 
 const NavigationList: FC = () => {
+  const { user } = useAuthStore((state) => state);
+  const { getUserFriends } = useUsersStore((state) => state);
+
+  if (!user) return;
+
   const pathname = usePathname();
 
   const listItems = [
@@ -75,8 +77,21 @@ const NavigationList: FC = () => {
             </ListItem>
           );
         })}
+        {user?.settings.isAdmin && (
+          <ListItem className="rounded">
+            <ListItemButton
+              role="menuitem"
+              className="rounded"
+              component={Link}
+              href="admin/dashboard"
+              aria-current={pathname === "admin/dashboard"}
+            >
+              <ListItemContent>Admin Panel</ListItemContent>
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
-      <FriendsList />
+      <FriendsList friends={getUserFriends(user)} />
     </div>
   );
 };

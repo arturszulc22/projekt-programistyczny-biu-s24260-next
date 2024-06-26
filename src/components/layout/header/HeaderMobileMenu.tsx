@@ -33,7 +33,7 @@ const HeaderMobileMenu: FC = ({ user, logout }) => {
         <div className="flex items-center px-5">
           <div className="flex-shrink-0">
             <img
-              className="h-10 w-10 rounded-full"
+              className="h-10 w-10 rounded-full object-cover"
               src={user?.imageURI}
               alt={user?.firstName + " " + user?.lastName}
             />
