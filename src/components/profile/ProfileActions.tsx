@@ -3,6 +3,7 @@ import { Button } from "@mui/joy";
 
 const ProfileActions: FC = ({
   className,
+  isAuthAccount,
   isUserFriend,
   isAuthUserSendRequest,
   isUserSendRequest,
@@ -26,7 +27,7 @@ const ProfileActions: FC = ({
           </Button>
         </>
       )}
-      {!isUserFriend && !isAuthUserSendRequest && !isUserSendRequest && (
+      {!isAuthAccount && !isUserFriend && !isAuthUserSendRequest && !isUserSendRequest && (
         <Button
           variant="solid"
           className="bg-primary-rose dark:bg-dark-primary-blue text-primary px-3 py-2 text-sm font-medium rounded-md dark:text-dark-primary-light-blue"
