@@ -1,6 +1,7 @@
 import { createStore } from "zustand/vanilla";
 import { User } from "@/interfaces/user";
-import { updateUser } from "@/api/user";
+import { getUsers, updateUser } from "@/api/user";
+import { setUser } from "@/actions/cookies";
 
 export type UsersState = {
   users: User[] | [];
@@ -10,9 +11,9 @@ export type UsersState = {
 export type UsersActions = {
   searchUsers: (phrase: string, user: User) => User[] | [];
   updateUser: (user, data) => void;
-  getUserFriends: (user: User) => User[] | [];
-  addFriend: (user: User, auth: User | null) => Promise<void>;
-  removeFriend: (user: User, auth: User | null) => Promise<void>;
+  getUserFriends: (user: User | null) => User[] | [];
+  addFriend: (user: User | null, auth: User | null) => Promise<void>;
+  removeFriend: (user: User | null, auth: User | null) => Promise<void>;
   getOtherPeople: (user: User) => User[] | [];
   getUserFriendsRequests: (user: User) => User[] | [];
   getUserById: (userId: string) => User | null;
@@ -68,13 +69,20 @@ export const createUsersStore = (initState: UsersState = defaultInitState) => {
           ],
         });
 
-        const updatedUser = await updateUser(requestData);
-        set((state) => ({
-          ...state,
-          users: state.users.map((u) =>
-            u.id === updatedUser.id ? updatedUser : u,
-          ),
-        }));
+        await updateUser(requestData);
+        await setUser(requestData);
+        await updateUser({
+          ...friend,
+          friends: [...friend.friends, user.id],
+          friendsRequests: [
+            ...friend.friendsRequests.filter((f) => f !== user.id),
+          ],
+        });
+
+        const updatedUsers = await getUsers();
+        set({
+          users: [...updatedUsers],
+        });
       } catch (e) {}
     },
     removeFriend: async (user, friend) => {
@@ -91,14 +99,27 @@ export const createUsersStore = (initState: UsersState = defaultInitState) => {
           ],
         };
 
-        const updatedUser = await updateUser(requestData);
-        set((state) => ({
-          ...state,
-          users: state.users.map((u) =>
-            u.id === updatedUser.id ? updatedUser : u,
-          ),
-        }));
-      } catch (e) {}
+        await updateUser(requestData);
+        await setUser(requestData);
+        await updateUser({
+          ...friend,
+          friends: [
+            ...friend.friends.filter((friendId) => friendId !== user.id),
+          ],
+          friendsRequests: [
+            ...friend.friendsRequests.filter(
+                (friendId) => friendId !== user.id,
+            ),
+          ],
+        });
+
+        const updatedUsers = await getUsers();
+        set({
+          users: [...updatedUsers],
+        });
+      } catch (e) {
+        console.error(e);
+      }
     },
     getUserFriends: (user: User) => {
       if (!user) return [];

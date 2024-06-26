@@ -9,6 +9,8 @@ import { PostCard } from "@/components/post/PostCard";
 import { useGroupsStore } from "@/providers/groups-store-provider";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { notFound, useRouter } from "next/navigation";
+import { usePostsStore } from "@/providers/posts-store-provider";
+import CreatePostForm from "@/components/post/CreatePostForm";
 
 const Group = ({ params }: { params: { id: string } }) => {
   const { push } = useRouter();
@@ -19,7 +21,8 @@ const Group = ({ params }: { params: { id: string } }) => {
   const group = getGroupById(params.id);
   if (!group) notFound();
 
-  const posts = [];
+  const { posts: allPosts, getGroupPosts } = usePostsStore((state) => state);
+  const posts = getGroupPosts(group);
 
   const isUserInGroup =
     group?.user?.id === auth?.id ||
@@ -98,9 +101,13 @@ const Group = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
       <Container className="py-10 max-w-screen-md flex flex-col gap-3 px-0">
-        {posts.map((post) => (
-          <PostCard post={post} key={post.id} />
-        ))}
+        {isUserInGroup && <CreatePostForm type="group" typeId={group.id} />}
+
+        <div className="grid grid-cols-1 gap-3">
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
       </Container>
     </Container>
   );

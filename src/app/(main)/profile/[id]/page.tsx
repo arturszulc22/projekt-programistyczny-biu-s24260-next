@@ -6,6 +6,9 @@ import ProfileStatistics from "@/components/profile/ProfileStatistics";
 import { useUsersStore } from "@/providers/users-store-provider";
 import { notFound } from "next/navigation";
 import { useAuthStore } from "@/providers/auth-store-provider";
+import CreatePostForm from "@/components/post/CreatePostForm";
+import { PostCard } from "@/components/post/PostCard";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
 const Profile: FC = ({ params }: { params: { id: string } }) => {
   const { getUserById } = useUsersStore((state) => state);
@@ -24,6 +27,9 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
     removeFriend: removeFriendAuth,
     addFriend: addFriendAuth,
   } = useAuthStore((state) => state);
+
+  const { getUserPosts } = usePostsStore((state) => state);
+  const posts = getUserPosts(user);
 
   const handleAddFriendRequest = async (user) => {
     await updateUser(user, {
@@ -78,13 +84,28 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
       </div>
       <ProfileActions
         className="mt-6"
+        isAuthAccount={user?.id === auth?.id}
         isUserFriend={isUserFriend(user)}
-        isAuthUserSendRequest={user.friendsRequests.some((f) => f === auth?.id)}
-        isUserSendRequest={auth?.friendsRequests.includes(user.id)}
+        isAuthUserSendRequest={user?.friendsRequests.some(
+          (f) => f === auth?.id,
+        )}
+        isUserSendRequest={auth?.friendsRequests.includes(user?.id)}
         addFriendRequest={async () => handleAddFriendRequest(user)}
         addFriend={async () => addFriend(user)}
         removeFriend={async () => await removeFriend(user)}
       />
+      <Container className="py-10 max-w-screen-md flex flex-col gap-3 px-0">
+        {user?.id === auth?.id && <CreatePostForm />}
+
+        {(user?.id === auth?.id ||
+          (user?.settings.profile.isPrivate && isUserFriend(user))) && (
+          <div className="grid grid-cols-1 gap-3">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
+        )}
+      </Container>
     </Container>
   );
 };

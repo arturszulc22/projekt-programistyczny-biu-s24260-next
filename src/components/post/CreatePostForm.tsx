@@ -1,100 +1,125 @@
 "use client";
-import { FC } from "react";
-import {Autocomplete, Avatar, Button, FormControl, FormLabel, styled} from "@mui/joy";
-import UploadIcon from '@mui/icons-material/Upload';
+import { FC, useState } from "react";
+import { Avatar, Button, FormControl, FormLabel, Typography } from "@mui/joy";
+import { useAuthStore } from "@/providers/auth-store-provider";
+import { useUsersStore } from "@/providers/users-store-provider";
+import { twMerge } from "tailwind-merge";
+import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  PostFormDataInterface,
+  postValidationSchema,
+} from "@/validations/post-validation-schema";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
-const VisuallyHiddenInput = styled('input')`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`;
+const CreatePostForm: FC = ({
+  type = null,
+  typeId = null,
+}: {
+  type: string;
+  typeId: string;
+}) => {
+  const [selectedFriends, setSelectedFriends] = useState([]);
 
+  const { user } = useAuthStore((state) => state);
+  const { getUserFriends } = useUsersStore((state) => state);
+  const { createPost } = usePostsStore((state) => state);
+  const friends = getUserFriends(user);
 
-const CreatePostForm: FC = () => {
-  const user = {
-    firstName: "Alice",
-    secondName: "Johnson",
-    profileUrl: "profile/2",
-    imageURI:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  const resolver = useYupValidationResolver(postValidationSchema);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<PostFormDataInterface>({ resolver });
+
+  const onSubmit: SubmitHandler<PostFormDataInterface> = (data) => {
+    createPost({
+      ...data,
+      attachedUsers: friends.filter((friend) =>
+        selectedFriends.includes(friend.id),
+      ),
+      idGroupPost: type === "group" ? typeId : null,
+      idEventPost: type === "event" ? typeId : null,
+      user: user,
+    });
+    reset();
   };
-
-  const friends = [
-    {
-      firstName: "Alice",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    {
-      firstName: "John",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    {
-      firstName: "Derek",
-      secondName: "Johnson",
-      profileUrl: "profile/2",
-      imageURI:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  ];
+  const handleSelectionChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value,
+    );
+    setSelectedFriends(selectedOptions);
+  };
 
   return (
     <div>
       <form
         action="@/components/post/CreatePostForm"
+        onSubmit={handleSubmit(onSubmit)}
         className="border border-primary-rose rounded p-4 bg-primary dark:bg-dark-primary dark:border-0"
       >
         <div className="flex flex-col md:flex-row gap-2">
           <Avatar
-            src={user.imageURI}
-            alt={user.firstName + " " + user.secondName}
+            src={user?.imageURI}
+            alt={user?.firstName + " " + user?.lastName}
             className="hidden md:block"
           />
           <div className="w-full flex flex-col gap-2">
             <textarea
               name="content"
+              {...register("content")}
               required
               placeholder="What do you think?"
-              className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose dark:placeholder:text-dark-primary sm:text-sm sm:leading-6"
+              className={twMerge(
+                "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose dark:placeholder:text-dark-primary sm:text-sm sm:leading-6",
+                errors.content && "ring-red-600 focus-visible:outline-red-600",
+              )}
             />
-            <div className="flex flex-col sm:flex-row gap-2">
+            {errors.content && (
+              <Typography color="danger" fontSize="sm">
+                {errors.content.message}
+              </Typography>
+            )}
+            <div className="flex flex-col gap-2">
               <FormControl className="w-full">
-                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">@Mentions</FormLabel>
-                <Autocomplete
-                    multiple
-                    id="tags-default"
-                    placeholder="Favorites"
-                    options={friends}
-                    getOptionLabel={(user) =>
-                        user.firstName + " " + user.secondName
-                    }
-                    defaultValue={[]}
-                />
+                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">
+                  @Mentions
+                </FormLabel>
+                <select
+                  id="friends"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  multiple={true}
+                  onChange={handleSelectionChange}
+                >
+                  {friends.map((friend) => (
+                    <option key={friend.id} value={friend.id}>
+                      {friend.firstName} {friend.lastName}
+                    </option>
+                  ))}
+                </select>
               </FormControl>
               <FormControl>
-                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">Image</FormLabel>
-                <Button
-                    component="label"
-                    role={undefined}
-                    tabIndex={-1}
-                    variant="outlined"
-                    color="neutral"
-                    className="py-1"
-                    startDecorator={<UploadIcon/>}
-                >
-                  <VisuallyHiddenInput type="file" />
-                </Button>
+                <FormLabel className="text-primary-rose dark:text-dark-primary-light-blue">
+                  Image URI
+                </FormLabel>
+                <input
+                  type="text"
+                  id="image-uri"
+                  className={twMerge(
+                    "block flex-1 border dark:border-0 border-secondary bg-white dark:bg-dark-primary-light-blue rounded py-1.5 px-2 text-primary-rose dark:text-dark-primary placeholder:text-primary-rose placeholder:dark:text-gray-800 focus:ring-0 sm:text-sm sm:leading-6",
+                    errors.imageURI &&
+                      "ring-red-600 focus-visible:outline-red-600",
+                  )}
+                  {...register("imageURI")}
+                  placeholder="Image URI"
+                />
+                {errors.imageURI && (
+                  <Typography color="danger" fontSize="sm">
+                    {errors.imageURI.message}
+                  </Typography>
+                )}
               </FormControl>
             </div>
           </div>
