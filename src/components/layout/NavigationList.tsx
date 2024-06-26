@@ -13,9 +13,14 @@ import { usePathname } from "next/navigation";
 import FriendsList from "@/components/layout/FriendsList";
 import Link from "next/link";
 import { useAuthStore } from "@/providers/auth-store-provider";
+import { useUsersStore } from "@/providers/users-store-provider";
 
 const NavigationList: FC = () => {
   const { user } = useAuthStore((state) => state);
+  const { getUserFriends } = useUsersStore((state) => state);
+
+  if (!user) return;
+
   const pathname = usePathname();
 
   const listItems = [
@@ -86,7 +91,7 @@ const NavigationList: FC = () => {
           </ListItem>
         )}
       </List>
-      <FriendsList />
+      <FriendsList friends={getUserFriends(user)} />
     </div>
   );
 };

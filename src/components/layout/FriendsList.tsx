@@ -1,8 +1,6 @@
 import { FC } from "react";
 import {
-  Avatar,
   List,
-  ListDivider,
   ListItem,
   ListItemDecorator,
   Typography,
@@ -10,8 +8,9 @@ import {
 import CircleIcon from "@mui/icons-material/Circle";
 import Link from "next/link";
 import AvatarWithStatus from "@/components/message/AvatarWithStatus";
+import { User } from "@/interfaces/user";
 
-const FriendsList: FC = () => {
+const FriendsList: FC = ({ friends }: { friends: User[] }) => {
   return (
     <div className="border-t border-primary-rose dark:border-dark-primary-light-blue pt-3">
       <Typography className="text-sm px-4 mb-3 text-primary-rose dark:text-dark-primary-light-blue font-bold">
@@ -23,17 +22,18 @@ const FriendsList: FC = () => {
           borderRadius: "sm",
         }}
       >
-        <Link href="/profile/1">
-          <ListItem className="text-primary-rose dark:text-dark-primary-light-blue">
-            <ListItemDecorator>
-              <AvatarWithStatus
-                online={true}
-                src="https://images.unsplash.com/photo-1717780084943-305381b5f8f0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-            </ListItemDecorator>
-            Mabel Boyle
-          </ListItem>
-        </Link>
+        {friends.length > 0 && friends.map((user) => {
+          return (
+            <Link href={"/messages"}>
+              <ListItem className="text-primary-rose dark:text-dark-primary-light-blue">
+                <ListItemDecorator>
+                  <AvatarWithStatus online={true} src={user.imageURI} />
+                </ListItemDecorator>
+                {user.firstName + " " + user.lastName}
+              </ListItem>
+            </Link>
+          );
+        })}
       </List>
     </div>
   );

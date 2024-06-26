@@ -84,7 +84,7 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
     <Container className="my-10">
       <div className="flex flex-col md:flex-row items-center gap-4">
         <img
-          className="inline-block h-20 w-20 rounded-full p-1"
+          className="inline-block h-20 w-20 rounded-full p-1 object-contain"
           src={user?.imageURI}
           alt="test"
         />
