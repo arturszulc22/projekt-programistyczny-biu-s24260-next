@@ -44,8 +44,6 @@ export const PostCard = ({ post }) => {
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
   const { addNotification } = useNotificationsStore((state) => state);
 
-  if (!user) return null;
-
   const isUserLike = isUserLikePost(post, user);
 
   const resolver = useYupValidationResolver(commentValidationSchema);
@@ -55,6 +53,8 @@ export const PostCard = ({ post }) => {
     reset,
     formState: { errors },
   } = useForm<CommentFormDataInterface>({ resolver });
+
+  if (!user) return null;
 
   const onSubmit: SubmitHandler<CommentFormDataInterface> = async (data) => {
     try {
