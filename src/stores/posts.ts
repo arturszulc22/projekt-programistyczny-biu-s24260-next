@@ -84,7 +84,12 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
     },
     getUserPosts: (user: User) => {
       return get()
-        .posts.filter((post) => post.user.id === user.id)
+        .posts.filter(
+          (post) =>
+            post.idGroupPost === null &&
+            post.idEventPost === null &&
+            post.user.id === user.id,
+        )
         .sort((a, b) =>
           compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
         );
@@ -100,6 +105,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
       set({ posts: [...get().posts, request] });
     },
     isUserPostAuthor: (post: Post, user: User) => {
+      if (!user) return null;
       return post.user.id === user.id;
     },
     isUserLikePost: (post: Post, user: User | null) => {
@@ -127,7 +133,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
         ...commentData,
         id: uuidv4(),
         likes: [],
-        createdAt: new Date().toLocaleString("pl-Pl"),
+        createdAt: new Date().toISOString(),
       };
       const updatedPosts = get().posts.map((p) =>
         p.id === post.id ? { ...p, comments: [...p.comments, comment] } : p,
@@ -157,6 +163,8 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
 
       const comment = post.comments.find((comment) => comment.id === commentId);
       if (!comment || !comment.likes) return false;
+
+      if (!user) return false;
 
       return comment.likes.some((likedUser) => likedUser.id === user.id);
     },

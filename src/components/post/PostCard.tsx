@@ -32,6 +32,7 @@ import {
   commentValidationSchema,
   CommentFormDataInterface,
 } from "@/validations/comment-validation-schema";
+import { compareDesc, parseISO } from "date-fns";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuthStore((state) => state);
@@ -248,14 +249,18 @@ export const PostCard = ({ post }) => {
         {isOpenCommentSection && (
           <List className="max-h-64 overflow-y-auto">
             {isOpenCommentSection &&
-              post.comments.map((comment) => (
-                <CommentItem
-                  key={comment.id}
-                  comment={comment}
-                  post={post}
-                  user={user}
-                />
-              ))}
+              post.comments
+                .sort((a, b) =>
+                  compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
+                )
+                .map((comment) => (
+                  <CommentItem
+                    key={comment.id}
+                    comment={comment}
+                    post={post}
+                    user={user}
+                  />
+                ))}
           </List>
         )}
       </CardContent>

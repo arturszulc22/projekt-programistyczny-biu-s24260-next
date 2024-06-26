@@ -21,6 +21,7 @@ const CommentItem = ({ comment, post, user }) => {
     removeUserCommentLike,
   } = usePostsStore((state) => state);
 
+  const isCommentAuthor = comment.user.id === user?.id;
   const isCommentLiked = isCommentLikedByUser(post.id, comment.id, user);
   const isUserAuthor = isUserPostAuthor(post, user);
 
@@ -45,6 +46,7 @@ const CommentItem = ({ comment, post, user }) => {
           {comment.content}
         </Typography>
       </ListItemContent>
+      ({comment.likes.length})
       <IconButton
         onClick={handleLikeComment}
         variant="plain"
@@ -60,7 +62,7 @@ const CommentItem = ({ comment, post, user }) => {
           )}
         />
       </IconButton>
-      {isUserAuthor && (
+      {(isUserAuthor || isCommentAuthor) && (
         <IconButton
           variant="plain"
           color="danger"
