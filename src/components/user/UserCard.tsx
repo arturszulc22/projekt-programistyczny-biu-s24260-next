@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/joy";
 import Link from "next/link";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
 const UserCard: FC = ({
   user,
@@ -20,11 +21,14 @@ const UserCard: FC = ({
   addFriend,
   removeFriend,
 }) => {
+  const { getUserPosts } = usePostsStore((state) => state);
   const truncate = (string, length = 80) => {
     return string.length > length
       ? string.substring(0, length) + "..."
       : string;
   };
+
+  const postsLength = getUserPosts(user).length;
 
   return (
     <Card
@@ -80,7 +84,7 @@ const UserCard: FC = ({
               fontWeight="lg"
               className="text-primary dark:text-dark-primary-light-blue"
             >
-              34
+              {postsLength}
             </Typography>
           </div>
           <div>

@@ -73,6 +73,13 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
     await removeFriendUser(user, auth);
   };
 
+  const canViewPosts = () => {
+    if (user?.id === auth?.id) return true;
+    if (isUserFriend(user)) return true;
+    if (user?.settings.profile.isPrivate && !isUserFriend(user)) return false
+    return false;
+  }
+
   return (
     <Container className="my-10">
       <div className="flex flex-col md:flex-row items-center gap-4">
@@ -94,7 +101,7 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
           <ProfileStatistics
             className="w-full"
             statistics={[
-              { name: "posts", value: 12 },
+              { name: "posts", value: posts.length },
               {
                 name: "friends",
                 value: user?.friends ? user?.friends.length : 0,
@@ -123,8 +130,7 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
       <Container className="py-10 max-w-screen-md flex flex-col gap-3 px-0">
         {user?.id === auth?.id && <CreatePostForm />}
 
-        {user?.id === auth?.id ||
-        (user?.settings.profile.isPrivate && isUserFriend(user)) ? (
+        {canViewPosts() ? (
           <div className="grid grid-cols-1 gap-3">
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
