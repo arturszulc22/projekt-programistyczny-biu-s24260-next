@@ -11,6 +11,8 @@ import {
   postValidationSchema,
 } from "@/validations/post-validation-schema";
 import { usePostsStore } from "@/providers/posts-store-provider";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
+import { v4 as uuidv4 } from "uuid";
 
 const CreatePostForm: FC = ({
   type = null,
@@ -24,6 +26,8 @@ const CreatePostForm: FC = ({
   const { user } = useAuthStore((state) => state);
   const { getUserFriends } = useUsersStore((state) => state);
   const { createPost } = usePostsStore((state) => state);
+  const { addNotification } = useNotificationsStore((state) => state);
+
   const friends = getUserFriends(user);
 
   const resolver = useYupValidationResolver(postValidationSchema);
@@ -34,16 +38,34 @@ const CreatePostForm: FC = ({
     formState: { errors },
   } = useForm<PostFormDataInterface>({ resolver });
 
+  if (!user) return;
+
   const onSubmit: SubmitHandler<PostFormDataInterface> = (data) => {
+    const attachedUsers = friends.filter((friend) =>
+      selectedFriends.includes(friend.id),
+    );
+
     createPost({
       ...data,
-      attachedUsers: friends.filter((friend) =>
-        selectedFriends.includes(friend.id),
-      ),
+      attachedUsers: attachedUsers,
       idGroupPost: type === "group" ? typeId : null,
       idEventPost: type === "event" ? typeId : null,
       user: user,
     });
+
+    attachedUsers &&
+      attachedUsers.forEach((attachedUser) => {
+        const notification = {
+          id: uuidv4(),
+          user: attachedUser,
+          sender: user,
+          description: "You were mentioned in a post",
+          createdAt: new Date().toISOString(),
+          isRead: false,
+        };
+        addNotification(notification);
+      });
+
     reset();
   };
   const handleSelectionChange = (e) => {

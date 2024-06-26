@@ -13,34 +13,16 @@ import {
   Typography,
 } from "@mui/joy";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const NotificationModal: FC = ({ isOpen, onCloseModal }) => {
-  const notifications = [
-    {
-      id: 1,
-      title: "Brunch this weekend?",
-      content: "test message content",
-      user: {
-        id: 1,
-        firstName: "Jan",
-        secondName: "Kowalski",
-        imageURI:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      id: 2,
-      title: "Brunch this weekend?",
-      content: "test message content",
-      user: {
-        id: 1,
-        firstName: "Jan",
-        secondName: "Kowalski",
-        imageURI:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-  ];
+  const { user } = useAuthStore((state) => state);
+  const { getNotificationsForUser, removeNotification } = useNotificationsStore(
+    (state) => state,
+  );
+
+  const notifications = getNotificationsForUser(user?.id || "");
 
   return (
     <Drawer open={isOpen} onClose={onCloseModal} anchor="right">
@@ -56,24 +38,29 @@ const NotificationModal: FC = ({ isOpen, onCloseModal }) => {
           return (
             <ListItem key={notification.id} className="my-2">
               <ListItemDecorator>
-                <Avatar src={notification.user.imageURI} />
+                <Avatar src={notification.sender.imageURI} />
               </ListItemDecorator>
               <ListItemContent>
                 <Typography
                   level="title-sm"
                   className="text-primary-rose dark:text-dark-primary-light-blue"
                 >
-                  {notification.title}
+                  {notification.sender.firstName +
+                    " " +
+                    notification.sender.lastName}
                 </Typography>
                 <Typography
                   level="body-sm"
                   noWrap
                   className="text-secondary dark:text-dark-primary-light-blue"
                 >
-                  {notification.content}
+                  {notification.description}
                 </Typography>
               </ListItemContent>
-              <Button variant="plain">
+              <Button
+                variant="plain"
+                onClick={() => removeNotification(notification.id)}
+              >
                 <DeleteIcon />
               </Button>
             </ListItem>

@@ -33,12 +33,16 @@ import {
   CommentFormDataInterface,
 } from "@/validations/comment-validation-schema";
 import { compareDesc, parseISO } from "date-fns";
+import { v4 as uuidv4 } from "uuid";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuthStore((state) => state);
+
   const { isUserLikePost, setUserLike, removeUserLike, addComment } =
     usePostsStore((state) => state);
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
+  const { addNotification } = useNotificationsStore((state) => state);
 
   const isUserLike = isUserLikePost(post, user);
 
@@ -50,16 +54,46 @@ export const PostCard = ({ post }) => {
     formState: { errors },
   } = useForm<CommentFormDataInterface>({ resolver });
 
+  if (!user) return null;
+
   const onSubmit: SubmitHandler<CommentFormDataInterface> = async (data) => {
     try {
+      const notification = {
+        id: uuidv4(),
+        user: post.user,
+        sender: user,
+        description: "commented your post!",
+        createdAt: new Date().toISOString(),
+        isRead: false,
+      };
+
       const newComment = {
         ...data,
         user: user,
       };
       await addComment(post, newComment);
       reset();
+      addNotification(notification);
     } catch (e: Error) {}
   };
+
+  const handleToggleUserLike = () => {
+    isUserLike
+        ? removeUserLike(post, user)
+        : setUserLike(post, user)
+
+    if (!isUserLike) {
+      const notification = {
+        id: uuidv4(),
+        user: post.user,
+        sender: user,
+        description: "like your post!",
+        createdAt: new Date().toISOString(),
+        isRead: false,
+      };
+      addNotification(notification);
+    }
+  }
 
   return (
     <Card
@@ -142,9 +176,7 @@ export const PostCard = ({ post }) => {
             variant="plain"
             className="text-primary-rose dark:text-dark-primary-light-blue"
             size="sm"
-            onClick={() =>
-              isUserLike ? removeUserLike(post, user) : setUserLike(post, user)
-            }
+            onClick={() => handleToggleUserLike()}
           >
             <Favorite
               className={twMerge(

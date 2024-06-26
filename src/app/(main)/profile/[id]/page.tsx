@@ -9,11 +9,14 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 import CreatePostForm from "@/components/post/CreatePostForm";
 import { PostCard } from "@/components/post/PostCard";
 import { usePostsStore } from "@/providers/posts-store-provider";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
+import { v4 as uuidv4 } from "uuid";
+import { Typography } from "@mui/joy";
 
 const Profile: FC = ({ params }: { params: { id: string } }) => {
   const { getUserById } = useUsersStore((state) => state);
   const user = getUserById(params.id);
-  if (!user) notFound();
+  if (!user) return notFound();
 
   const {
     updateUser,
@@ -29,17 +32,40 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
   } = useAuthStore((state) => state);
 
   const { getUserPosts } = usePostsStore((state) => state);
+  const { addNotification } = useNotificationsStore((state) => state);
+  if (!auth) return;
+
   const posts = getUserPosts(user);
 
   const handleAddFriendRequest = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "sent you friend request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
+
     await updateUser(user, {
       friendsRequests: [...user.friendsRequests, auth?.id],
     });
+
+    addNotification(notification);
   };
 
   const addFriend = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "accepted your request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
     await addFriendAuth(user);
     await addFriendUser(user, auth);
+    addNotification(notification);
   };
 
   const removeFriend = async (user) => {
@@ -97,13 +123,15 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
       <Container className="py-10 max-w-screen-md flex flex-col gap-3 px-0">
         {user?.id === auth?.id && <CreatePostForm />}
 
-        {(user?.id === auth?.id ||
-          (user?.settings.profile.isPrivate && isUserFriend(user))) && (
+        {user?.id === auth?.id ||
+        (user?.settings.profile.isPrivate && isUserFriend(user)) ? (
           <div className="grid grid-cols-1 gap-3">
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
+        ) : (
+          <Typography fontSize="sm" className="text-primary-rose dark:text-dark-primary-light-blue text-center">This profile is private</Typography>
         )}
       </Container>
     </Container>
