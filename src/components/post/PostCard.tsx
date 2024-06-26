@@ -26,15 +26,39 @@ import { useState } from "react";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { usePostsStore } from "@/providers/posts-store-provider";
 import Link from "next/link";
+import { useYupValidationResolver } from "@/resolvers/yupValidationResolver";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  commentValidationSchema,
+  CommentFormDataInterface,
+} from "@/validations/comment-validation-schema";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuthStore((state) => state);
-  const { isUserLikePost, setUserLike, removeUserLike } = usePostsStore(
-    (state) => state,
-  );
+  const { isUserLikePost, setUserLike, removeUserLike, addComment } =
+    usePostsStore((state) => state);
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
 
   const isUserLike = isUserLikePost(post, user);
+
+  const resolver = useYupValidationResolver(commentValidationSchema);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CommentFormDataInterface>({ resolver });
+
+  const onSubmit: SubmitHandler<CommentFormDataInterface> = async (data) => {
+    try {
+      const newComment = {
+        ...data,
+        user: user,
+      };
+      await addComment(post, newComment);
+      reset();
+    } catch (e: Error) {}
+  };
 
   return (
     <Card
@@ -197,27 +221,40 @@ export const PostCard = ({ post }) => {
           {post.createdAt}
         </Typography>
       </CardContent>
-      <CardContent orientation="horizontal" sx={{ gap: 1 }}>
-        <IconButton
-          size="sm"
-          variant="plain"
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-          sx={{ ml: -1 }}
-        >
-          <Face />
-        </IconButton>
-        <Input
-          placeholder="Add a comment…"
-          className="block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose sm:text-sm sm:leading-6"
-        />
-        <Button variant="solid">Post</Button>
-      </CardContent>
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <CardContent orientation="horizontal" sx={{ gap: 1 }}>
+          <IconButton
+            size="sm"
+            variant="plain"
+            className="text-primary-rose dark:text-dark-primary-light-blue"
+            sx={{ ml: -1 }}
+          >
+            <Face />
+          </IconButton>
+          <Input
+            {...register("content")}
+            placeholder="Add a comment…"
+            className={twMerge(
+              "block flex w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose dark:placeholder:text-dark-primary sm:text-sm sm:leading-6",
+              errors.content && "ring-red-600 focus-visible:outline-red-600",
+            )}
+          />
+          <Button variant="solid" type="submit">
+            Post
+          </Button>
+        </CardContent>
+      </form>
       <CardContent>
         {isOpenCommentSection && (
-          <List className="max-h-32 overflow-scroll">
+          <List className="max-h-64 overflow-y-auto">
             {isOpenCommentSection &&
               post.comments.map((comment) => (
-                <CommentItem key={comment.id} comment={comment} />
+                <CommentItem
+                  key={comment.id}
+                  comment={comment}
+                  post={post}
+                  user={user}
+                />
               ))}
           </List>
         )}

@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   IconButton,
@@ -6,10 +7,29 @@ import {
   ListItemDecorator,
   Typography,
 } from "@mui/joy";
-import { FavoriteBorder } from "@mui/icons-material";
+import { Delete, Favorite } from "@mui/icons-material";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
+import { usePostsStore } from "@/providers/posts-store-provider";
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment, post, user }) => {
+  const {
+    isUserPostAuthor,
+    removeComment,
+    isCommentLikedByUser,
+    setUserCommentLike,
+    removeUserCommentLike,
+  } = usePostsStore((state) => state);
+
+  const isCommentLiked = isCommentLikedByUser(post.id, comment.id, user);
+  const isUserAuthor = isUserPostAuthor(post, user);
+
+  const handleLikeComment = () => {
+    isCommentLikedByUser(post.id, comment.id, user)
+      ? removeUserCommentLike(post.id, comment.id, user)
+      : setUserCommentLike(post.id, comment.id, user);
+  };
+
   return (
     <ListItem className="w-full">
       <ListItemDecorator className="self-start">
@@ -26,12 +46,30 @@ const CommentItem = ({ comment }) => {
         </Typography>
       </ListItemContent>
       <IconButton
+        onClick={handleLikeComment}
         variant="plain"
         className="text-primary-rose dark:text-dark-primary-light-blue"
         size="sm"
       >
-        <FavoriteBorder />
+        <Favorite
+          className={twMerge(
+            "stroke-2",
+            !isCommentLiked &&
+              "stroke-primary-rose dark:stroke-dark-primary-light-blue fill-transparent",
+            isCommentLiked && "stroke-red-500 fill-red-500",
+          )}
+        />
       </IconButton>
+      {isUserAuthor && (
+        <IconButton
+          variant="plain"
+          color="danger"
+          size="sm"
+          onClick={() => removeComment(post, comment.id)}
+        >
+          <Delete />
+        </IconButton>
+      )}
     </ListItem>
   );
 };
