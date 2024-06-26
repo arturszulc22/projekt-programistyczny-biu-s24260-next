@@ -15,6 +15,7 @@ import SearchModal from "@/components/modals/SearchModal";
 import NotificationModal from "@/components/modals/NotificationModal";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useRouter } from "next/navigation";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
 
 const Header: FC = () => {
   const { user, logout } = useAuthStore((state) => state);
@@ -23,6 +24,11 @@ const Header: FC = () => {
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+
+  const { getNotificationCountForUser } = useNotificationsStore(
+    (state) => state,
+  );
+  const notificationCount = getNotificationCountForUser(user?.id || "");
 
   const logoutUser = async () => {
     await logout();
@@ -61,7 +67,7 @@ const Header: FC = () => {
                   className="p-1"
                   onClick={() => setIsNotificationModalOpen(true)}
                 >
-                  <Badge badgeContent={4} size="sm" className="text-xs">
+                  <Badge badgeContent={notificationCount} size="sm" className="text-xs">
                     <Typography>
                       <NotificationsIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
                     </Typography>

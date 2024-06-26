@@ -1,8 +1,10 @@
+import { User } from "@/interfaces/user";
+
 export interface Notification {
   id: string;
-  userId: string;
-  senderId: string;
-  content: string;
+  user: User;
+  sender: User;
+  description: string;
   createdAt: string;
   isRead: boolean;
 }

@@ -2,6 +2,8 @@ import { Grid } from "@mui/material";
 import UserCard from "@/components/user/UserCard";
 import { useAuthStore } from "@/providers/auth-store-provider";
 import { useUsersStore } from "@/providers/users-store-provider";
+import { v4 as uuidv4 } from "uuid";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
 
 const UserTab = ({ users }) => {
   const {
@@ -17,15 +19,40 @@ const UserTab = ({ users }) => {
     addFriend: addFriendAuth,
   } = useAuthStore((state) => state);
 
+  const { addNotification } = useNotificationsStore((state) => state);
+
+  if (!auth) return null;
+
   const handleAddFriendRequest = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "sent you friend request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
+
     await updateUser(user, {
       friendsRequests: [...user.friendsRequests, auth?.id],
     });
+
+    addNotification(notification);
   };
 
   const addFriend = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "accepted your request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
     await addFriendAuth(user);
     await addFriendUser(user, auth);
+
+    addNotification(notification);
   };
 
   const removeFriend = async (user) => {

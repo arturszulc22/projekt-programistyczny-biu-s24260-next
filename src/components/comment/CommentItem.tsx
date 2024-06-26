@@ -11,6 +11,8 @@ import { Delete, Favorite } from "@mui/icons-material";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { usePostsStore } from "@/providers/posts-store-provider";
+import { v4 as uuidv4 } from "uuid";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
 
 const CommentItem = ({ comment, post, user }) => {
   const {
@@ -25,10 +27,25 @@ const CommentItem = ({ comment, post, user }) => {
   const isCommentLiked = isCommentLikedByUser(post.id, comment.id, user);
   const isUserAuthor = isUserPostAuthor(post, user);
 
+  const { addNotification } = useNotificationsStore((state) => state);
+
   const handleLikeComment = () => {
-    isCommentLikedByUser(post.id, comment.id, user)
+    isCommentLiked
       ? removeUserCommentLike(post.id, comment.id, user)
       : setUserCommentLike(post.id, comment.id, user);
+
+    if (!isCommentLiked) {
+      const notification = {
+        id: uuidv4(),
+        user: comment.user,
+        sender: user,
+        description: "like your comment",
+        createdAt: new Date().toISOString(),
+        isRead: false,
+      };
+
+      addNotification(notification);
+    }
   };
 
   return (

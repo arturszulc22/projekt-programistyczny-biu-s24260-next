@@ -9,11 +9,13 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 import CreatePostForm from "@/components/post/CreatePostForm";
 import { PostCard } from "@/components/post/PostCard";
 import { usePostsStore } from "@/providers/posts-store-provider";
+import {useNotificationsStore} from "@/providers/notifications-store-provider";
+import { v4 as uuidv4 } from "uuid";
 
 const Profile: FC = ({ params }: { params: { id: string } }) => {
   const { getUserById } = useUsersStore((state) => state);
   const user = getUserById(params.id);
-  if (!user) notFound();
+  if (!user) return notFound();
 
   const {
     updateUser,
@@ -27,19 +29,42 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
     removeFriend: removeFriendAuth,
     addFriend: addFriendAuth,
   } = useAuthStore((state) => state);
+  if (!auth) return;
 
   const { getUserPosts } = usePostsStore((state) => state);
   const posts = getUserPosts(user);
 
+  const { addNotification } = useNotificationsStore((state) => state);
+
   const handleAddFriendRequest = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "sent you friend request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
+
     await updateUser(user, {
       friendsRequests: [...user.friendsRequests, auth?.id],
     });
+
+    addNotification(notification);
   };
 
   const addFriend = async (user) => {
+    const notification = {
+      id: uuidv4(),
+      user: user,
+      sender: auth,
+      description: "accepted your request",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
     await addFriendAuth(user);
     await addFriendUser(user, auth);
+    addNotification(notification);
   };
 
   const removeFriend = async (user) => {

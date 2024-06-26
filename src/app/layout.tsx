@@ -9,6 +9,7 @@ import { EventsStoreProvider } from "@/providers/events-store-provider";
 import { UsersStoreProvider } from "@/providers/users-store-provider";
 import { getUsers } from "@/api/user";
 import { PostsStoreProvider } from "@/providers/posts-store-provider";
+import {NotificationsStoreProvider} from "@/providers/notifications-store-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +36,9 @@ const RootLayout: NextPage<RootLayoutProps> = async ({ children }) => {
             <GroupsStoreProvider>
               <EventsStoreProvider>
                 <PostsStoreProvider>
-                  <ThemeProvider attribute="class">{children}</ThemeProvider>
+                  <NotificationsStoreProvider>
+                    <ThemeProvider attribute="class">{children}</ThemeProvider>
+                  </NotificationsStoreProvider>
                 </PostsStoreProvider>
               </EventsStoreProvider>
             </GroupsStoreProvider>
