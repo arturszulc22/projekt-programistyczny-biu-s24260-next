@@ -6,6 +6,7 @@ import { Event } from "@/interfaces/event";
 import { User } from "@/interfaces/user";
 import { v4 as uuidv4 } from "uuid";
 import { Comment } from "@/interfaces/comment";
+import { compareDesc, parseISO } from "date-fns";
 
 export type PostsState = {
   posts: Post[] | [];
@@ -55,22 +56,38 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
     ...initState,
     getHomePosts: (auth) => {
       if (!auth) return [];
-      return get().posts.filter(
-        (post) =>
-          post.idGroupPost === null &&
-          post.idEventPost === null &&
-          (post.user.friends.includes(auth.id) || post.user.id === auth.id),
-      );
+      return get()
+        .posts.filter(
+          (post) =>
+            post.idGroupPost === null &&
+            post.idEventPost === null &&
+            (post.user.friends.includes(auth.id) || post.user.id === auth.id),
+        )
+        .sort((a, b) =>
+          compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
+        );
     },
     getEventPosts: (event: Event) => {
       if (!event) return [];
-      return get().posts.filter((post) => post.idEventPost === event.id);
+      return get()
+        .posts.filter((post) => post.idEventPost === event.id)
+        .sort((a, b) =>
+          compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
+        );
     },
     getGroupPosts: (group: Group) => {
-      return get().posts.filter((post) => post.idGroupPost === group.id);
+      return get()
+        .posts.filter((post) => post.idGroupPost === group.id)
+        .sort((a, b) =>
+          compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
+        );
     },
     getUserPosts: (user: User) => {
-      return get().posts.filter((post) => post.user.id === user.id);
+      return get()
+        .posts.filter((post) => post.user.id === user.id)
+        .sort((a, b) =>
+          compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)),
+        );
     },
     createPost: (data) => {
       const request = {
@@ -78,7 +95,7 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
         id: uuidv4(),
         comments: [],
         likes: [],
-        createdAt: new Date().toLocaleString("pl-Pl"),
+        createdAt: new Date().toISOString(),
       };
       set({ posts: [...get().posts, request] });
     },
