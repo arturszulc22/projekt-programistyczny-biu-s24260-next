@@ -1,16 +1,12 @@
 import { FC } from "react";
 import {
   Avatar,
-  Box,
-  Button,
   Card,
   CardContent,
-  Link,
+  Link as LinkJoy,
   Typography,
 } from "@mui/joy";
-import { useUsersStore } from "@/providers/users-store-provider";
-import { useAuthStore } from "@/providers/auth-store-provider";
-import { User } from "@/interfaces/user";
+import Link from "next/link";
 
 const UserCardSecondary: FC = ({ user }) => {
   const truncate = (string, length = 120) => {
@@ -31,13 +27,14 @@ const UserCardSecondary: FC = ({ user }) => {
       <Avatar src={user.imageURI} alt="test" size="lg" />
       <CardContent>
         <Typography fontSize="xl" fontWeight="lg">
-          <Link
+          <LinkJoy
             overlay
+            component={Link}
             href={"/profile/" + user.id}
             className="text-primary-rose dark:text-dark-primary-light-blue hover:no-underline"
           >
             {user.firstName} {user.lastName} ({user.town})
-          </Link>
+          </LinkJoy>
         </Typography>
         <Typography
           level="body-sm"
