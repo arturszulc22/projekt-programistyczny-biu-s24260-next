@@ -1,6 +1,6 @@
 "use client";
 import { FC, useState } from "react";
-import { Badge, Button, Typography } from "@mui/joy";
+import { Avatar, Badge, Button, Typography } from "@mui/joy";
 
 import HeaderMobileMenu from "@/components/layout/header/HeaderMobileMenu";
 import HeaderProfilePopup from "@/components/layout/header/HeaderProfilePopup";
@@ -67,7 +67,15 @@ const Header: FC = () => {
                   className="p-1"
                   onClick={() => setIsNotificationModalOpen(true)}
                 >
-                  <Badge badgeContent={user?.settings.app.isNotificationEnabled ? notificationCount : 0} size="sm" className="text-xs">
+                  <Badge
+                    badgeContent={
+                      user?.settings.app.isNotificationEnabled
+                        ? notificationCount
+                        : 0
+                    }
+                    size="sm"
+                    className="text-xs"
+                  >
                     <Typography>
                       <NotificationsIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
                     </Typography>
@@ -86,10 +94,10 @@ const Header: FC = () => {
                     >
                       <span className="absolute -inset-1.5"></span>
                       <span className="sr-only">Open user menu</span>
-                      <img
+                      <Avatar
+                        alt={user?.firstName}
                         className="h-8 w-8 rounded-full object-cover"
                         src={user?.imageURI}
-                        alt="profile"
                       />
                     </button>
                   </div>
