@@ -9,8 +9,9 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 import CreatePostForm from "@/components/post/CreatePostForm";
 import { PostCard } from "@/components/post/PostCard";
 import { usePostsStore } from "@/providers/posts-store-provider";
-import {useNotificationsStore} from "@/providers/notifications-store-provider";
+import { useNotificationsStore } from "@/providers/notifications-store-provider";
 import { v4 as uuidv4 } from "uuid";
+import { Typography } from "@mui/joy";
 
 const Profile: FC = ({ params }: { params: { id: string } }) => {
   const { getUserById } = useUsersStore((state) => state);
@@ -29,12 +30,12 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
     removeFriend: removeFriendAuth,
     addFriend: addFriendAuth,
   } = useAuthStore((state) => state);
-  if (!auth) return;
 
   const { getUserPosts } = usePostsStore((state) => state);
-  const posts = getUserPosts(user);
-
   const { addNotification } = useNotificationsStore((state) => state);
+  if (!auth) return;
+
+  const posts = getUserPosts(user);
 
   const handleAddFriendRequest = async (user) => {
     const notification = {
@@ -122,13 +123,15 @@ const Profile: FC = ({ params }: { params: { id: string } }) => {
       <Container className="py-10 max-w-screen-md flex flex-col gap-3 px-0">
         {user?.id === auth?.id && <CreatePostForm />}
 
-        {(user?.id === auth?.id ||
-          (user?.settings.profile.isPrivate && isUserFriend(user))) && (
+        {user?.id === auth?.id ||
+        (user?.settings.profile.isPrivate && isUserFriend(user)) ? (
           <div className="grid grid-cols-1 gap-3">
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
+        ) : (
+          <Typography fontSize="sm" className="text-primary-rose dark:text-dark-primary-light-blue text-center">This profile is private</Typography>
         )}
       </Container>
     </Container>

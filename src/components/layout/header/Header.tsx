@@ -67,7 +67,7 @@ const Header: FC = () => {
                   className="p-1"
                   onClick={() => setIsNotificationModalOpen(true)}
                 >
-                  <Badge badgeContent={notificationCount} size="sm" className="text-xs">
+                  <Badge badgeContent={user?.settings.app.isNotificationEnabled ? notificationCount : 0} size="sm" className="text-xs">
                     <Typography>
                       <NotificationsIcon className="fill-primary-rose dark:fill-dark-primary-light-blue" />
                     </Typography>
