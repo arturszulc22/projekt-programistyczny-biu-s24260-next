@@ -12,12 +12,20 @@ import {
   List,
   Typography,
   Link as LinkJoy,
+  MenuButton,
+  MenuItem,
+  Menu,
+  ListItemDecorator,
+  ListDivider,
+  Dropdown,
 } from "@mui/joy";
 import {
+  DeleteForever,
+  Edit,
   Face,
   Favorite,
   ModeComment,
-  MoreHoriz,
+  MoreVert,
   SendOutlined,
 } from "@mui/icons-material";
 import CommentItem from "@/components/comment/CommentItem";
@@ -38,11 +46,19 @@ import { useNotificationsStore } from "@/providers/notifications-store-provider"
 
 export const PostCard = ({ post }) => {
   const { user } = useAuthStore((state) => state);
-
-  const { isUserLikePost, setUserLike, removeUserLike, addComment } =
-    usePostsStore((state) => state);
-  const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
+  const {
+    isUserLikePost,
+    setUserLike,
+    removeUserLike,
+    addComment,
+    removePost,
+    handleEditPost,
+  } = usePostsStore((state) => state);
   const { addNotification } = useNotificationsStore((state) => state);
+
+  const [isOpenCommentSection, setIsOpenCommentSection] = useState(false);
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
+  const [editedContent, setEditedContent] = useState("");
 
   const isUserLike = isUserLikePost(post, user);
 
@@ -78,9 +94,7 @@ export const PostCard = ({ post }) => {
   };
 
   const handleToggleUserLike = () => {
-    isUserLike
-        ? removeUserLike(post, user)
-        : setUserLike(post, user)
+    isUserLike ? removeUserLike(post, user) : setUserLike(post, user);
 
     if (!isUserLike) {
       const notification = {
@@ -93,7 +107,16 @@ export const PostCard = ({ post }) => {
       };
       addNotification(notification);
     }
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    console.log("test");
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleEditPost(post.id, editedContent);
+      setIsEditModeEnabled(false);
+    }
+  };
 
   return (
     <Card
@@ -150,13 +173,42 @@ export const PostCard = ({ post }) => {
             </Typography>
           )}
         </Typography>
-        <IconButton
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-          size="sm"
-          sx={{ ml: "auto" }}
-        >
-          <MoreHoriz />
-        </IconButton>
+        {user.id === post.user.id && (
+          <Dropdown>
+            <MenuButton
+              slots={{ root: IconButton }}
+              slotProps={{ root: { variant: "plain", color: "neutral" } }}
+              className="ml-auto hover:bg-transparent dark:hover:bg-dark-primary-blue"
+            >
+              <MoreVert className="fill-primary-rose dark:fill-dark-primary-light-blue" />
+            </MenuButton>
+            <Menu
+              placement="bottom-end"
+              className="bg-primary dark:bg-dark-primary"
+            >
+              <MenuItem
+                className="text-primary-rose dark:text-dark-primary-light-blue"
+                onClick={() => setIsEditModeEnabled(true)}
+              >
+                <ListItemDecorator>
+                  <Edit />
+                </ListItemDecorator>
+                Edit post
+              </MenuItem>
+              <ListDivider />
+              <MenuItem
+                variant="soft"
+                color="danger"
+                onClick={() => removePost(post.id)}
+              >
+                <ListItemDecorator sx={{ color: "inherit" }}>
+                  <DeleteForever />
+                </ListItemDecorator>
+                Delete
+              </MenuItem>
+            </Menu>
+          </Dropdown>
+        )}
       </CardContent>
       <CardOverflow>
         <AspectRatio>
@@ -232,27 +284,44 @@ export const PostCard = ({ post }) => {
             {post.comments.length} comments
           </Typography>
         </div>
-        <Typography
-          fontSize="sm"
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-        >
-          <Typography
-            color="neutral"
-            fontWeight="lg"
-            className="text-primary-rose dark:text-dark-primary-light-blue mr-1"
-          >
-            {post.user.firstName} {post.user.lastName}
-          </Typography>
-          {post.content}
-        </Typography>
-        <Typography
-          underline="none"
-          fontSize="10px"
-          className="text-primary-rose dark:text-dark-primary-light-blue"
-          sx={{ my: 0.5 }}
-        >
-          {post.createdAt}
-        </Typography>
+        {!isEditModeEnabled ? (
+          <>
+            <Typography
+              fontSize="sm"
+              className="text-primary-rose dark:text-dark-primary-light-blue"
+            >
+              <Typography
+                color="neutral"
+                fontWeight="lg"
+                className="text-primary-rose dark:text-dark-primary-light-blue mr-1"
+              >
+                {post.user.firstName} {post.user.lastName}
+              </Typography>
+              {post.content}
+            </Typography>
+            <Typography
+              underline="none"
+              fontSize="10px"
+              className="text-primary-rose dark:text-dark-primary-light-blue"
+              sx={{ my: 0.5 }}
+            >
+              {post.createdAt}
+            </Typography>
+          </>
+        ) : (
+          <textarea
+            name="content"
+            required
+            placeholder="What do you think?"
+            onKeyDown={handleKeyDown}
+            defaultValue={post.content}
+            onChange={(e) => setEditedContent(e.target.value)}
+            className={twMerge(
+              "block w-full rounded-md border-0 px-2 py-1.5 text-primary-rose dark:text-dark-primary shadow-sm ring-1 dark:bg-dark-primary-light-blue ring-inset ring-primary-rose dark:ring-dark-primary-light-blue placeholder:text-primary-rose dark:placeholder:text-dark-primary sm:text-sm sm:leading-6",
+              errors.content && "ring-red-600 focus-visible:outline-red-600",
+            )}
+          />
+        )}
       </CardContent>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <CardContent orientation="horizontal" sx={{ gap: 1 }}>

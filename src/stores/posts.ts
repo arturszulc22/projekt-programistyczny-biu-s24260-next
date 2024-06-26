@@ -18,6 +18,8 @@ export type PostsActions = {
   getGroupPosts: (group: Group) => Post[] | [];
   getUserPosts: (user: User) => Post[] | [];
   createPost: (data: object) => void;
+  removePost: (postId) => void;
+  handleEditPost: (postId, content) => void;
   isUserPostAuthor: (post: Post, user: User | null) => boolean;
   isUserLikePost: (post: Post, user: User | null) => boolean;
   setUserLike: (post: Post, user: User | null) => void;
@@ -103,6 +105,18 @@ export const createPostsStore = (initState: PostsState = defaultInitState) => {
         createdAt: new Date().toISOString(),
       };
       set({ posts: [...get().posts, request] });
+    },
+    removePost: (postId) => {
+      set((state) => ({
+        posts: state.posts.filter((post) => post.id !== postId)
+      }));
+    },
+    handleEditPost: (postId, newContent) => {
+      set((state) => ({
+        posts: state.posts.map((post) =>
+            post.id === postId ? { ...post, content: newContent } : post
+        )
+      }));
     },
     isUserPostAuthor: (post: Post, user: User) => {
       if (!user) return null;
