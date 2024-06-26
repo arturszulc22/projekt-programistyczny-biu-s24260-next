@@ -32,13 +32,13 @@ const ChatListItem: FC = (props) => {
           }}
         >
           <Stack direction="row" spacing={1.5}>
-            <AvatarWithStatus online={sender.online} src={sender.avatar} />
+            <AvatarWithStatus online={true} src={sender.imageURI} />
             <Box sx={{ flex: 1 }}>
               <Typography
                 level="title-sm"
                 className="text-primary-rose dark:text-dark-primary-light-blue"
               >
-                {sender.name}
+                {sender.firstName + " " + sender.lastName}
               </Typography>
               <Typography
                 level="body-sm"
@@ -53,7 +53,7 @@ const ChatListItem: FC = (props) => {
                 textAlign: "right",
               }}
             >
-              {messages[0].unread && (
+              {messages[0] && messages[0].unread && (
                 <CircleIcon
                   sx={{ fontSize: 12 }}
                   className="fill-primary-rose dark:fill-dark-primary-blue"
@@ -80,7 +80,7 @@ const ChatListItem: FC = (props) => {
             }}
             className="text-primary-rose dark:text-dark-primary-light-blue"
           >
-            {messages[0].content}
+            {messages[0] ? messages[0].content : ""}
           </Typography>
         </ListItemButton>
       </ListItem>

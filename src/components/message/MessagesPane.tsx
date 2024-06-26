@@ -4,11 +4,15 @@ import AvatarWithStatus from "./AvatarWithStatus";
 import ChatBubble from "./ChatBubble";
 import MessageInput from "./MessageInput";
 import MessagesPaneHeader from "./MessagesPaneHeader";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 export default function MessagesPane(props) {
   const { chat } = props;
+  const { user: auth } = useAuthStore((state) => state);
   const [chatMessages, setChatMessages] = useState(chat.messages);
   const [textAreaValue, setTextAreaValue] = useState("");
+
+  if (!auth) return;
 
   useEffect(() => {
     setChatMessages(chat.messages);
@@ -20,7 +24,7 @@ export default function MessagesPane(props) {
       <Box className="flex flex-col-reverse flex-1 min-h-0 px-2 py-3 overflow-y-auto bg-primary dark:bg-dark-primary">
         <Stack spacing={2} justifyContent="flex-end">
           {chatMessages.map((message, index: number) => {
-            const isYou = message.sender === "You";
+            const isYou = message.sender.id === auth?.id;
 
             return (
               <Stack
@@ -29,11 +33,8 @@ export default function MessagesPane(props) {
                 spacing={2}
                 flexDirection={isYou ? "row-reverse" : "row"}
               >
-                {message.sender !== "You" && (
-                  <AvatarWithStatus
-                    online={message.sender.online}
-                    src={message.sender.avatar}
-                  />
+                {message.sender.id !== auth?.id && (
+                  <AvatarWithStatus src={message.sender.imageURI} />
                 )}
                 <ChatBubble
                   variant={isYou ? "sent" : "received"}
@@ -54,7 +55,7 @@ export default function MessagesPane(props) {
             ...chatMessages,
             {
               id: newIdString,
-              sender: "You",
+              sender: auth,
               content: textAreaValue,
               timestamp: "Just now",
             },

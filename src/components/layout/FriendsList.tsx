@@ -24,7 +24,7 @@ const FriendsList: FC = ({ friends }: { friends: User[] }) => {
       >
         {friends.length > 0 && friends.map((user) => {
           return (
-            <Link href={"/messages"}>
+            <Link href={"/messages"} key={user.id}>
               <ListItem className="text-primary-rose dark:text-dark-primary-light-blue">
                 <ListItemDecorator>
                   <AvatarWithStatus online={true} src={user.imageURI} />

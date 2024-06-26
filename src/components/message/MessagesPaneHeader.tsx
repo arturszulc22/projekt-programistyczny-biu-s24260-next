@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { Typography, Stack, IconButton, Chip, Button, Avatar } from "@mui/joy";
-import CircleIcon from "@mui/icons-material/Circle";
+import { Typography, Stack, IconButton, Button, Avatar } from "@mui/joy";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import { toggleMessagesPane } from "@/utils/switchMessagesPane";
 import Link from "next/link";
+import { User } from "@/interfaces/user";
 
 const MessagesPaneHeader: FC = (props) => {
-  const { sender } = props;
+  const { sender }: User = props;
 
   return (
     <Stack className="py-2 px-1 md:px-2 border-b flex flex-row justify-between bg-white dark:bg-dark-secondary">
@@ -27,31 +27,13 @@ const MessagesPaneHeader: FC = (props) => {
         >
           <ArrowBackIosNewRoundedIcon />
         </IconButton>
-        <Avatar size="lg" src={sender.avatar} />
+        <Avatar size="lg" src={sender.imageURI} />
         <div>
           <Typography
             className="font-bold text-lg text-nowrap text-primary-rose dark:text-dark-primary-light-blue"
             component="h2"
-            endDecorator={
-              sender.online ? (
-                <Chip
-                  variant="outlined"
-                  size="sm"
-                  color="neutral"
-                  sx={{
-                    borderRadius: "sm",
-                  }}
-                  startDecorator={
-                    <CircleIcon sx={{ fontSize: 8 }} color="success" />
-                  }
-                  slotProps={{ root: { component: "span" } }}
-                >
-                  Online
-                </Chip>
-              ) : undefined
-            }
           >
-            {sender}
+            {sender.firstName + " " + sender.lastName}
           </Typography>
           <Typography level="body-sm">{sender.username}</Typography>
         </div>
@@ -60,7 +42,7 @@ const MessagesPaneHeader: FC = (props) => {
         <Button
           variant="solid"
           component={Link}
-          href="/profile/1"
+          href={"/profile/" + sender.id}
           size="sm"
           sx={{
             display: { xs: "none", md: "inline-flex" },

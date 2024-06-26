@@ -1,9 +1,13 @@
 import { FC } from "react";
 import { Sheet, Typography, Stack, Box } from "@mui/joy";
 import { twMerge } from "tailwind-merge";
+import { useAuthStore } from "@/providers/auth-store-provider";
 
 const ChatBubble: FC = (props) => {
   const { content, variant, timestamp, sender } = props;
+  const { user: auth } = useAuthStore((state) => state);
+  if (!auth) return;
+
   const isSent = variant === "sent";
 
   return (
@@ -15,7 +19,9 @@ const ChatBubble: FC = (props) => {
         className="mb-1"
       >
         <Typography className="text-xs text-primary-rose dark:text-dark-primary-light-blue">
-          {sender === "You" ? sender : sender}
+          {sender.id === auth.id
+            ? "You"
+            : sender.firstName + " " + sender.lastName}
         </Typography>
         <Typography className="text-xs text-primary-rose dark:text-dark-primary-light-blue">
           {timestamp}
