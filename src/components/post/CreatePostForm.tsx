@@ -84,9 +84,9 @@ const CreatePostForm: FC = ({
       >
         <div className="flex flex-col md:flex-row gap-2">
           <Avatar
-            src={user?.imageURI}
-            alt={user?.firstName + " " + user?.lastName}
-            className="hidden md:block"
+              alt={user?.firstName}
+              className="h-12 w-12 rounded-full object-cover"
+              src={user?.imageURI}
           />
           <div className="w-full flex flex-col gap-2">
             <textarea

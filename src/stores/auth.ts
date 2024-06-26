@@ -93,7 +93,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
         const newUser = await updateUser(requestData);
         await setUser(newUser);
 
-        set({ user });
+        set({ user: newUser });
       } catch (e: Error) {
         throw new Error("Cannot save user data!");
       }
